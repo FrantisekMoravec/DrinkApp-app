@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
+import com.example.drinkapp.presentation.screens.home.HomeScreen
 import com.example.drinkapp.presentation.screens.splash.SplashScreen
 import com.example.drinkapp.util.Constants.DETAILS_ARGUMENT_KEY
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -27,11 +28,8 @@ fun SetupNavGraph(navController: NavHostController) {
         composable(route = Screen.Splash.route) {
             SplashScreen(navController = navController)
         }
-        composable(route = Screen.Welcome.route) {
-            //WelcomeScreen(navController = navController)
-        }
         composable(route = Screen.Home.route) {
-            //HomeScreen(navController = navController)
+            HomeScreen(navController = navController)
         }
         composable(
             route = Screen.Details.route,

@@ -22,6 +22,8 @@ import com.example.drinkapp.ui.theme.LightBlue
 @Composable
 fun SplashScreen(navController: NavHostController) {
     Splash()
+    //navController.popBackStack()
+    //navController.navigate(Screen.Home.route)
 }
 
 @Composable
