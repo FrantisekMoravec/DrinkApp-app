@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.drinkapp.util.Constants.DRINK_DATABASE_TABLE
 
+@kotlinx.serialization.Serializable
 @Entity(tableName = DRINK_DATABASE_TABLE)
 data class Drink(
     @PrimaryKey(autoGenerate = false)
