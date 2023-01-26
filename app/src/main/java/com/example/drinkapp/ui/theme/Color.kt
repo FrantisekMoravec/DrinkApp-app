@@ -10,6 +10,8 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 val LightBlue = Color(0xFF44A9FF)
 val DarkBlue = Color(0xFF003561)
+val StarColor = Color(0xFFFFC940)
+val LightGray = Color(0xFFD8D8D8)
 
 val Colors.topAppBarContentColor: Color
     @Composable
