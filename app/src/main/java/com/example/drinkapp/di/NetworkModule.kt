@@ -1,6 +1,10 @@
 package com.example.drinkapp.di
 
+import androidx.paging.ExperimentalPagingApi
+import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.data.remote.DrinkApi
+import com.example.drinkapp.data.repository.RemoteDataSourceImpl
+import com.example.drinkapp.domain.repository.RemoteDataSource
 import com.example.drinkapp.util.Constants.BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -15,6 +19,7 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+@ExperimentalPagingApi
 @ExperimentalSerializationApi
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,6 +49,18 @@ object NetworkModule {
     @Singleton
     fun provideDrinkApi(retrofit: Retrofit): DrinkApi{
         return  retrofit.create(DrinkApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesRemoteDataSource(
+        drinkApi: DrinkApi,
+        drinkDatabase: DrinkDatabase
+    ):RemoteDataSource{
+        return RemoteDataSourceImpl(
+            drinkApi = drinkApi,
+            drinkDatabase = drinkDatabase
+        )
     }
 
 }

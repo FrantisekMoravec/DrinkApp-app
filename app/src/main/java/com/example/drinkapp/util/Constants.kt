@@ -10,4 +10,7 @@ object Constants {
     const val DRINK_REMOTE_KEYS_DATABASE_TABLE = "drink_remote_keys_table"
 
     const val DRINK_DATABASE = "drink_database"
+
+    //TODO změnit velikost stránky
+    const val ITEMS_PER_PAGE = 3
 }
