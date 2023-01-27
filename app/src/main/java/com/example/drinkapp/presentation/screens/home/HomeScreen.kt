@@ -5,9 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.drinkapp.presentation.common.ListContent
 
 @Composable
 fun HomeScreen(
+    navController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     val allDrinks = homeViewModel.getAllDrinks.collectAsLazyPagingItems()
@@ -15,6 +17,12 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             HomeTopBar (onSearchClicked = {})
+        },
+        content = {
+            ListContent(
+                drinks = allDrinks,
+                navController = navController
+            )
         }
-    ) {}
+    )
 }
