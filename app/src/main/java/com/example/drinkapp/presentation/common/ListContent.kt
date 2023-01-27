@@ -1,5 +1,6 @@
 package com.example.drinkapp.presentation.common
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -57,7 +58,7 @@ fun DrinkItem(
         },
         contentAlignment = Alignment.BottomStart
     ){
-        Surface(shape = Shapes.large){
+        Surface(shape = RoundedCornerShape(size = LARGE_PADDING)){
             Image(
                 modifier= Modifier.fillMaxSize(),
                 painter = painter,
@@ -116,6 +117,28 @@ fun DrinkItem(
 @Preview
 @Composable
 fun DrinkItemPreview() {
+    DrinkItem(
+        drink = Drink(
+            id = 1,
+            name = "B52",
+            image = "",
+            description = "B52 drink je třívrstvý míchaný nápoj nazvaný podle amerického bombardéru používaného ve válce ve Vietnamu. Zvláštností tohoto drinku je, že se podává doslova hořící.",
+            rating = 4.0,
+            ingredients = listOf(
+                "Kahlúa (3 cl)",
+                "Baileys (2 cl)",
+                "Grand Marnier nebo Absinth nebo Stroh (3 cl)"
+            ),
+            tutorial = "Ingredience opatrně nalijte do panáku skrze kávovou lžičku, tak, aby zůstaly nepromíchané. A to přesně v tomto pořadí: 1. likér Kahlúa, 2. likér Baileys, a nakonec 3. Grand Marnier či Absinth nebo Stroh . Těsně před konzumací zapálíme zapalovačem. Podáváme s tlustým brčkem."
+        ),
+        navController = rememberNavController()
+    )
+}
+
+@ExperimentalCoilApi
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun DrinkItemDarkPreview() {
     DrinkItem(
         drink = Drink(
             id = 1,
