@@ -14,7 +14,6 @@ import com.example.drinkapp.presentation.screens.splash.SplashScreen
 import com.example.drinkapp.util.Constants.DETAILS_ARGUMENT_KEY
 import com.google.accompanist.pager.ExperimentalPagerApi
 
-
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @ExperimentalAnimationApi

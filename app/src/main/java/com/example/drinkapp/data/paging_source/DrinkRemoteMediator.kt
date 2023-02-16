@@ -1,5 +1,6 @@
 package com.example.drinkapp.data.paging_source
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -9,16 +10,36 @@ import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.data.remote.DrinkApi
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.DrinkRemoteKeys
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @ExperimentalPagingApi
-class DrinkRemoteMediator @Inject constructor(
+class DrinkRemoteMediator(
     private val drinkApi: DrinkApi,
     private val drinkDatabase: DrinkDatabase
 ) : RemoteMediator<Int, Drink>() {
 
     private val drinkDao = drinkDatabase.drinkDao()
     private val drinkRemoteKeysDao = drinkDatabase.drinkRemoteKeysDao()
+
+    /** po 24 hodinách se při dalším spojením se serverem znovu stahnou data ze serveru a nahradí data lokální */
+    override suspend fun initialize(): InitializeAction {
+        val currentTime = System.currentTimeMillis()
+        val lastUpdated = drinkRemoteKeysDao.getRemoteKeys(drinkId = 1)?.lastUpdated ?: 0L
+        val cacheTimeout = 1440
+        //Log.d("RemoteMediator", "Current Time: ${parseMillis(currentTime)}")
+        //Log.d("RemoteMediator", "Last Updated Time: ${parseMillis(lastUpdated)}")
+
+        val diffInMinutes = (currentTime - lastUpdated) / 1000 / 60
+        return  if (diffInMinutes.toInt() <= cacheTimeout){
+            //Log.d("RemoteMediator", "up to date")
+            InitializeAction.SKIP_INITIAL_REFRESH
+        }else{
+            //Log.d("RemoteMediator", "refresh")
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        }
+    }
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Drink>): RemoteMediator.MediatorResult {
         return try {
@@ -61,7 +82,8 @@ class DrinkRemoteMediator @Inject constructor(
                         DrinkRemoteKeys(
                             id = drink.id,
                             prevPage = prevPage,
-                            nextPage = nextPage
+                            nextPage = nextPage,
+                            lastUpdated = response.lastUpdated
                         )
                     }
                     drinkRemoteKeysDao.addAllRemoteKeys(drinkRemoteKeys = keys)
@@ -101,4 +123,11 @@ class DrinkRemoteMediator @Inject constructor(
                 drinkRemoteKeysDao.getRemoteKeys(drinkId = drink.id)
             }
     }
+/*
+    private fun parseMillis(millis: Long): String{
+        val date = Date(millis)
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.ROOT)
+        return format.format(date)
+    }
+*/
 }

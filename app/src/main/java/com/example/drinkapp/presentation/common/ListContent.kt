@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
@@ -21,22 +22,69 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.components.RatingWidget
+import com.example.drinkapp.presentation.components.ShimmerEffect
 import com.example.drinkapp.ui.theme.*
 import com.example.drinkapp.util.Constants.BASE_URL
 
+@ExperimentalCoilApi
 @Composable
 fun ListContent(
     drinks: LazyPagingItems<Drink>,
     navController: NavHostController
 ) {
+    val result = handlePagingResult(drinks = drinks)
 
+    if (result){
+        LazyColumn(
+            contentPadding = PaddingValues(all = SMALL_PADDING),
+            verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
+        ){
+            items(
+                items = drinks,
+                key = { drink ->
+                    drink.id
+                }
+            ){ drink ->
+                drink?.let {
+                    DrinkItem(drink = it, navController = navController)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun handlePagingResult(
+    drinks: LazyPagingItems<Drink>
+): Boolean {
+    drinks.apply {
+        val error = when{
+            loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+            loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+            loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+            else -> null
+        }
+
+        return when{
+            loadState.refresh is LoadState.Loading -> {
+                ShimmerEffect()
+                false
+            }
+            error != null ->{
+                false
+            }
+            else -> true
+        }
+    }
 }
 
 @ExperimentalCoilApi
@@ -45,7 +93,7 @@ fun DrinkItem(
     drink: Drink,
     navController: NavHostController
 ) {
-    /** cesta k souboru na server*/
+    /** cesta k souboru na serveru*/
     val painter = rememberImagePainter(data = "$BASE_URL${drink.image}"){
         placeholder(R.drawable.placeholder)
         error(R.drawable.placeholder)
@@ -60,7 +108,7 @@ fun DrinkItem(
     ){
         Surface(shape = RoundedCornerShape(size = LARGE_PADDING)){
             Image(
-                modifier= Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 painter = painter,
                 contentDescription = stringResource(R.string.drink_image),
                 contentScale = ContentScale.Crop
@@ -76,9 +124,11 @@ fun DrinkItem(
                 bottomEnd = LARGE_PADDING
             )
         ) {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(all = MEDIUM_PADDING)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(all = MEDIUM_PADDING)
+            ) {
                 Text(
                     text = drink.name,
                     color = MaterialTheme.colors.topAppBarContentColor,
