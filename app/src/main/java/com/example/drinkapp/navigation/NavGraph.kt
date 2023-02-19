@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.presentation.screens.home.HomeScreen
+import com.example.drinkapp.presentation.screens.search.SearchScreen
 import com.example.drinkapp.presentation.screens.splash.SplashScreen
 import com.example.drinkapp.util.Constants.DETAILS_ARGUMENT_KEY
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -40,6 +41,7 @@ fun SetupNavGraph(navController: NavHostController) {
         }
         composable(route = Screen.Search.route) {
             //SearchScreen(navController = navController)
+            SearchScreen()
         }
     }
 }
