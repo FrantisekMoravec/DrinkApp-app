@@ -50,7 +50,27 @@ object NetworkModule {
     fun provideDrinkApi(retrofit: Retrofit): DrinkApi{
         return  retrofit.create(DrinkApi::class.java)
     }
+/*
+    @Provides
+    @Singleton
+    fun provideIngredientApi(retrofit: Retrofit): IngredientApi{
+        return  retrofit.create(IngredientApi::class.java)
+    }
 
+    @Provides
+    @Singleton
+    fun providesRemoteDataSource(
+        drinkApi: DrinkApi,
+        ingredientApi: IngredientApi,
+        drinkDatabase: DrinkDatabase
+    ):RemoteDataSource{
+        return RemoteDataSourceImpl(
+            drinkApi = drinkApi,
+            ingredientApi = ingredientApi,
+            drinkDatabase = drinkDatabase
+        )
+    }
+*/
     @Provides
     @Singleton
     fun providesRemoteDataSource(

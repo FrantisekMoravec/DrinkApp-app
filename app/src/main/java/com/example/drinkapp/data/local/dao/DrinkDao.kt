@@ -21,4 +21,5 @@ interface DrinkDao {
 
     @Query("DELETE FROM drink_table")
     suspend fun deleteAllDrinks()
+
 }

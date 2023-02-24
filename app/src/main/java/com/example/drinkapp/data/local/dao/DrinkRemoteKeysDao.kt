@@ -10,12 +10,12 @@ import com.example.drinkapp.domain.model.DrinkRemoteKeys
 interface DrinkRemoteKeysDao {
 
     @Query("SELECT * FROM drink_remote_keys_table WHERE id = :drinkId")
-    suspend fun getRemoteKeys(drinkId: Int): DrinkRemoteKeys?
+    suspend fun getDrinkRemoteKeys(drinkId: Int): DrinkRemoteKeys?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addAllRemoteKeys(drinkRemoteKeys: List<DrinkRemoteKeys>)
+    suspend fun addAllDrinkRemoteKeys(drinkRemoteKeys: List<DrinkRemoteKeys>)
 
     @Query("DELETE FROM drink_remote_keys_table")
-    suspend fun deleteAllRemoteKeys()
+    suspend fun deleteAllDrinkRemoteKeys()
 
 }

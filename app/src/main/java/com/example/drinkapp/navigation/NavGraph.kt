@@ -40,8 +40,7 @@ fun SetupNavGraph(navController: NavHostController) {
             //DetailsScreen(navController = navController)
         }
         composable(route = Screen.Search.route) {
-            //SearchScreen(navController = navController)
-            SearchScreen()
+            SearchScreen(navController = navController)
         }
     }
 }

@@ -6,15 +6,17 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.data.paging_source.DrinkRemoteMediator
+import com.example.drinkapp.data.paging_source.SearchDrinksSource
 import com.example.drinkapp.data.remote.DrinkApi
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.repository.RemoteDataSource
-import com.example.drinkapp.util.Constants.ITEMS_PER_PAGE
+import com.example.drinkapp.util.Constants.DRINK_ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
 
 @ExperimentalPagingApi
 class RemoteDataSourceImpl(
     private val drinkApi: DrinkApi,
+//    private val ingredientApi: IngredientApi,
     private val drinkDatabase: DrinkDatabase
 ): RemoteDataSource {
 
@@ -23,7 +25,7 @@ class RemoteDataSourceImpl(
     override fun getAllDrinks(): Flow<PagingData<Drink>> {
         val pagingSourceFactory = { drinkDao.getAllDrinks() }
         return Pager(
-            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+            config = PagingConfig(pageSize = DRINK_ITEMS_PER_PAGE),
             remoteMediator = DrinkRemoteMediator(
                 drinkApi = drinkApi,
                 drinkDatabase = drinkDatabase
@@ -32,8 +34,24 @@ class RemoteDataSourceImpl(
         ).flow
     }
 
-    override fun searchDrinks(): Flow<PagingData<Drink>> {
+    override fun searchDrinks(query: String): Flow<PagingData<Drink>> {
+        return Pager(
+            config = PagingConfig(pageSize = DRINK_ITEMS_PER_PAGE),
+            pagingSourceFactory = {
+                SearchDrinksSource(
+                    drinkApi = drinkApi,
+                    query = query
+                )
+            }
+        ).flow
+    }
+/*
+    override fun getAllIngredients(): Flow<PagingData<Ingredient>> {
         TODO("Not yet implemented")
     }
 
+    override fun searchIngredients(query: String): Flow<PagingData<Ingredient>> {
+        TODO("Not yet implemented")
+    }
+*/
 }
