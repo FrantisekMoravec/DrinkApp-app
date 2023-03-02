@@ -19,12 +19,15 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+/** tento objekt poskytuje třídy knihovny retrofit pro komunikaci se serverem */
+
 @ExperimentalPagingApi
 @ExperimentalSerializationApi
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    /** pokud aplikace nenaváže spojení se serverem do 15 sekund přestane se zobrazovat efekt načítání a zobrazí se chyba připojení k internetu/serveru */
     @Provides
     @Singleton
     fun provideHttpClient(): OkHttpClient{

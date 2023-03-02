@@ -29,12 +29,14 @@ fun SearchTopBar(
     onCloseClicked: () -> Unit
 ) {
     SearchWidget(
-        text = "",
-        onTextChange = {},
-        onSearchClicked = {},
-        onCloseClicked = {}
+        text = text,
+        onTextChange = onTextChange,
+        onSearchClicked = onSearchClicked,
+        onCloseClicked = onCloseClicked
     )
 }
+
+/** tato metoda říká jak bude vypadat lišta pro vyhledávání drinků ve fragmentu pro vyhledávání driků */
 
 @Composable
 fun SearchWidget(
@@ -54,11 +56,11 @@ fun SearchWidget(
             modifier = Modifier
                 .fillMaxWidth(),
             value = text,
-            onValueChange = {onTextChange(it)},
+            onValueChange = { onTextChange(it) },
             placeholder = {
                 Text(
                     modifier = Modifier
-                        .alpha(ContentAlpha.medium),
+                        .alpha(alpha = ContentAlpha.medium),
                     text = "Hledat drink...",
                     color = Color.White
                 )
@@ -112,6 +114,8 @@ fun SearchWidget(
         )
     }
 }
+
+/** náhled jak bude vypadat lišta pro hledání drinků */
 
 @Preview
 @Composable

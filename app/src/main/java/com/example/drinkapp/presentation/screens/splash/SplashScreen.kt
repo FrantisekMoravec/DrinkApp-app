@@ -23,6 +23,7 @@ import com.example.drinkapp.ui.theme.DarkBlue
 import com.example.drinkapp.ui.theme.LightBlue
 import kotlinx.coroutines.delay
 
+/** tato metoda říká kdy se má zapnout metoda Splash a řídí její animaci */
 @Composable
 fun SplashScreen(navController: NavHostController) {
     var startAnimation by remember { mutableStateOf(false) }
@@ -42,6 +43,7 @@ fun SplashScreen(navController: NavHostController) {
     Splash(alpha = alphaAnim.value)
 }
 
+/** tato metoda vykresluje splash screen */
 @Composable
 fun Splash(alpha: Float) {
     if (isSystemInDarkTheme()){
@@ -71,12 +73,14 @@ fun Splash(alpha: Float) {
     }
 }
 
+/** náhled splash screenu */
 @Preview
 @Composable
 fun SplashScreenPreview() {
     Splash(alpha = 1f)
 }
 
+/** náhled splash screenu pro zařízení v tmavém módu*/
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun SplashScreenPreviewDark() {

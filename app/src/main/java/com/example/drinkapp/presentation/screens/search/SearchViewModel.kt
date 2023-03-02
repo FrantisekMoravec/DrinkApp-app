@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/** viewmodel obrazovky pro vyhledávání drinků - zajišťuje že data zůstanou načtená i při změně stavu */
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val useCases: UseCases

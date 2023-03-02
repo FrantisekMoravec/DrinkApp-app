@@ -11,6 +11,8 @@ import com.example.drinkapp.R
 import com.example.drinkapp.ui.theme.topAppBarBackgroundColor
 import com.example.drinkapp.ui.theme.topAppBarContentColor
 
+/** tato metoda vykresluje horní lištu fragmentu s drinky */
+
 @Composable
 fun HomeTopBar(onSearchClicked: () -> Unit) {
     TopAppBar(
@@ -33,11 +35,15 @@ fun HomeTopBar(onSearchClicked: () -> Unit) {
     )
 }
 
+/** náhled toho jak bude lišta vypadat */
+
 @Preview
 @Composable
 fun HomeTopBarPreview() {
     HomeTopBar {}
 }
+
+/** náhled toho jak bude lišta vypadat v tamném módu */
 
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable

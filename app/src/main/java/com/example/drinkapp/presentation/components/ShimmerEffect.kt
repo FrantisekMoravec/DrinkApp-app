@@ -15,6 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.drinkapp.ui.theme.*
 
+/** tento soubor říká jak funguje mhavý efekt který se zobrazí při načítání dat ze serveru */
+
+/** tato metoda popisuje kolikrát se má zobrazit mlhavý efekt a jeho parametry */
 @Composable
 fun ShimmerEffect() {
     LazyColumn(
@@ -27,6 +30,7 @@ fun ShimmerEffect() {
     }
 }
 
+/** animace mlhavého efektu */
 @Composable
 fun AnimatedShimmerItem() {
     val transition = rememberInfiniteTransition()
@@ -44,6 +48,7 @@ fun AnimatedShimmerItem() {
     ShimmerItem(alpha = alphaAnim)
 }
 
+/** tato metoda popisuje jak bude mlhavý efekt vypadat */
 @Composable
 fun ShimmerItem(alpha: Float) {
     Surface(
@@ -99,12 +104,14 @@ fun ShimmerItem(alpha: Float) {
     }
 }
 
+/** náhled mlhavého efektu */
 @Preview
 @Composable
 fun ShimmerItemPreview() {
     AnimatedShimmerItem()
 }
 
+/** náhled mlhavého efektu pro zařízení v tmavém módu */
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun ShimmerItemDarkPreview() {

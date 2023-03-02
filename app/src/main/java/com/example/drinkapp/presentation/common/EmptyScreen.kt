@@ -1,7 +1,6 @@
 package com.example.drinkapp.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -27,15 +26,25 @@ import com.example.drinkapp.ui.theme.SMALL_PADDING
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 
+/** metoda pro vykreslení obrazovky bez obsahu */
 @Composable
-fun EmptyScreen(error: LoadState.Error) {
-    val message by remember {
-        mutableStateOf(parseErrorMessage(error = error))
+fun EmptyScreen(error: LoadState.Error? = null) {
+
+    /** ikona a hláška pro obrazovku s vyhledáváním drinků podle jména */
+    var message by remember {
+        mutableStateOf("Najdi svůj drink")
     }
-    val icon by remember {
-        mutableStateOf(R.drawable.ic_network_error)
+    var icon by remember {
+        mutableStateOf(R.drawable.ic_search_document)
     }
 
+    /** pokud nastane chyby během načítání obsahu tak se zobrazí o jakou chybu jde */
+    if (error != null){
+        message = parseErrorMessage(error = error)
+        icon = R.drawable.ic_network_error
+    }
+
+    /** animace ikony */
     var startAnimation by remember { mutableStateOf(false) }
     val alphaAnim by animateFloatAsState(
         targetValue = if (startAnimation) ContentAlpha.disabled else 0f,
@@ -50,6 +59,7 @@ fun EmptyScreen(error: LoadState.Error) {
     EmptyContent(alphaAnim = alphaAnim, icon = icon, message = message)
 }
 
+/** vykreslení textu a ikony */
 @Composable
 fun EmptyContent(alphaAnim: Float, icon: Int, message: String) {
     Column(
@@ -77,40 +87,38 @@ fun EmptyContent(alphaAnim: Float, icon: Int, message: String) {
         )
     }
 }
-
+/** podle chyby vybere zprávu která se zobrazí uživateli */
 fun parseErrorMessage(error: LoadState.Error): String{
     return when (error.error) {
         is SocketTimeoutException -> {
-            //"Server Unavailable."
-            "Nelze se připojit k serveru."
+            "Nelze se připojit k serveru"
         }
         is ConnectException -> {
-            //"Internet Unavailable"
-            "Nelze se připojit k internetu."
+            "Nelze se připojit k internetu"
         }
         else -> {
-            //"Unknown Error."
-            "Neznámá chyba."
+            "Neznámá chyba"
         }
     }
 }
-
+/** náhled obrazovky */
 @Preview(showBackground = true)
 @Composable
 fun EmptyScreenPreview() {
     EmptyContent(
         alphaAnim = 1f,
         icon = R.drawable.ic_network_error,
-        message = "Internet Unavailable."
+        message = "Nelze se připojit k internetu"
     )
 }
 
+/** náhled obrazovky když je zařízení v tmavém módu */
 @Composable
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 fun EmptyScreenDarkPreview() {
     EmptyContent(
         alphaAnim = 1f,
         icon = R.drawable.ic_network_error,
-        message = "Internet Unavailable."
+        message = "Nelze se připojit k internetu"
     )
 }

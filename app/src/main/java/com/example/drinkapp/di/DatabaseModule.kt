@@ -12,6 +12,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/** tento objekt poskytuje databázi */
+
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {

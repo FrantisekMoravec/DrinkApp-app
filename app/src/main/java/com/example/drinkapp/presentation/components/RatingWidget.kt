@@ -23,6 +23,7 @@ import com.example.drinkapp.ui.theme.EXTRA_SMALL_PADDING
 import com.example.drinkapp.ui.theme.LightGray
 import com.example.drinkapp.ui.theme.StarColor
 
+/** tato metoda říká jak se má vykreslit celá hodnotící komponenta */
 @Composable
 fun RatingWidget(
     modifier: Modifier,
@@ -75,6 +76,7 @@ fun RatingWidget(
 
 }
 
+/** tato metoda říká jak se má vykreslit plná hvězda */
 @Composable
 fun FilledStar(
     starPath: Path,
@@ -99,6 +101,7 @@ fun FilledStar(
     }
 }
 
+/** tato metoda říká jak se má vykreslit poloplná hvězda */
 @Composable
 fun HalfFilledStar(
     starPath: Path,
@@ -132,6 +135,7 @@ fun HalfFilledStar(
     }
 }
 
+/** tato metoda říká jak se má vykreslit prázdná hvězda */
 @Composable
 fun EmptyStar(
     starPath: Path,
@@ -156,6 +160,7 @@ fun EmptyStar(
     }
 }
 
+/** tato metoda počítá kolik jakých hvězd se má vykreslit */
 @Composable
 fun calculateStars(rating: Double): Map<String, Int> {
     val maxStars by remember { mutableStateOf(5) }
@@ -193,7 +198,7 @@ fun calculateStars(rating: Double): Map<String, Int> {
         "emptyStars" to emptyStars
     )
 }
-
+/** náhled plné hvězdy */
 @Composable
 @Preview(showBackground = true)
 fun FilledStarPreview() {
@@ -211,6 +216,7 @@ fun FilledStarPreview() {
     )
 }
 
+/** náhled poloplné hvězdy */
 @Composable
 @Preview(showBackground = true)
 fun HalfFilledStarPreview() {
@@ -228,6 +234,7 @@ fun HalfFilledStarPreview() {
     )
 }
 
+/** náhled prázdné hvězdy */
 @Composable
 @Preview(showBackground = true)
 fun EmptyStarPreview() {

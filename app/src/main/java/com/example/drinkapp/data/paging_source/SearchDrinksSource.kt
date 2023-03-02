@@ -6,12 +6,13 @@ import com.example.drinkapp.data.remote.DrinkApi
 import com.example.drinkapp.domain.model.Drink
 import javax.inject.Inject
 
+/** tato třída upravuje data ze serveru pro paging3 knihovnu */
 class SearchDrinksSource @Inject constructor(
     private val drinkApi: DrinkApi,
     private val query: String
 ): PagingSource<Int, Drink>() {
 
-    /** načte hledané drinky z api */
+    /** prochází drinky ze serveru jestli se jméno některého bude shodovat s tím který uživatel hledá */
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Drink> {
         return try {
             val apiResponse = drinkApi.searchDrinks(name = query)

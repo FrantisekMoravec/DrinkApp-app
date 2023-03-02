@@ -15,6 +15,8 @@ import com.example.drinkapp.presentation.screens.splash.SplashScreen
 import com.example.drinkapp.util.Constants.DETAILS_ARGUMENT_KEY
 import com.google.accompanist.pager.ExperimentalPagerApi
 
+/** tato metoda slouží k navigaci mezi fragmenty */
+
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @ExperimentalAnimationApi

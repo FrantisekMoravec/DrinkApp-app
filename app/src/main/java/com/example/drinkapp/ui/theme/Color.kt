@@ -4,6 +4,8 @@ import androidx.compose.material.Colors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+/** tento soubor je seznam použitých barev knihovnou compose */
+
 val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
@@ -17,6 +19,7 @@ val ShimmerLightGray = Color(0xFFF1F1F1)
 val ShimmerMediumGray = Color(0xFFE3E3E3)
 val ShimmerDarkGray = Color(0xFF1D1D1D)
 
+/** barva je definována podle toho zda je zařízení v tmavém či světlém módu */
 val Colors.topAppBarContentColor: Color
     @Composable
     get() = if (isLight) Color.White else Color.LightGray

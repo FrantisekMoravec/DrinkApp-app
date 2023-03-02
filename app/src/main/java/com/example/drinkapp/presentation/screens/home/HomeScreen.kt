@@ -9,6 +9,8 @@ import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.common.ListContent
 
+/** tato metoda říká jak má vypadat fragment s drinky */
+
 @ExperimentalCoilApi
 @Composable
 fun HomeScreen(

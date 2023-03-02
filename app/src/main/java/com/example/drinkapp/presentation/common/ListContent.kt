@@ -35,6 +35,8 @@ import com.example.drinkapp.presentation.components.ShimmerEffect
 import com.example.drinkapp.ui.theme.*
 import com.example.drinkapp.util.Constants.BASE_URL
 
+/** tento soubor slouží k zobrazování obsahu */
+
 @ExperimentalCoilApi
 @Composable
 fun ListContent(
@@ -62,11 +64,13 @@ fun ListContent(
     }
 }
 
+/** tato metoda říká co se má stát podle výsledků načítání */
 @Composable
 fun handlePagingResult(
     drinks: LazyPagingItems<Drink>
 ): Boolean {
     drinks.apply {
+        /** tato konstanta nám řekne co se stalo za chybu pokud nějaká nastane */
         val error = when{
             loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
             loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
@@ -75,14 +79,22 @@ fun handlePagingResult(
         }
 
         return when{
+            /** pokud se budou data načítat zobrazí se mlhavý efekt */
             loadState.refresh is LoadState.Loading -> {
                 ShimmerEffect()
                 false
             }
+            /** pokud nastane chyba zobrazí se fragment EmptyScreen a na něm příslušná chyba */
             error != null ->{
                 EmptyScreen(error = error)
                 false
             }
+
+            drinks.itemCount < 1 -> {
+                EmptyScreen()
+                false
+            }
+
             else -> true
         }
     }
@@ -94,10 +106,11 @@ fun DrinkItem(
     drink: Drink,
     navController: NavHostController
 ) {
-    /** cesta k souboru na serveru*/
+    /** pokud se to půjde bude použit obrázek ze serveru použije se obrázek drinku */
+    /** pokud to nebude možné bude místo něj použitý placeholder */
     val painter = rememberImagePainter(data = "$BASE_URL${drink.image}"){
-        placeholder(R.drawable.placeholder)
-        error(R.drawable.placeholder)
+        placeholder(R.drawable.ic_placeholder)
+        error(R.drawable.ic_placeholder)
     }
 
     Box(modifier = Modifier
@@ -164,6 +177,8 @@ fun DrinkItem(
     }
 }
 
+/** tato metoda ukazuje náhled jak bude vypadat DrinkItem pokud se nenačte obrázek driku */
+
 @ExperimentalCoilApi
 @Preview
 @Composable
@@ -185,6 +200,8 @@ fun DrinkItemPreview() {
         navController = rememberNavController()
     )
 }
+
+/** tato metoda má dělá to samé co DrinkItemPreview ale pro zařízení v tmavém módu */
 
 @ExperimentalCoilApi
 @Preview(uiMode = UI_MODE_NIGHT_YES)

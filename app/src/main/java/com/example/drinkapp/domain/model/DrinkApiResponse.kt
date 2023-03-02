@@ -1,5 +1,7 @@
 package com.example.drinkapp.domain.model
 
+/** api drinku */
+
 @kotlinx.serialization.Serializable
 data class DrinkApiResponse (
     val success: Boolean,
