@@ -1,4 +1,4 @@
-package com.example.drinkapp.presentation.screens.home
+package com.example.drinkapp.presentation.screens.drinks
 
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -13,15 +13,15 @@ import com.example.drinkapp.presentation.common.ListContent
 
 @ExperimentalCoilApi
 @Composable
-fun HomeScreen(
+fun DrinksScreen(
     navController: NavHostController,
-    homeViewModel: HomeViewModel = hiltViewModel()
+    drinksViewModel: DrinksViewModel = hiltViewModel()
 ) {
-    val allDrinks = homeViewModel.getAllDrinks.collectAsLazyPagingItems()
+    val allDrinks = drinksViewModel.getAllDrinks.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
-            HomeTopBar (
+            DrinksTopBar (
                 onSearchClicked = {
                     navController.navigate(Screen.Search.route)
                 }

@@ -3,7 +3,7 @@ package com.example.drinkapp.ui.theme
 import androidx.compose.material.Colors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-
+//TODO doladit barvy
 /** tento soubor je seznam použitých barev knihovnou compose */
 
 val Purple200 = Color(0xFFBB86FC)
@@ -14,6 +14,7 @@ val LightBlue = Color(0xFF44A9FF)
 val DarkBlue = Color(0xFF003561)
 val StarColor = Color(0xFFFFC940)
 val LightGray = Color(0xFFD8D8D8)
+val DarkestBlue = Color(0xFF001A30)
 
 val ShimmerLightGray = Color(0xFFF1F1F1)
 val ShimmerMediumGray = Color(0xFFE3E3E3)
@@ -27,3 +28,15 @@ val Colors.topAppBarContentColor: Color
 val Colors.topAppBarBackgroundColor: Color
     @Composable
     get() = if (isLight) DarkBlue else Color.Black
+
+val Colors.bottomNavBackgroundColor: Color
+    @Composable
+    get() = if (isLight) DarkBlue else Color.Black
+
+val Colors.bottomNavUnselectedItemsColor: Color
+    @Composable
+    get() = if (isLight) DarkestBlue else ShimmerDarkGray
+
+val Colors.bottomNavSelectedItemColor: Color
+    @Composable
+    get() = if (isLight) LightBlue else ShimmerMediumGray

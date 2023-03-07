@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.drinkapp.R
 import com.example.drinkapp.navigation.Screen
+import com.example.drinkapp.navigation.graphs.Graph
 import com.example.drinkapp.ui.theme.DarkBlue
 import com.example.drinkapp.ui.theme.LightBlue
 import kotlinx.coroutines.delay
@@ -38,7 +39,7 @@ fun SplashScreen(navController: NavHostController) {
         startAnimation = true
         delay(4000)
         navController.popBackStack()
-        navController.navigate(Screen.Home.route)
+        navController.navigate(Graph.HOME)
     }
     Splash(alpha = alphaAnim.value)
 }

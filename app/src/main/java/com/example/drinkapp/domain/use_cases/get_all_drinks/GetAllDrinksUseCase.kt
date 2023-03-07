@@ -6,7 +6,7 @@ import com.example.drinkapp.domain.model.Drink
 import kotlinx.coroutines.flow.Flow
 
 class GetAllDrinksUseCase(
-    private  val repository: Repository
+    private val repository: Repository
 ) {
     operator fun invoke(): Flow<PagingData<Drink>>{
         return repository.getAllDrinks()

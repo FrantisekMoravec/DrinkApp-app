@@ -1,4 +1,4 @@
-package com.example.drinkapp.presentation.screens.home
+package com.example.drinkapp.presentation.screens.drinks
 
 import androidx.lifecycle.ViewModel
 import com.example.drinkapp.domain.use_cases.UseCases
@@ -8,7 +8,7 @@ import javax.inject.Inject
 /** viewmodel fragmentu s drinky - zajišťuje že data zůstanou načtená i při změně stavu */
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class DrinksViewModel @Inject constructor(
     useCases: UseCases
 ): ViewModel() {
     val getAllDrinks = useCases.getAllDrinksUseCase()
