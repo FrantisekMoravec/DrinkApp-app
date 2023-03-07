@@ -12,6 +12,7 @@ import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.navigation.BottomBarScreen
 import com.example.drinkapp.presentation.screens.assistant.AssistantScreen
 import com.example.drinkapp.presentation.screens.drinks.DrinksScreen
+import com.example.drinkapp.presentation.screens.ingredients.IngredientsScreen
 import com.example.drinkapp.presentation.screens.settings.SettingsScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -30,6 +31,9 @@ fun HomeNavGraph(navController: NavHostController) {
     ) {
         composable(route = BottomBarScreen.Drinks.route) {
             DrinksScreen(navController = navController)
+        }
+        composable(route = BottomBarScreen.Ingredients.route) {
+            IngredientsScreen(navController = navController)
         }
         composable(route = BottomBarScreen.Assistant.route) {
             AssistantScreen(navController = navController)

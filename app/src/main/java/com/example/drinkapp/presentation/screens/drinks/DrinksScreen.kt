@@ -17,6 +17,7 @@ fun DrinksScreen(
     navController: NavHostController,
     drinksViewModel: DrinksViewModel = hiltViewModel()
 ) {
+    /** vybere drinky z viewmodelu */
     val allDrinks = drinksViewModel.getAllDrinks.collectAsLazyPagingItems()
 
     Scaffold(
