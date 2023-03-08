@@ -1,4 +1,4 @@
-package com.example.drinkapp.presentation.screens.search
+package com.example.drinkapp.presentation.screens.search_drinks
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -10,13 +10,12 @@ import com.example.drinkapp.domain.use_cases.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /** viewmodel obrazovky pro vyhledávání drinků - zajišťuje že data zůstanou načtená i při změně stavu */
 @HiltViewModel
-class SearchViewModel @Inject constructor(
+class DrinksSearchViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
 
@@ -26,7 +25,7 @@ class SearchViewModel @Inject constructor(
     private val _searchedDrinks = MutableStateFlow<PagingData<Drink>>(PagingData.empty())
     val searchedDrinks = _searchedDrinks
 
-    fun updateSearchQuery(query: String){
+    fun drinksUpdateSearchQuery(query: String){
         _searchQuery.value = query
     }
 
@@ -37,5 +36,4 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
-
 }

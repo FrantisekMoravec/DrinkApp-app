@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.drinkapp.domain.model.Drink
 
+/** říká knihovně room jak provádět crud operace */
 @Dao
 interface DrinkDao {
 

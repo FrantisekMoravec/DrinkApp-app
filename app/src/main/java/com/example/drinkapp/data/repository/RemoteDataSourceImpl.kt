@@ -6,21 +6,28 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.data.paging_source.DrinkRemoteMediator
+import com.example.drinkapp.data.paging_source.IngredientRemoteMediator
 import com.example.drinkapp.data.paging_source.SearchDrinksSource
+import com.example.drinkapp.data.paging_source.SearchIngredientsSource
 import com.example.drinkapp.data.remote.DrinkApi
+import com.example.drinkapp.data.remote.IngredientApi
 import com.example.drinkapp.domain.model.Drink
+import com.example.drinkapp.domain.model.Ingredient
 import com.example.drinkapp.domain.repository.RemoteDataSource
 import com.example.drinkapp.util.Constants.DRINK_ITEMS_PER_PAGE
+import com.example.drinkapp.util.Constants.INGREDIENT_ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
 
+/** knihovna paging bere data z databáze a upravuje si je jak potřebuje */
 @ExperimentalPagingApi
 class RemoteDataSourceImpl(
     private val drinkApi: DrinkApi,
-//    private val ingredientApi: IngredientApi,
+    private val ingredientApi: IngredientApi,
     private val drinkDatabase: DrinkDatabase
 ): RemoteDataSource {
 
     private val drinkDao = drinkDatabase.drinkDao()
+    private val ingredientDao = drinkDatabase.ingredientDao()
 
     override fun getAllDrinks(): Flow<PagingData<Drink>> {
         val pagingSourceFactory = { drinkDao.getAllDrinks() }
@@ -45,13 +52,28 @@ class RemoteDataSourceImpl(
             }
         ).flow
     }
-/*
+
     override fun getAllIngredients(): Flow<PagingData<Ingredient>> {
-        TODO("Not yet implemented")
+        val pagingSourceFactory = { ingredientDao.getAllIngredients() }
+        return Pager(
+            config = PagingConfig(pageSize = INGREDIENT_ITEMS_PER_PAGE),
+            remoteMediator = IngredientRemoteMediator(
+                ingredientApi = ingredientApi,
+                drinkDatabase = drinkDatabase
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
     }
 
     override fun searchIngredients(query: String): Flow<PagingData<Ingredient>> {
-        TODO("Not yet implemented")
+        return Pager(
+            config = PagingConfig(pageSize = INGREDIENT_ITEMS_PER_PAGE),
+            pagingSourceFactory = {
+                SearchIngredientsSource(
+                    ingredientApi = ingredientApi,
+                    query = query
+                )
+            }
+        ).flow
     }
-*/
 }

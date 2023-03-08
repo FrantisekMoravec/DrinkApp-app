@@ -1,4 +1,4 @@
-package com.example.drinkapp.presentation.screens.search
+package com.example.drinkapp.presentation.screens.search_drinks
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,13 +22,13 @@ import com.example.drinkapp.ui.theme.topAppBarBackgroundColor
 import com.example.drinkapp.ui.theme.topAppBarContentColor
 
 @Composable
-fun SearchTopBar(
+fun DrinksSearchTopBar(
     text: String,
     onTextChange: (String) -> Unit,
     onSearchClicked: (String) -> Unit,
     onCloseClicked: () -> Unit
 ) {
-    SearchWidget(
+    DrinksSearchWidget(
         text = text,
         onTextChange = onTextChange,
         onSearchClicked = onSearchClicked,
@@ -39,7 +39,7 @@ fun SearchTopBar(
 /** tato metoda říká jak bude vypadat lišta pro vyhledávání drinků ve fragmentu pro vyhledávání driků */
 
 @Composable
-fun SearchWidget(
+fun DrinksSearchWidget(
     text: String,
     onTextChange: (String) -> Unit,
     onSearchClicked: (String) -> Unit,
@@ -119,8 +119,8 @@ fun SearchWidget(
 
 @Preview
 @Composable
-fun SearchWidgetPreview() {
-    SearchWidget(
+fun DrinksSearchWidgetPreview() {
+    DrinksSearchWidget(
         text = "",
         onTextChange = {},
         onSearchClicked = {},

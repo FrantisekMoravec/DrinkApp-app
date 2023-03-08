@@ -1,4 +1,4 @@
-package com.example.drinkapp.presentation.screens.search
+package com.example.drinkapp.presentation.screens.search_drinks
 
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -13,22 +13,22 @@ import com.example.drinkapp.presentation.common.ListContent
 
 @ExperimentalCoilApi
 @Composable
-fun SearchScreen(
+fun DrinksSearchScreen(
     navController: NavHostController,
-    searchViewModel: SearchViewModel = hiltViewModel()
+    drinksSearchViewModel: DrinksSearchViewModel = hiltViewModel()
 ) {
-    val searchQuery by searchViewModel.searchQuery
-    val drinks = searchViewModel.searchedDrinks.collectAsLazyPagingItems()
+    val searchQuery by drinksSearchViewModel.searchQuery
+    val drinks = drinksSearchViewModel.searchedDrinks.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
-            SearchTopBar(
+            DrinksSearchTopBar(
                 text = searchQuery,
                 onTextChange = {
-                   searchViewModel.updateSearchQuery(query = it)
+                   drinksSearchViewModel.drinksUpdateSearchQuery(query = it)
                 },
                 onSearchClicked = {
-                                  searchViewModel.searchDrinks(query = it)
+                                  drinksSearchViewModel.searchDrinks(query = it)
                 },
                 onCloseClicked = {
                     navController.popBackStack()

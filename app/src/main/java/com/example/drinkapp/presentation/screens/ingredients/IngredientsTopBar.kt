@@ -1,6 +1,6 @@
-package com.example.drinkapp.presentation.screens.drinks
+package com.example.drinkapp.presentation.screens.ingredients
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.content.res.Configuration
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -11,13 +11,13 @@ import com.example.drinkapp.R
 import com.example.drinkapp.ui.theme.topAppBarBackgroundColor
 import com.example.drinkapp.ui.theme.topAppBarContentColor
 
-/** tato metoda vykresluje horní lištu fragmentu s drinky */
+/** tato metoda vykresluje horní lištu fragmentu s ingrediencemi */
 @Composable
-fun DrinksTopBar(onSearchClicked: () -> Unit) {
+fun IngredientsTopBar(onSearchClicked: () -> Unit) {
     TopAppBar(
         title = {
             Text(
-                text = "hledat drink",
+                text = "hledat ingredience",
                 color = MaterialTheme.colors.topAppBarContentColor
             )
         },
@@ -37,13 +37,13 @@ fun DrinksTopBar(onSearchClicked: () -> Unit) {
 /** náhled toho jak bude lišta vypadat */
 @Preview
 @Composable
-fun DrinksTopBarPreview() {
-    DrinksTopBar {}
+fun IngredientsTopBarPreview() {
+    IngredientsTopBar {}
 }
 
 /** náhled toho jak bude lišta vypadat v temném módu */
-@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DrinksTopBarDarkPreview() {
-    DrinksTopBar {}
+fun IngredientsTopBarDarkPreview() {
+    IngredientsTopBar {}
 }
