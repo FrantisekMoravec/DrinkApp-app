@@ -6,14 +6,20 @@ sealed class Screen(val route: String) {
     object Splash : Screen("splash_screen")
     //object Welcome : Screen("welcome_screen")
     //object Home : Screen("home_screen")
-    object Details : Screen("details_screen/{drinkId}") {
+    object DrinkDetails : Screen("drink_details_screen/{drinkId}") {
         fun passDrinkId(drinkId: Int): String {
-            return "details_screen/$drinkId"
+            return "drink_details_screen/$drinkId"
         }
     }
-    object Search : Screen("search_screen")
+    object DrinkSearch : Screen("drink_search_screen")
 
+    object IngredientSearch : Screen("ingredient_search_screen")
 
+    //object Main : Screen("main_screen")
 
-    object Main : Screen("main_screen")
+    object IngredientDetails: Screen("ingredient_details_screen"){
+        fun passIngredientId(ingredientId: Int): String{
+            return "ingredient_details_screen/$ingredientId"
+        }
+    }
 }

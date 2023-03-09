@@ -79,7 +79,7 @@ fun DrinksSearchWidget(
                         imageVector = Icons.Default.Search,
                         contentDescription = stringResource(R.string.search_icon),
                         tint = MaterialTheme.colors.topAppBarContentColor
-                        )
+                    )
                 }
             },
             trailingIcon = {

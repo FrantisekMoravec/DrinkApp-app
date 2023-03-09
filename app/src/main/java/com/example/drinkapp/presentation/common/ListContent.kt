@@ -116,7 +116,7 @@ fun DrinkItem(
     Box(modifier = Modifier
         .height(DRINK_ITEM_HEIGHT)
         .clickable {
-            navController.navigate(Screen.Details.passDrinkId(drinkId = drink.id))
+            navController.navigate(Screen.DrinkDetails.passDrinkId(drinkId = drink.id))
         },
         contentAlignment = Alignment.BottomStart
     ){

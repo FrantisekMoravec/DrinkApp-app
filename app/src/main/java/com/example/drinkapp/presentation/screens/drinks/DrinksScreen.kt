@@ -24,7 +24,7 @@ fun DrinksScreen(
         topBar = {
             DrinksTopBar (
                 onSearchClicked = {
-                    navController.navigate(Screen.Search.route)
+                    navController.navigate(Screen.DrinkSearch.route)
                 }
             )
         },

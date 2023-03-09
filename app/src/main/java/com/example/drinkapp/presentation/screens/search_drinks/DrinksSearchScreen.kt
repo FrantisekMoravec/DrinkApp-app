@@ -24,15 +24,9 @@ fun DrinksSearchScreen(
         topBar = {
             DrinksSearchTopBar(
                 text = searchQuery,
-                onTextChange = {
-                   drinksSearchViewModel.drinksUpdateSearchQuery(query = it)
-                },
-                onSearchClicked = {
-                                  drinksSearchViewModel.searchDrinks(query = it)
-                },
-                onCloseClicked = {
-                    navController.popBackStack()
-                }
+                onTextChange = {drinksSearchViewModel.drinksUpdateSearchQuery(query = it)},
+                onSearchClicked = {drinksSearchViewModel.searchDrinks(query = it) },
+                onCloseClicked = {navController.popBackStack()}
             )
         },
         content = {
