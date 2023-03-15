@@ -6,11 +6,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +32,9 @@ import com.example.drinkapp.presentation.components.ShimmerEffect
 import com.example.drinkapp.ui.theme.*
 import com.example.drinkapp.util.Constants.BASE_URL
 
-//TODO přidat checkbox
+// TODO přidat list zaškrtnutých ingrediencí a udělat do fragmentu drinků komponentu
+// TODO která se použije pokud budou nějaké drinky zašktrnuté pokud žádné zaškrtnuté
+// TODO nebudou použije se komponenta pro všechny ingredience
 
 @ExperimentalCoilApi
 @Composable
@@ -82,7 +83,7 @@ fun handlePagingResult(
             }
 
             error != null ->{
-                EmptyScreen(error = error)
+                EmptyScreen(error = error, ingredients = ingredients)
                 false
             }
 
@@ -102,6 +103,7 @@ fun IngredientItem(
     ingredient: Ingredient,
     navController: NavHostController
 ) {
+    val checkedState = remember{ mutableStateOf(false) }
     val painter = rememberImagePainter(data = "${BASE_URL}${ingredient.image}"){
         placeholder(R.drawable.ic_placeholder)
         error(R.drawable.ic_placeholder)
@@ -162,6 +164,12 @@ fun IngredientItem(
                     overflow = TextOverflow.Ellipsis
                 )
             }
+            Checkbox(
+                modifier = Modifier.padding(start = 300.dp, top = 40.dp),
+                checked = checkedState.value,
+                onCheckedChange = {checkedState.value = it}
+            )
+
         }
     }
 

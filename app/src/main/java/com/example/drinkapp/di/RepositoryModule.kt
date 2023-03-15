@@ -4,6 +4,7 @@ import com.example.drinkapp.data.repository.Repository
 import com.example.drinkapp.domain.use_cases.UseCases
 import com.example.drinkapp.domain.use_cases.get_all_drinks.GetAllDrinksUseCase
 import com.example.drinkapp.domain.use_cases.get_all_ingredients.GetAllIngredientsUseCase
+import com.example.drinkapp.domain.use_cases.get_selected_drink.GetSelectedDrinkUseCase
 import com.example.drinkapp.domain.use_cases.search_drinks.SearchDrinksUseCase
 import com.example.drinkapp.domain.use_cases.search_ingredients.SearchIngredientsUseCase
 import dagger.Module
@@ -24,7 +25,9 @@ object RepositoryModule {
             searchDrinksUseCase = SearchDrinksUseCase(repository),
 
             getAllIngredientsUseCase = GetAllIngredientsUseCase(repository),
-            searchIngredientsUseCase = SearchIngredientsUseCase(repository)
+            searchIngredientsUseCase = SearchIngredientsUseCase(repository),
+
+            getSelectedDrinkUseCase = GetSelectedDrinkUseCase(repository)
         )
     }
 

@@ -5,6 +5,8 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -20,15 +22,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.paging.compose.LazyPagingItems
 import com.example.drinkapp.R
+import com.example.drinkapp.domain.model.Drink
+import com.example.drinkapp.domain.model.Ingredient
 import com.example.drinkapp.ui.theme.NETWORK_ERROR_ICON_HEIGHT
 import com.example.drinkapp.ui.theme.SMALL_PADDING
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 /** metoda pro vykreslení obrazovky bez obsahu */
 @Composable
-fun EmptyScreen(error: LoadState.Error? = null) {
+fun EmptyScreen(
+    error: LoadState.Error? = null,
+    drinks: LazyPagingItems<Drink>? = null,
+    ingredients: LazyPagingItems<Ingredient>? = null
+) {
 
     /** ikona a hláška pro obrazovku s vyhledáváním drinků podle jména */
     var message by remember {
@@ -56,35 +67,63 @@ fun EmptyScreen(error: LoadState.Error? = null) {
         startAnimation = true
     }
 
-    EmptyContent(alphaAnim = alphaAnim, icon = icon, message = message)
+    EmptyContent(
+        alphaAnim = alphaAnim,
+        icon = icon,
+        message = message,
+        drinks = drinks,
+        ingredients = ingredients,
+        error = error
+    )
 }
 
 /** vykreslení textu a ikony */
 @Composable
-fun EmptyContent(alphaAnim: Float, icon: Int, message: String) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Icon(
+fun EmptyContent(
+    alphaAnim: Float,
+    icon: Int,
+    message: String,
+    drinks: LazyPagingItems<Drink>? = null,
+    ingredients: LazyPagingItems<Ingredient>? = null,
+    error: LoadState.Error? = null
+) {
+    var isRefreshing by remember { mutableStateOf(false) }
+
+    SwipeRefresh(
+        swipeEnabled = error != null,
+        state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
+        onRefresh = {
+            isRefreshing = true
+            drinks?.refresh()
+            ingredients?.refresh()
+            isRefreshing = false
+        }) {
+        Column(
             modifier = Modifier
-                .alpha(alpha = alphaAnim)
-                .size(NETWORK_ERROR_ICON_HEIGHT),
-            painter = painterResource(id = icon),
-            contentDescription = stringResource(R.string.network_error_icon),
-            tint = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
-        )
-        Text(
-            modifier = Modifier
-                .alpha(alpha = alphaAnim)
-                .padding(top = SMALL_PADDING),
-            text = message,
-            color = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Medium,
-            fontSize = MaterialTheme.typography.subtitle1.fontSize
-        )
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                modifier = Modifier
+                    .alpha(alpha = alphaAnim)
+                    .size(NETWORK_ERROR_ICON_HEIGHT),
+                painter = painterResource(id = icon),
+                contentDescription = stringResource(R.string.network_error_icon),
+                tint = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
+            )
+            Text(
+                modifier = Modifier
+                    .alpha(alpha = alphaAnim)
+                    .padding(top = SMALL_PADDING),
+                text = message,
+                color = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Medium,
+                fontSize = MaterialTheme.typography.subtitle1.fontSize
+            )
+        }
     }
 }
 /** podle chyby vybere zprávu která se zobrazí uživateli */

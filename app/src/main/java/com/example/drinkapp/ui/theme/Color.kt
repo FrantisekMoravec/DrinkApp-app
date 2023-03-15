@@ -3,6 +3,8 @@ package com.example.drinkapp.ui.theme
 import androidx.compose.material.Colors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.DarkGray
+
 //TODO doladit barvy
 /** tento soubor je seznam použitých barev knihovnou compose */
 
@@ -40,3 +42,7 @@ val Colors.bottomNavUnselectedItemsColor: Color
 val Colors.bottomNavSelectedItemColor: Color
     @Composable
     get() = if (isLight) LightBlue else ShimmerMediumGray
+
+val Colors.titleColor
+    @Composable
+    get() = if (isLight) DarkGray else LightGray

@@ -86,7 +86,7 @@ fun handlePagingResult(
             }
             /** pokud nastane chyba zobrazí se fragment EmptyScreen a na něm příslušná chyba */
             error != null ->{
-                EmptyScreen(error = error)
+                EmptyScreen(error = error, drinks = drinks)
                 false
             }
 
