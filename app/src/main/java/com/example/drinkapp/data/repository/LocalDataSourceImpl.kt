@@ -8,6 +8,7 @@ class LocalDataSourceImpl(
     drinkDatabase: DrinkDatabase
 ): LocalDataSource {
     private val drinkDao = drinkDatabase.drinkDao()
+    private val drinksMadeByUserDao = drinkDatabase
 
     override suspend fun getSelectedDrink(drinkId: Int): Drink {
         return drinkDao.getSelectedDrink(drinkId = drinkId)

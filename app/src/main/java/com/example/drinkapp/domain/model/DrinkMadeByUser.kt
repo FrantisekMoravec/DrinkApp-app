@@ -4,17 +4,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.drinkapp.util.Constants.DRINK_DATABASE_TABLE
 
-/** entita drinku */
-
-@kotlinx.serialization.Serializable
+/** entita drinku vytvořeného uživatelem */
 @Entity(tableName = DRINK_DATABASE_TABLE)
-data class Drink(
-    @PrimaryKey(autoGenerate = false)
+data class DrinkMadeByUser (
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,
-    val image: String,
+    val image: Int?, //TODO možná bude potřeba změnit datový typ
     val description: String,
-    val rating: Double,
-    val ingredients: List<String>,
+    val ingredients: String,
     val tutorial: String
 )

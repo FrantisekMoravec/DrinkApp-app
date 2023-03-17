@@ -22,4 +22,6 @@ object Constants {
     //TODO změnit velikost stránky
     const val DRINK_ITEMS_PER_PAGE = 3
     const val INGREDIENT_ITEMS_PER_PAGE = 3
+
+    const val PREFERENCE_NAME = "drinks_made_by_user_preferences"
 }
