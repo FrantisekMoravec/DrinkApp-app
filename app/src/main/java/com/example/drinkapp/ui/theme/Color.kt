@@ -46,3 +46,7 @@ val Colors.bottomNavSelectedItemColor: Color
 val Colors.titleColor
     @Composable
     get() = if (isLight) DarkGray else LightGray
+
+val Colors.statusBarColor
+    @Composable
+    get() = if (isLight) DarkBlue else Color.Black

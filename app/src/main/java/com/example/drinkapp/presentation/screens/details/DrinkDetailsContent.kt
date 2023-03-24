@@ -1,5 +1,6 @@
 package com.example.drinkapp.presentation.screens.details
 
+import android.graphics.Color.parseColor
 import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
@@ -9,8 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -38,15 +38,31 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun DrinkDetailsContent(
     navController: NavHostController,
-    selectedDrink: Drink?
+    selectedDrink: Drink?,
+    colors: Map<String, String>
 ) {
+    var vibrant by remember { mutableStateOf("#000000") }
+    var darkVibrant by remember { mutableStateOf("#000000") }
+    var onDarkVibrant by remember { mutableStateOf("#ffffff") }
+
+    /** když se změní vybraný drink změní se i barvy které používáme */
+    LaunchedEffect(key1 = selectedDrink) {
+        vibrant = colors["vibrant"]!!
+        darkVibrant = colors["darkVibrant"]!!
+        onDarkVibrant = colors["onDarkVibrant"]!!
+    }
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(
+        color = Color(parseColor(darkVibrant))
+    )
+
     /** spodní výsuvná lišta bude vysunutá když na drink klikneme */
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Expanded)
     )
 
     val currentSheetFraction = scaffoldState.currentSheetFraction
-    Log.d("Fraction NEW", currentSheetFraction.toString())
+    //Log.d("Fraction NEW", currentSheetFraction.toString())
 
     val radiusAnim by animateDpAsState(
         targetValue =
@@ -65,15 +81,21 @@ fun DrinkDetailsContent(
         scaffoldState = scaffoldState,
         sheetPeekHeight = MIN_SHEET_HEIGHT,
         sheetContent = {
-            selectedDrink?.let { BottomSheetContent(selectedDrink = it) }
+            selectedDrink?.let {
+                BottomSheetContent(
+                    selectedDrink = it,
+                    sheetBackgroundColor = Color(parseColor(darkVibrant)),
+                    contentColor = Color(parseColor(onDarkVibrant))
+                )
+            }
         },
         content = {
             selectedDrink?.let { drink ->
                 BackgroundContent(
                     drinkImage = drink.image,
                     imageFraction = currentSheetFraction,
+                    backgroundColor = Color(parseColor(darkVibrant)),
                     onCloseClicked = {
-                        //TODO nefunguje vracení se do drinků/vyhledávání drinků přes cancel button
                         navController.popBackStack()
                     }
                 )

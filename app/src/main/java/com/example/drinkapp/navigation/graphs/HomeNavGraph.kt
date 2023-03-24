@@ -10,7 +10,6 @@ import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.navigation.BottomBarScreen
 import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.screens.details.DrinkDetailsScreen
-import com.example.drinkapp.presentation.screens.details.IngredientDetailsScreen
 import com.example.drinkapp.presentation.screens.assistant.AssistantScreen
 import com.example.drinkapp.presentation.screens.drinks.DrinksScreen
 import com.example.drinkapp.presentation.screens.ingredients.IngredientsScreen
@@ -65,7 +64,7 @@ fun HomeNavGraph(navController: NavHostController) {
         ) {
             DrinkDetailsScreen(navController = navController)
         }
-
+/*
         composable(
             route = Screen.IngredientDetails.route,
             arguments = listOf(navArgument(INGREDIENT_DETAILS_ARGUMENT_KEY){
@@ -74,34 +73,6 @@ fun HomeNavGraph(navController: NavHostController) {
         ) {
             IngredientDetailsScreen(navController = navController)
         }
-
-    }
-}
-
-/*
-fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
-    navigation(
-        route = Graph.DETAILS,
-        startDestination = DetailsScreen.Information.route
-    ) {
-        composable(route = DetailsScreen.Information.route) {
-            ScreenContent(name = DetailsScreen.Information.route) {
-                navController.navigate(DetailsScreen.Overview.route)
-            }
-        }
-        composable(route = DetailsScreen.Overview.route) {
-            ScreenContent(name = DetailsScreen.Overview.route) {
-                navController.popBackStack(
-                    route = DetailsScreen.Information.route,
-                    inclusive = false
-                )
-            }
-        }
-    }
-}
-
-sealed class DetailsScreen(val route: String) {
-    object Information : DetailsScreen(route = "INFORMATION")
-    object Overview : DetailsScreen(route = "OVERVIEW")
-}
 */
+    }
+}

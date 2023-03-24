@@ -1,5 +1,6 @@
 package com.example.drinkapp.presentation.screens.search_ingredients
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -8,6 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.presentation.common.ListIngredients
+import com.example.drinkapp.ui.theme.statusBarColor
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @ExperimentalCoilApi
 @Composable
@@ -17,6 +20,11 @@ fun IngredientsSearchScreen(
 ) {
     val searchQuery by ingredientsSearchViewModel.searchQuery
     val ingredients = ingredientsSearchViewModel.searchedIngredients.collectAsLazyPagingItems()
+
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(
+        color = MaterialTheme.colors.statusBarColor
+    )
 
     Scaffold(
         topBar = {
