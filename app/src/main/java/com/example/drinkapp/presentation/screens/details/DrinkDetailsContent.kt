@@ -110,7 +110,8 @@ fun BottomSheetContent(
     sheetBackgroundColor: Color = MaterialTheme.colors.surface,
     contentColor: Color = MaterialTheme.colors.titleColor
     ) {
-    Column(modifier = Modifier
+    Column(
+        modifier = Modifier
         .background(sheetBackgroundColor)
         .padding(all = LARGE_PADDING)
     ) {
@@ -146,7 +147,9 @@ fun BottomSheetContent(
             maxLines = DRINK_DESCRIPTION_MAX_LINES
         )
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = MEDIUM_PADDING),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             ListOfIngredients(
@@ -154,6 +157,23 @@ fun BottomSheetContent(
                 textColor = contentColor
             )
         }
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            //extrakce z xml blbne proto je to takhle
+            text = "Jak si drink namíchat",
+            color = contentColor,
+            fontSize = MaterialTheme.typography.subtitle1.fontSize,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            modifier = Modifier
+                .alpha(ContentAlpha.medium)
+                .padding(bottom = SMALL_PADDING),
+            text = selectedDrink.tutorial,
+            color = contentColor,
+            fontSize = MaterialTheme.typography.body1.fontSize,
+            maxLines = DRINK_DESCRIPTION_MAX_LINES
+        )
     }
 }
 

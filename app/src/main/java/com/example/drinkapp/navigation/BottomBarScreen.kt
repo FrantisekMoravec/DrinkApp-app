@@ -11,13 +11,11 @@ sealed class BottomBarScreen (
     val route: String,
     val icon: ImageVector
 ){
-    //TODO změnit ikonu na ikonu drinku
     object Drinks : BottomBarScreen(
         route = "DRINKS",
         icon = Icons.Default.Home
     )
 
-    //TODO změnit ikonu na ikonu ingredience
     object Ingredients : BottomBarScreen(
         route = "INGREDIENTS",
         icon = Icons.Default.Search

@@ -14,4 +14,4 @@ data class UseCases (
     val searchIngredientsUseCase: SearchIngredientsUseCase,
 
     val getSelectedDrinkUseCase: GetSelectedDrinkUseCase
-        )
+)

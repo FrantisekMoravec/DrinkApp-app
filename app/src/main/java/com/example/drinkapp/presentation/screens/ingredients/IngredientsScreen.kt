@@ -20,8 +20,6 @@ fun IngredientsScreen(
     /** vybere ingredience z viewmodelu */
     val allIngredients = ingredientsViewModel.getAllIngredients.collectAsLazyPagingItems()
 
-    //TODO doklepat podle drinksScreenu
-
     Scaffold(
         topBar = {
             IngredientsTopBar (

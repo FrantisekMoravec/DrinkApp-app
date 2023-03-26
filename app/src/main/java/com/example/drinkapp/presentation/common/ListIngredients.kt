@@ -112,12 +112,13 @@ fun IngredientItem(
     Box(modifier = Modifier
         .height(INGREDIENT_ITEM_HEIGHT)
         .fillMaxWidth()
+            /*
         .clickable {
             navController.navigate(Screen.IngredientDetails.passIngredientId(ingredientId = ingredient.id))
-        },
+        }
+        */,
         contentAlignment = Alignment.BottomStart
     ){
-
 
     Surface(
         shape = RoundedCornerShape(size = LARGE_PADDING),

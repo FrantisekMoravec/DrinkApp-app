@@ -8,4 +8,5 @@
     <string name="close_icon">Close Icon</string>
     <string name="ingredient_image">Ingredient Image</string>
     <string name="about_drink">O drinku</string>
+    <string name="how_to_make_a_drink">Jak si drink namíchat</string>
 </resources>

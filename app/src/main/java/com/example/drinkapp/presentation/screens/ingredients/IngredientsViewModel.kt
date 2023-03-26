@@ -11,4 +11,5 @@ class IngredientsViewModel @Inject constructor(
     useCases: UseCases
 ): ViewModel() {
     val getAllIngredients = useCases.getAllIngredientsUseCase()
+
 }
