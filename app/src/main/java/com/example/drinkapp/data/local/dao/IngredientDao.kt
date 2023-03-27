@@ -22,5 +22,11 @@ interface IngredientDao {
 
     @Query("DELETE FROM ingredient_table")
     suspend fun deleteAllIngredients()
+/*
+    @Query("SELECT * FROM ingredient_table WHERE id=:ingredientId")
+    suspend fun checkSelectedIngredient(ingredientId: Int): Ingredient
 
+    @Query("SELECT * FROM ingredient_table WHERE id=:ingredientId")
+    suspend fun uncheckSelectedIngredient(ingredientId: Int): Ingredient
+ */
 }

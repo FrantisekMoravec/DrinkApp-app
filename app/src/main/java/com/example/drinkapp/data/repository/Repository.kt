@@ -36,8 +36,11 @@ class Repository @Inject constructor(
     suspend fun getSelectedDrink(drinkId: Int): Drink{
         return local.getSelectedDrink(drinkId = drinkId)
     }
-
-
+/*
+    suspend fun getSelectedIngredient(ingredientId: Int): Ingredient{
+        return local.getSelectedIngredient(ingredientId = ingredientId)
+    }
+*/
 /*
     fun getSelectedDrinkMadeByUser(id: Int): Flow<DrinkMadeByUser> {
         return drinkMadeByUserDao.getSelectedDrinkMadeByUser(id = id)

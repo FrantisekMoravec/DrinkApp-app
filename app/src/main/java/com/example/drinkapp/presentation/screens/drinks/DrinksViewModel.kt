@@ -11,4 +11,6 @@ class DrinksViewModel @Inject constructor(
     useCases: UseCases
 ): ViewModel() {
     val getAllDrinks = useCases.getAllDrinksUseCase()
+    //TODO podle tohohle upravit fragment - když bude něco zaškrtnutýho dát tam tuhle verzi
+    //val getFilteredDrinksByCheckedIngredients = useCases.getFilteredDrinksByCheckedIngredientsUseCase()
 }

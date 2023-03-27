@@ -14,4 +14,6 @@ data class Ingredient (
     val name: String,
     val image: String,
     val description: String
+    //,
+    //var checked: Boolean?
 )

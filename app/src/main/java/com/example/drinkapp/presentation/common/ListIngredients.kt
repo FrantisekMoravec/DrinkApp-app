@@ -44,6 +44,8 @@ fun ListIngredients(
 ) {
     val result = handlePagingResult(ingredients = ingredients)
 
+    //var checkedIngredients = listOf<Int>()
+
     if (result){
         LazyColumn(
             contentPadding = PaddingValues(all = SMALL_PADDING),
@@ -170,7 +172,17 @@ fun IngredientItem(
                 checked = checkedState.value,
                 onCheckedChange = {checkedState.value = it}
             )
-
+/*
+            Checkbox(
+                modifier = Modifier.padding(start = 300.dp, top = 40.dp),
+                checked = ingredient.checked!!,
+                onCheckedChange = {
+                    checkedState.value = it
+                    ingredient.checked = checkedState.value
+                    //checkedIngredients.add()
+                }
+            )
+*/
         }
     }
 
@@ -188,6 +200,8 @@ fun IngredientItemPreview() {
                 name = "Vodka",
                 image = "",
                 description = "Vodka je tvrdý bezbarvý alkoholický nápoj oblíbený po celém světě. Kvalita a chuť vodky se mohou lišit vlivem různých faktorů. Jedná se o to, že tento alkoholický nápoj se vyrábí z obilí, jehož specifické složení určuje výrobce. Některé druhy namísto obilí obsahují destilaci z brambor."
+            //,
+            //    checked = false
             ),
         navController = rememberNavController()
     )
@@ -203,6 +217,8 @@ fun IngredientItemDarkPreview() {
             name = "Vodka",
             image = "",
             description = "Vodka je tvrdý bezbarvý alkoholický nápoj oblíbený po celém světě. Kvalita a chuť vodky se mohou lišit vlivem různých faktorů. Jedná se o to, že tento alkoholický nápoj se vyrábí z obilí, jehož specifické složení určuje výrobce. Některé druhy namísto obilí obsahují destilaci z brambor."
+            //,
+            //checked = false
         ),
         navController = rememberNavController()
     )
