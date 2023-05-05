@@ -11,6 +11,7 @@ import com.example.drinkapp.navigation.graphs.RootNavigationGraph
 import com.example.drinkapp.ui.theme.DrinkAppTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.appcompat.app.AppCompatActivity
 
 /** v této aktivitě se zobrazuje všechen obsah přes fragmenty */
 

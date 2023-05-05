@@ -1,9 +1,8 @@
 package com.example.drinkapp.data.repository
 
 import androidx.paging.PagingData
-import com.example.drinkapp.data.local.dao.DrinkMadeByUserDao
+import androidx.paging.PagingSource
 import com.example.drinkapp.domain.model.Drink
-import com.example.drinkapp.domain.model.DrinkMadeByUser
 import com.example.drinkapp.domain.model.Ingredient
 import com.example.drinkapp.domain.repository.LocalDataSource
 import com.example.drinkapp.domain.repository.RemoteDataSource
@@ -12,9 +11,7 @@ import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val remote: RemoteDataSource,
-    private val local: LocalDataSource/*,
-    private val drinkMadeByUserDao: DrinkMadeByUserDao
-    */
+    private val local: LocalDataSource
 ){
 
     fun getAllDrinks(): Flow<PagingData<Drink>>{
@@ -36,6 +33,21 @@ class Repository @Inject constructor(
     suspend fun getSelectedDrink(drinkId: Int): Drink{
         return local.getSelectedDrink(drinkId = drinkId)
     }
+
+    suspend fun getAllIngredientsMadeByUser(madeByUser: Boolean): Ingredient {
+        return local.getAllIngredientsMadeByUser(madeByUser = madeByUser)
+    }
+
+    fun getDrinksContainingIngredients(ingredientNames: List<String>): Flow<PagingData<Drink>> {
+        return local.getDrinksContainingIngredients(ingredientNames = ingredientNames)
+    }
+}
+/*
+    suspend fun getSelectedIngredients(ingredientIds: List<Int>): List<Ingredient>{
+        return local.getSelectedIngredients(ingredientIds = ingredientIds)
+    }
+*/
+
 /*
     suspend fun getSelectedIngredient(ingredientId: Int): Ingredient{
         return local.getSelectedIngredient(ingredientId = ingredientId)
@@ -62,4 +74,3 @@ class Repository @Inject constructor(
         return drinkMadeByUserDao.searchDrinkMadeByUser(searchDrinkMadeByUser = query)
     }
 */
-}

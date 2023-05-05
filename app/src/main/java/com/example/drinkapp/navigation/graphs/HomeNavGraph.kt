@@ -10,14 +10,15 @@ import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.navigation.BottomBarScreen
 import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.screens.details.DrinkDetailsScreen
-import com.example.drinkapp.presentation.screens.assistant.AssistantScreen
+import com.example.drinkapp.presentation.screens.details.assistant.AssistantScreen
 import com.example.drinkapp.presentation.screens.drinks.DrinksScreen
+import com.example.drinkapp.presentation.screens.ingredients.FilteredDrinksScreen
 import com.example.drinkapp.presentation.screens.ingredients.IngredientsScreen
 import com.example.drinkapp.presentation.screens.search_drinks.DrinksSearchScreen
 import com.example.drinkapp.presentation.screens.search_ingredients.IngredientsSearchScreen
 import com.example.drinkapp.presentation.screens.settings.SettingsScreen
 import com.example.drinkapp.util.Constants.DRINK_DETAILS_ARGUMENT_KEY
-import com.example.drinkapp.util.Constants.INGREDIENT_DETAILS_ARGUMENT_KEY
+import com.example.drinkapp.util.Constants.FILTERED_DRINKS_ARGUMENT_KEY
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 /** tato metoda slouží k navigaci mezi fragmenty a díky NavHostControlleru má backstack */
@@ -64,6 +65,36 @@ fun HomeNavGraph(navController: NavHostController) {
         ) {
             DrinkDetailsScreen(navController = navController)
         }
+
+        composable(
+            route = Screen.FilteredDrinks.route,
+            deepLinks = listOf(navDeepLink {
+                uriPattern = "android-app://androidx.navigation/filtered_drinks_screen/{ingredients}"
+            }),
+            arguments = listOf(
+                navArgument("ingredients") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            )
+        ) { backStackEntry ->
+            val ingredients = backStackEntry.arguments?.getString("ingredients")?.split(",") ?: listOf()
+            FilteredDrinksScreen(navController = navController, ingredients = ingredients)
+        }
+
+/*
+        composable(
+            route = Screen.FilteredDrinks.route,
+            arguments = listOf(navArgument("ingredients") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val ingredients = backStackEntry.arguments?.getString("ingredients")?.split(",") ?: emptyList()
+            FilteredDrinksScreen(navController = navController, ingredients = ingredients)
+        }
+        */
+    }
+}
+
+
 /*
         composable(
             route = Screen.IngredientDetails.route,
@@ -74,5 +105,3 @@ fun HomeNavGraph(navController: NavHostController) {
             IngredientDetailsScreen(navController = navController)
         }
 */
-    }
-}

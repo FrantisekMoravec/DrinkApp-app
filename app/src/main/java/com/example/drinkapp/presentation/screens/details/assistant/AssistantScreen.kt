@@ -1,4 +1,4 @@
-package com.example.drinkapp.presentation.screens.assistant
+package com.example.drinkapp.presentation.screens.details.assistant
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

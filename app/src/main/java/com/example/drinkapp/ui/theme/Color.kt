@@ -50,3 +50,7 @@ val Colors.titleColor
 val Colors.statusBarColor
     @Composable
     get() = if (isLight) DarkBlue else Color.Black
+
+val Colors.drinksScreenBackgroundColor
+    @Composable
+    get() = if (isLight) DarkestBlue else ShimmerDarkGray

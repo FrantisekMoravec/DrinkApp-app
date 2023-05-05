@@ -1,7 +1,5 @@
 package com.example.drinkapp.presentation.common
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +11,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,22 +30,24 @@ import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
+import com.example.drinkapp.data.local.dao.DrinkImageDao
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.components.RatingWidget
 import com.example.drinkapp.presentation.components.ShimmerEffect
 import com.example.drinkapp.ui.theme.*
-import com.example.drinkapp.util.Constants.BASE_URL
+import com.example.drinkapp.util.Constants
 
 /** tento soubor slouží k zobrazování obsahu */
 
 @ExperimentalCoilApi
 @Composable
-fun ListContent(
+fun ListFilteredDrinks(
     drinks: LazyPagingItems<Drink>,
-    navController: NavHostController
+    navController: NavHostController,
+    selectedIngredients: List<String>
 ) {
-    val result = handlePagingResult(drinks = drinks)
+    val result = FilteredDrinksHandlePagingResult(drinks = drinks)
 
     if (result){
         LazyColumn(
@@ -61,7 +63,10 @@ fun ListContent(
                 }
             ){ drink ->
                 drink?.let {
-                    DrinkItem(drink = it, navController = navController)
+                    // Filtrujte nápoje podle vybraných ingrediencí
+                    if (drink.ingredients.intersect(selectedIngredients).isNotEmpty()) {
+                        FilteredDrinkItem(drink = it, navController = navController)
+                    }
                 }
             }
         }
@@ -70,7 +75,7 @@ fun ListContent(
 
 /** tato metoda říká co se má stát podle výsledků načítání */
 @Composable
-fun handlePagingResult(
+fun FilteredDrinksHandlePagingResult(
     drinks: LazyPagingItems<Drink>
 ): Boolean {
     drinks.apply {
@@ -106,16 +111,34 @@ fun handlePagingResult(
 
 @ExperimentalCoilApi
 @Composable
-fun DrinkItem(
+fun FilteredDrinkItem(
     drink: Drink,
     navController: NavHostController
+    //,
+    //drinkImageDao: DrinkImageDao
 ) {
-    /** pokud se to půjde bude použit obrázek ze serveru použije se obrázek drinku */
+    /*
+    val localImagePath by produceState<String?>(initialValue = null, key1 = drink.id) {
+        val drinkImage = drinkImageDao.getDrinkImage(drink.id)
+        value = drinkImage?.localImagePath
+    }
+     */
+    /** pokud se to půjde bude použit obrázek z lokální databáze, tak se použije jinak se použije obrázek ze serveru */
     /** pokud to nebude možné bude místo něj použitý placeholder */
-    val painter = rememberImagePainter(data = "$BASE_URL${drink.image}"){
+    /*
+    val painter = rememberImagePainter(
+        data = localImagePath ?: "${Constants.BASE_URL}${drink.image}",
+        builder = {
+            placeholder(R.drawable.ic_placeholder)
+            error(R.drawable.ic_placeholder)
+        }
+    )
+    */
+    val painter = rememberImagePainter(data = "${Constants.BASE_URL}${drink.image}"){
         placeholder(R.drawable.ic_placeholder)
         error(R.drawable.ic_placeholder)
     }
+
 
     Box(modifier = Modifier
         .background(MaterialTheme.colors.drinksScreenBackgroundColor)
@@ -128,7 +151,6 @@ fun DrinkItem(
         Surface(shape = RoundedCornerShape(size = LARGE_PADDING)){
             Image(
                 modifier = Modifier
-                    //.fillMaxSize()
                     .fillMaxWidth(),
                 painter = painter,
                 contentDescription = stringResource(R.string.drink_image),
@@ -184,54 +206,4 @@ fun DrinkItem(
             }
         }
     }
-}
-
-/** tato metoda ukazuje náhled jak bude vypadat DrinkItem pokud se nenačte obrázek driku */
-
-@ExperimentalCoilApi
-@Preview
-@Composable
-fun DrinkItemPreview() {
-    DrinkItem(
-        drink = Drink(
-            id = 1,
-            name = "B52",
-            image = "",
-            description = "B52 drink je třívrstvý míchaný nápoj nazvaný podle amerického bombardéru používaného ve válce ve Vietnamu. Zvláštností tohoto drinku je, že se podává doslova hořící.",
-            rating = 4.0,
-            ingredients = listOf(
-                "Kahlúa (3 cl)",
-                "Baileys (2 cl)",
-                "Grand Marnier nebo Absinth nebo Stroh (3 cl)"
-            ),
-            tutorial = "Ingredience opatrně nalijte do panáku skrze kávovou lžičku, tak, aby zůstaly nepromíchané. A to přesně v tomto pořadí: 1. likér Kahlúa, 2. likér Baileys, a nakonec 3. Grand Marnier či Absinth nebo Stroh . Těsně před konzumací zapálíme zapalovačem. Podáváme s tlustým brčkem.",
-            madeByUser = false
-        ),
-        navController = rememberNavController()
-    )
-}
-
-/** tato metoda má dělá to samé co DrinkItemPreview ale pro zařízení v tmavém módu */
-
-@ExperimentalCoilApi
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun DrinkItemDarkPreview() {
-    DrinkItem(
-        drink = Drink(
-            id = 1,
-            name = "B52",
-            image = "",
-            description = "B52 drink je třívrstvý míchaný nápoj nazvaný podle amerického bombardéru používaného ve válce ve Vietnamu. Zvláštností tohoto drinku je, že se podává doslova hořící.",
-            rating = 4.0,
-            ingredients = listOf(
-                "Kahlúa (3 cl)",
-                "Baileys (2 cl)",
-                "Grand Marnier nebo Absinth nebo Stroh (3 cl)"
-            ),
-            tutorial = "Ingredience opatrně nalijte do panáku skrze kávovou lžičku, tak, aby zůstaly nepromíchané. A to přesně v tomto pořadí: 1. likér Kahlúa, 2. likér Baileys, a nakonec 3. Grand Marnier či Absinth nebo Stroh . Těsně před konzumací zapálíme zapalovačem. Podáváme s tlustým brčkem.",
-            madeByUser = false
-        ),
-        navController = rememberNavController()
-    )
 }

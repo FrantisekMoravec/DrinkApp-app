@@ -1,12 +1,22 @@
 package com.example.drinkapp.presentation.common
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Checkbox
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,10 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
@@ -27,24 +36,23 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.Ingredient
-import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.components.ShimmerEffect
-import com.example.drinkapp.ui.theme.*
+import com.example.drinkapp.presentation.screens.filtered_drinks.FilteredDrinksViewModel
+import com.example.drinkapp.ui.theme.INGREDIENT_ITEM_HEIGHT
+import com.example.drinkapp.ui.theme.LARGE_PADDING
+import com.example.drinkapp.ui.theme.MEDIUM_PADDING
+import com.example.drinkapp.ui.theme.SMALL_PADDING
+import com.example.drinkapp.ui.theme.topAppBarContentColor
 import com.example.drinkapp.util.Constants.BASE_URL
-
-// TODO přidat list zaškrtnutých ingrediencí a udělat do fragmentu drinků komponentu
-// TODO která se použije pokud budou nějaké drinky zašktrnuté pokud žádné zaškrtnuté
-// TODO nebudou použije se komponenta pro všechny ingredience
 
 @ExperimentalCoilApi
 @Composable
 fun ListIngredients(
     ingredients: LazyPagingItems<Ingredient>,
-    navController: NavHostController
+    navController: NavHostController,
+    filteredDrinksViewModel: FilteredDrinksViewModel = hiltViewModel()
 ) {
     val result = handlePagingResult(ingredients = ingredients)
-
-    //var checkedIngredients = listOf<Int>()
 
     if (result){
         LazyColumn(
@@ -56,9 +64,15 @@ fun ListIngredients(
                 key = { ingredient ->
                     ingredient.id
                 }
-            ){ ingredient ->
+            ) { ingredient ->
                 ingredient?.let {
-                    IngredientItem(ingredient = it, navController = navController)
+                    IngredientItem(
+                        ingredient = it,
+                        navController = navController,
+                        onCheckboxChanged = { ingredient, isChecked ->
+                            filteredDrinksViewModel.updateSelectedIngredients(ingredient, isChecked)
+                        }
+                    )
                 }
             }
         }
@@ -103,8 +117,10 @@ fun handlePagingResult(
 @Composable
 fun IngredientItem(
     ingredient: Ingredient,
-    navController: NavHostController
+    navController: NavHostController,
+    onCheckboxChanged: (Ingredient, Boolean) -> Unit
 ) {
+    var checkedIngredients = remember {mutableListOf<Ingredient>()}
     val checkedState = remember{ mutableStateOf(false) }
     val painter = rememberImagePainter(data = "${BASE_URL}${ingredient.image}"){
         placeholder(R.drawable.ic_placeholder)
@@ -114,11 +130,11 @@ fun IngredientItem(
     Box(modifier = Modifier
         .height(INGREDIENT_ITEM_HEIGHT)
         .fillMaxWidth()
-            /*
         .clickable {
-            navController.navigate(Screen.IngredientDetails.passIngredientId(ingredientId = ingredient.id))
+            //navController.navigate(Screen.IngredientDetails.passIngredientId(ingredientId = ingredient.id))
+            //Log.d("ingredient name", ingredient.name + " - ingredient clicked")
         }
-        */,
+        ,
         contentAlignment = Alignment.BottomStart
     ){
 
@@ -160,8 +176,8 @@ fun IngredientItem(
             ) {
                 Text(
                     text = ingredient.name,
-                    //color = MaterialTheme.colors.topAppBarContentColor,
-                    color = Color.Black,
+                    color = MaterialTheme.colors.topAppBarContentColor,
+                    //color = Color.Black,
                     fontSize = MaterialTheme.typography.h5.fontSize,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -170,26 +186,16 @@ fun IngredientItem(
             Checkbox(
                 modifier = Modifier.padding(start = 300.dp, top = 40.dp),
                 checked = checkedState.value,
-                onCheckedChange = {checkedState.value = it}
-            )
-/*
-            Checkbox(
-                modifier = Modifier.padding(start = 300.dp, top = 40.dp),
-                checked = ingredient.checked!!,
-                onCheckedChange = {
-                    checkedState.value = it
-                    ingredient.checked = checkedState.value
-                    //checkedIngredients.add()
+                onCheckedChange = { isChecked ->
+                    checkedState.value = isChecked
+                    onCheckboxChanged(ingredient, isChecked)
                 }
             )
-*/
         }
     }
-
-
     }
 }
-
+/*
 @ExperimentalCoilApi
 @Preview
 @Composable
@@ -199,11 +205,11 @@ fun IngredientItemPreview() {
                 id = 1,
                 name = "Vodka",
                 image = "",
-                description = "Vodka je tvrdý bezbarvý alkoholický nápoj oblíbený po celém světě. Kvalita a chuť vodky se mohou lišit vlivem různých faktorů. Jedná se o to, že tento alkoholický nápoj se vyrábí z obilí, jehož specifické složení určuje výrobce. Některé druhy namísto obilí obsahují destilaci z brambor."
-            //,
-            //    checked = false
+                description = "Vodka je tvrdý bezbarvý alkoholický nápoj oblíbený po celém světě. Kvalita a chuť vodky se mohou lišit vlivem různých faktorů. Jedná se o to, že tento alkoholický nápoj se vyrábí z obilí, jehož specifické složení určuje výrobce. Některé druhy namísto obilí obsahují destilaci z brambor.",
+                madeByUser = false
             ),
-        navController = rememberNavController()
+        navController = rememberNavController(),
+        onCheckboxChanged = ("Vodka", false)
     )
 }
 
@@ -216,10 +222,10 @@ fun IngredientItemDarkPreview() {
             id = 1,
             name = "Vodka",
             image = "",
-            description = "Vodka je tvrdý bezbarvý alkoholický nápoj oblíbený po celém světě. Kvalita a chuť vodky se mohou lišit vlivem různých faktorů. Jedná se o to, že tento alkoholický nápoj se vyrábí z obilí, jehož specifické složení určuje výrobce. Některé druhy namísto obilí obsahují destilaci z brambor."
-            //,
-            //checked = false
+            description = "Vodka je tvrdý bezbarvý alkoholický nápoj oblíbený po celém světě. Kvalita a chuť vodky se mohou lišit vlivem různých faktorů. Jedná se o to, že tento alkoholický nápoj se vyrábí z obilí, jehož specifické složení určuje výrobce. Některé druhy namísto obilí obsahují destilaci z brambor.",
+            madeByUser = false
         ),
         navController = rememberNavController()
     )
 }
+*/

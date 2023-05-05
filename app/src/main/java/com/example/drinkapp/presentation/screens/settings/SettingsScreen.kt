@@ -13,6 +13,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import coil.annotation.ExperimentalCoilApi
 
+//TODO přidat "o aplikaci" a theme switch
+
 @ExperimentalCoilApi
 @Composable
 fun SettingsScreen(navController: NavHostController) {

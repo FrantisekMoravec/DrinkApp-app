@@ -1,30 +1,25 @@
-package com.example.drinkapp.presentation.screens.drinks
+package com.example.drinkapp.presentation.screens.ingredients
 
-import androidx.compose.foundation.background
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
-import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.common.ListContent
-import com.example.drinkapp.ui.theme.drinksScreenBackgroundColor
+import com.example.drinkapp.presentation.screens.filtered_drinks.FilteredDrinksViewModel
 import com.example.drinkapp.ui.theme.statusBarColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-/** tato metoda říká jak má vypadat fragment s drinky */
-
 @ExperimentalCoilApi
 @Composable
-fun DrinksScreen(
+fun FilteredDrinksScreen(
     navController: NavHostController,
-    drinksViewModel: DrinksViewModel = hiltViewModel()
-) {
-    /** vybere drinky z viewmodelu */
-    val allDrinks = drinksViewModel.getAllDrinks.collectAsLazyPagingItems()
+    ingredients: List<String>,
+    filteredDrinksViewModel: FilteredDrinksViewModel = hiltViewModel()
+){
+    val filteredDrinks = filteredDrinksViewModel.filteredDrinks.collectAsLazyPagingItems()
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(
@@ -32,16 +27,9 @@ fun DrinksScreen(
     )
 
     Scaffold(
-        topBar = {
-            DrinksTopBar (
-                onSearchClicked = {
-                    navController.navigate(Screen.DrinkSearch.route)
-                }
-            )
-        },
         content = {
             ListContent(
-                drinks = allDrinks,
+                drinks = filteredDrinks,
                 navController = navController
             )
         }

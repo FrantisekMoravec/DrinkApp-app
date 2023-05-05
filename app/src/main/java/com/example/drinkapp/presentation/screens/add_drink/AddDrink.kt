@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
-
+/*
 @ExperimentalCoilApi
 @Composable
 fun AddDrink() {
@@ -99,3 +99,4 @@ fun AddDrink() {
         )
     }
 }
+*/

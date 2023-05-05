@@ -14,9 +14,21 @@ sealed class Screen(val route: String) {
 
     object IngredientSearch : Screen("ingredient_search_screen")
 
-    object IngredientDetails: Screen("ingredient_details_screen"){
-        fun passIngredientId(ingredientId: Int): String{
-            return "ingredient_details_screen/$ingredientId"
+    object FilteredDrinks : Screen("filtered_drinks_screen?ingredients={ingredients}") {
+        fun passIngredients(ingredients: List<String>): String {
+            val ingredientsArg = ingredients.joinToString(",")
+            return "filtered_drinks_screen?ingredients=$ingredientsArg"
         }
     }
 }
+
+/*
+    object FilteredDrinks : Screen("filtered_drinks_screen/{ingredients}") {
+        fun passIngredients(ingredients: List<String>): String {
+            val ingredientsString = ingredients.joinToString(separator = ",")
+            return "filtered_drinks_screen/$ingredientsString"
+        }
+    }
+*/
+
+//object FilteredDrinks: Screen("filtered_drinks_screen")

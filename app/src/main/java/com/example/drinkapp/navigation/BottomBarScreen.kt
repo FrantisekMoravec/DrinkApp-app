@@ -20,7 +20,13 @@ sealed class BottomBarScreen (
         route = "INGREDIENTS",
         icon = Icons.Default.Search
     )
-
+    /*
+    {
+        fun passIngredientId(ingredientId: Int): String{
+            return "INGREDIENTS/$ingredientId"
+        }
+    }
+*/
     object Assistant : BottomBarScreen(
         route = "ASSISTANT",
         icon = Icons.Default.Person
