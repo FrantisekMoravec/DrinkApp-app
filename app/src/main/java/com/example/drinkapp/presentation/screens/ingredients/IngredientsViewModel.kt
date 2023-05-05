@@ -36,7 +36,7 @@ class IngredientsViewModel @Inject constructor(
     //val getAllIngredients = useCases.getAllIngredientsUseCase()
 /*
     //val getAllCheckedIngredientsUseCase = useCases.getAllCheckedIngredientsUseCase(checked = true)
-    val getAllDrinks = useCases.getAllDrinksUseCase()
+    val getAllRemoteDrinks = useCases.getAllDrinksUseCase()
     var checkedIngredients = listOf<Int>()
 */
     //TODO přidat ingrediencím nullable parametr checked

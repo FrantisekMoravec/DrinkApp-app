@@ -1,6 +1,5 @@
 package com.example.drinkapp.data.local.dao
 
-import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -15,7 +14,10 @@ import kotlinx.coroutines.flow.Flow
 interface DrinkDao {
 
     @Query("SELECT * FROM drink_table ORDER BY id ASC")
-    fun getAllDrinks(): PagingSource<Int, Drink>
+    fun getAllRemoteDrinks(): PagingSource<Int, Drink>
+
+    @Query("SELECT * FROM drink_table ORDER BY id ASC")
+    fun getAllLocalDrinks(): Flow<List<Drink>>
 
     @Query("SELECT * FROM drink_table WHERE id=:drinkId")
     fun getSelectedDrink(drinkId: Int): Drink

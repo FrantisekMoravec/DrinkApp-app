@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RemoteDataSource {
 
-    fun getAllDrinks(): Flow<PagingData<Drink>>
+    fun getAllRemoteDrinks(): Flow<PagingData<Drink>>
 
     fun searchDrinks(query: String): Flow<PagingData<Drink>>
 

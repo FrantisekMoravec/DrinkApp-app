@@ -2,9 +2,10 @@ package com.example.drinkapp.di
 
 import com.example.drinkapp.data.repository.Repository
 import com.example.drinkapp.domain.use_cases.UseCases
-import com.example.drinkapp.domain.use_cases.get_all_drinks.GetAllDrinksUseCase
+import com.example.drinkapp.domain.use_cases.get_all_remote_drinks.GetAllRemoteDrinksUseCase
 import com.example.drinkapp.domain.use_cases.get_all_ingredients.GetAllIngredientsUseCase
 import com.example.drinkapp.domain.use_cases.get_all_ingredients_made_by_user.GetAllIngredientsMadeByUserUseCase
+import com.example.drinkapp.domain.use_cases.get_all_local_drinks.GetAllLocalDrinksUseCase
 import com.example.drinkapp.domain.use_cases.get_drinks_containing_ingredients.GetDrinksContainingIngredientsUseCase
 import com.example.drinkapp.domain.use_cases.get_selected_drink.GetSelectedDrinkUseCase
 import com.example.drinkapp.domain.use_cases.search_drinks.SearchDrinksUseCase
@@ -23,7 +24,8 @@ object RepositoryModule {
     @Singleton
     fun provideUseCases(repository: Repository): UseCases{
         return UseCases(
-            getAllDrinksUseCase = GetAllDrinksUseCase(repository),
+            getAllRemoteDrinksUseCase = GetAllRemoteDrinksUseCase(repository),
+            getAllLocalDrinksUseCase = GetAllLocalDrinksUseCase(repository),
             searchDrinksUseCase = SearchDrinksUseCase(repository),
 
             getAllIngredientsUseCase = GetAllIngredientsUseCase(repository),

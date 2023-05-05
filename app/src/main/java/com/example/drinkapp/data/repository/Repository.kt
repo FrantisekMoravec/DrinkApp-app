@@ -1,7 +1,6 @@
 package com.example.drinkapp.data.repository
 
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.Ingredient
 import com.example.drinkapp.domain.repository.LocalDataSource
@@ -14,8 +13,12 @@ class Repository @Inject constructor(
     private val local: LocalDataSource
 ){
 
-    fun getAllDrinks(): Flow<PagingData<Drink>>{
-        return remote.getAllDrinks()
+    fun getAllRemoteDrinks(): Flow<PagingData<Drink>>{
+        return remote.getAllRemoteDrinks()
+    }
+
+    suspend fun getAllLocalDrinks(): Flow<List<Drink>>{
+        return local.getAllLocalDrinks()
     }
 
     fun searchDrinks(query: String): Flow<PagingData<Drink>>{

@@ -29,8 +29,8 @@ class RemoteDataSourceImpl(
     private val drinkDao = drinkDatabase.drinkDao()
     private val ingredientDao = drinkDatabase.ingredientDao()
 
-    override fun getAllDrinks(): Flow<PagingData<Drink>> {
-        val pagingSourceFactory = { drinkDao.getAllDrinks() }
+    override fun getAllRemoteDrinks(): Flow<PagingData<Drink>> {
+        val pagingSourceFactory = { drinkDao.getAllRemoteDrinks() }
         return Pager(
             config = PagingConfig(pageSize = DRINK_ITEMS_PER_PAGE),
             remoteMediator = DrinkRemoteMediator(

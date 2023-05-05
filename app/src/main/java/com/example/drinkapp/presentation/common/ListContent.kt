@@ -165,22 +165,6 @@ fun DrinkItem(
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
-                /*
-                Row(
-                    modifier = Modifier.padding(top = SMALL_PADDING),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RatingWidget(
-                        modifier = Modifier.padding(end = SMALL_PADDING),
-                        rating = drink.rating
-                    )
-                    Text(
-                        text = "(${drink.rating})",
-                        textAlign = TextAlign.Center,
-                        color = Color.White.copy(alpha = ContentAlpha.medium)
-                    )
-                }
-                */
             }
         }
     }

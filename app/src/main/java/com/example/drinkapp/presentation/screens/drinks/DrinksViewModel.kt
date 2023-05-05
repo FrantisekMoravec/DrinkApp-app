@@ -11,5 +11,5 @@ import javax.inject.Inject
 class DrinksViewModel @Inject constructor(
     useCases: UseCases
 ): ViewModel() {
-    val getAllDrinks = useCases.getAllDrinksUseCase()
+    val getAllDrinks = useCases.getAllRemoteDrinksUseCase()
 }
