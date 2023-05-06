@@ -49,22 +49,22 @@ fun ListFilteredDrinks(
 ) {
     val result = FilteredDrinksHandlePagingResult(drinks = drinks)
 
-    if (result){
+    if (result) {
         LazyColumn(
             modifier = Modifier
                 .background(MaterialTheme.colors.drinksScreenBackgroundColor),
             contentPadding = PaddingValues(all = SMALL_PADDING),
             verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
-        ){
+        ) {
             items(
                 items = drinks,
                 key = { drink ->
                     drink.id
                 }
-            ){ drink ->
+            ) { drink ->
                 drink?.let {
                     // Filtrujte nápoje podle vybraných ingrediencí
-                    if (drink.ingredients.intersect(selectedIngredients).isNotEmpty()) {
+                    if (drink.ingredients.any { selectedIngredients.contains(it) }) {
                         FilteredDrinkItem(drink = it, navController = navController)
                     }
                 }
@@ -72,6 +72,7 @@ fun ListFilteredDrinks(
         }
     }
 }
+
 
 /** tato metoda říká co se má stát podle výsledků načítání */
 @Composable
@@ -187,22 +188,7 @@ fun FilteredDrinkItem(
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
-                /*
-                Row(
-                    modifier = Modifier.padding(top = SMALL_PADDING),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RatingWidget(
-                        modifier = Modifier.padding(end = SMALL_PADDING),
-                        rating = drink.rating
-                    )
-                    Text(
-                        text = "(${drink.rating})",
-                        textAlign = TextAlign.Center,
-                        color = Color.White.copy(alpha = ContentAlpha.medium)
-                    )
-                }
-                */
+
             }
         }
     }

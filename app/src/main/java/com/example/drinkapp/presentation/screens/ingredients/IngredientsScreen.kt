@@ -61,7 +61,7 @@ fun IngredientsScreen(
                     val selectedIngredientNames = selectedIngredients.map { it.name }
 
                     Log.d("FAB", "vybrané ingredience: $selectedIngredientNames")
-                    Log.d("FAB", "Vyfiltrované nápoje: ${filteredDrinks.itemSnapshotList}")
+                    Log.d("FAB", "Vyfiltrované drinky: ${filteredDrinks.itemSnapshotList.items.map { "${it.name} (ID: ${it.id})" }}")
 
                     navController.navigate(Screen.FilteredDrinks.passIngredients(selectedIngredientNames))
                 },

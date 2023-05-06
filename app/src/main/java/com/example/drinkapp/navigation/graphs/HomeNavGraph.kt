@@ -18,7 +18,6 @@ import com.example.drinkapp.presentation.screens.search_drinks.DrinksSearchScree
 import com.example.drinkapp.presentation.screens.search_ingredients.IngredientsSearchScreen
 import com.example.drinkapp.presentation.screens.settings.SettingsScreen
 import com.example.drinkapp.util.Constants.DRINK_DETAILS_ARGUMENT_KEY
-import com.example.drinkapp.util.Constants.FILTERED_DRINKS_ARGUMENT_KEY
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 /** tato metoda slouží k navigaci mezi fragmenty a díky NavHostControlleru má backstack */
@@ -79,7 +78,7 @@ fun HomeNavGraph(navController: NavHostController) {
             )
         ) { backStackEntry ->
             val ingredients = backStackEntry.arguments?.getString("ingredients")?.split(",") ?: listOf()
-            FilteredDrinksScreen(navController = navController, ingredients = ingredients)
+            FilteredDrinksScreen(navController = navController, drinks = ingredients)
         }
 
 /*

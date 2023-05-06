@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.presentation.common.ListContent
+import com.example.drinkapp.presentation.common.ListFilteredDrinks
 import com.example.drinkapp.presentation.screens.filtered_drinks.FilteredDrinksViewModel
 import com.example.drinkapp.ui.theme.statusBarColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -16,9 +17,9 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun FilteredDrinksScreen(
     navController: NavHostController,
-    ingredients: List<String>,
+    drinks: List<String>,
     filteredDrinksViewModel: FilteredDrinksViewModel = hiltViewModel()
-){
+) {
     val filteredDrinks = filteredDrinksViewModel.filteredDrinks.collectAsLazyPagingItems()
 
     val systemUiController = rememberSystemUiController()
@@ -28,9 +29,10 @@ fun FilteredDrinksScreen(
 
     Scaffold(
         content = {
-            ListContent(
+            ListFilteredDrinks(
                 drinks = filteredDrinks,
-                navController = navController
+                navController = navController,
+                selectedIngredients = drinks
             )
         }
     )
