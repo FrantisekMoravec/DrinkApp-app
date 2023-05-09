@@ -52,8 +52,8 @@ class Repository @Inject constructor(
 */
 
 /*
-    suspend fun getSelectedIngredient(ingredientId: Int): Ingredient{
-        return local.getSelectedIngredient(ingredientId = ingredientId)
+    suspend fun getSelectedIngredientById(ingredientId: Int): Ingredient{
+        return local.getSelectedIngredientById(ingredientId = ingredientId)
     }
 */
 /*

@@ -42,7 +42,7 @@ class LocalDataSourceImpl(
     */
 
     /*
-        override suspend fun getSelectedIngredient(ingredientId: Int): Ingredient {
-            return ingredientDao.getSelectedIngredient(ingredientId = ingredientId)
+        override suspend fun getSelectedIngredientById(ingredientId: Int): Ingredient {
+            return ingredientDao.getSelectedIngredientById(ingredientId = ingredientId)
         }
     */

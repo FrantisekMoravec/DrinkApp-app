@@ -5,7 +5,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.Ingredient
 
 /** říká knihovně room jak provádět crud operace */
@@ -16,7 +15,10 @@ interface IngredientDao {
     fun getAllIngredients(): PagingSource<Int, Ingredient>
 
     @Query("SELECT * FROM ingredient_table WHERE id=:ingredientId")
-    fun getSelectedIngredient(ingredientId: Int): Ingredient
+    fun getSelectedIngredientById(ingredientId: Int): Ingredient
+
+    @Query("SELECT * FROM ingredient_table WHERE name=:ingredientName")
+    fun getSelectedIngredientByName(ingredientName: String): Ingredient
 
     @Query("SELECT * FROM ingredient_table WHERE madeByUser=:ingredientMadeByUser")
     fun getIngredientsMadeByUser(ingredientMadeByUser: Boolean): Ingredient

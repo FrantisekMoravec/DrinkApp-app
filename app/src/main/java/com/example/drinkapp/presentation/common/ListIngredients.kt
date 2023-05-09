@@ -18,8 +18,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +27,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -37,21 +36,26 @@ import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.Ingredient
 import com.example.drinkapp.presentation.components.ShimmerEffect
-import com.example.drinkapp.presentation.screens.filtered_drinks.FilteredDrinksViewModel
 import com.example.drinkapp.ui.theme.INGREDIENT_ITEM_HEIGHT
 import com.example.drinkapp.ui.theme.LARGE_PADDING
 import com.example.drinkapp.ui.theme.MEDIUM_PADDING
 import com.example.drinkapp.ui.theme.SMALL_PADDING
 import com.example.drinkapp.ui.theme.topAppBarContentColor
 import com.example.drinkapp.util.Constants.BASE_URL
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @ExperimentalCoilApi
 @Composable
 fun ListIngredients(
     ingredients: LazyPagingItems<Ingredient>,
     navController: NavHostController,
-    filteredDrinksViewModel: FilteredDrinksViewModel = hiltViewModel()
+    checkedIngredients: StateFlow<Map<Int, String>>,
+    onCheckedChange: (Int, String, Boolean) -> Unit
+    //filteredDrinksViewModel: FilteredDrinksViewModel = hiltViewModel()
 ) {
+    //val checkedIngredients = rememberSaveable { mutableStateOf(mutableSetOf<Ingredient>()) }
+
     val result = handlePagingResult(ingredients = ingredients)
 
     if (result){
@@ -69,9 +73,8 @@ fun ListIngredients(
                     IngredientItem(
                         ingredient = it,
                         navController = navController,
-                        onCheckboxChanged = { ingredient, isChecked ->
-                            filteredDrinksViewModel.updateSelectedIngredients(ingredient, isChecked)
-                        }
+                        checkedIngredients = checkedIngredients,
+                        onCheckedChange = onCheckedChange
                     )
                 }
             }
@@ -118,10 +121,11 @@ fun handlePagingResult(
 fun IngredientItem(
     ingredient: Ingredient,
     navController: NavHostController,
-    onCheckboxChanged: (Ingredient, Boolean) -> Unit
+    checkedIngredients: StateFlow<Map<Int, String>>,
+    onCheckedChange: (Int, String, Boolean) -> Unit
 ) {
-    var checkedIngredients = remember {mutableListOf<Ingredient>()}
-    val checkedState = remember{ mutableStateOf(false) }
+    val currentCheckedIngredients by checkedIngredients.collectAsState()
+
     val painter = rememberImagePainter(data = "${BASE_URL}${ingredient.image}"){
         placeholder(R.drawable.ic_placeholder)
         error(R.drawable.ic_placeholder)
@@ -183,14 +187,16 @@ fun IngredientItem(
                     overflow = TextOverflow.Ellipsis
                 )
             }
+//TODO předělat přes map - mutableStateMapOf a najít přes klíč mapy, kterej se bude jméno/id ingredience
             Checkbox(
                 modifier = Modifier.padding(start = 300.dp, top = 40.dp),
-                checked = checkedState.value,
-                onCheckedChange = { isChecked ->
-                    checkedState.value = isChecked
-                    onCheckboxChanged(ingredient, isChecked)
+                enabled = true,
+                checked = currentCheckedIngredients.values.contains(ingredient.name),
+                onCheckedChange = { checked ->
+                    onCheckedChange(ingredient.id, ingredient.name, checked)
                 }
             )
+
         }
     }
     }

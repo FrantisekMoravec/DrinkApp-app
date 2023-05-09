@@ -35,7 +35,6 @@ fun IngredientsScreen(
 
     val filteredDrinks = filteredDrinksViewModel.filteredDrinks.collectAsLazyPagingItems()
 
-    // Získání hodnoty z MutableSharedFlow
     val selectedIngredients by filteredDrinksViewModel.selectedIngredients.collectAsState(emptyList())
 
     Scaffold(
@@ -49,7 +48,15 @@ fun IngredientsScreen(
         content = {
             ListIngredients(
                 ingredients = allIngredients,
-                navController = navController
+                navController = navController,
+                checkedIngredients = filteredDrinksViewModel.checkedIngredients,
+                onCheckedChange = { id, name, isChecked ->
+                    if (isChecked) {
+                        filteredDrinksViewModel.addCheckedIngredient(id, name)
+                    } else {
+                        filteredDrinksViewModel.removeCheckedIngredient(id)
+                    }
+                }
             )
         },
         floatingActionButton = {
@@ -62,6 +69,7 @@ fun IngredientsScreen(
 
                     Log.d("FAB", "vybrané ingredience: $selectedIngredientNames")
                     Log.d("FAB", "Vyfiltrované drinky: ${filteredDrinks.itemSnapshotList.items.map { "${it.name} (ID: ${it.id})" }}")
+                    Log.d("FAB", "zaškrtnuté ingredience: ${filteredDrinksViewModel.checkedIngredients.value}")
 
                     navController.navigate(Screen.FilteredDrinks.passIngredients(selectedIngredientNames))
                 },

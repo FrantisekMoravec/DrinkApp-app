@@ -7,7 +7,7 @@ class GetSelectedIngredientUseCase(
     private val repository: Repository
 ) {
     suspend operator fun invoke(ingredientId: Int): Ingredient {
-        return repository.getSelectedIngredient(ingredientId = ingredientId)
+        return repository.getSelectedIngredientById(ingredientId = ingredientId)
     }
 }
 */

@@ -17,4 +17,4 @@ interface LocalDataSource {
 }
     //suspend fun getSelectedIngredients(ingredientIds: List<Int>): List<Ingredient>
 
-    //suspend fun getSelectedIngredient(ingredientId: Int): Ingredient
+    //suspend fun getSelectedIngredientById(ingredientId: Int): Ingredient
