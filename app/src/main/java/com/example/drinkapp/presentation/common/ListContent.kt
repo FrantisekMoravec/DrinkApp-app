@@ -95,7 +95,7 @@ fun handlePagingResult(
             }
 
             drinks.itemCount < 1 -> {
-                EmptyScreen()
+                EmptyScreen(error = null)
                 false
             }
 
