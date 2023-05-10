@@ -5,6 +5,7 @@ import com.example.drinkapp.domain.use_cases.get_all_ingredients.GetAllIngredien
 import com.example.drinkapp.domain.use_cases.get_all_ingredients_made_by_user.GetAllIngredientsMadeByUserUseCase
 import com.example.drinkapp.domain.use_cases.get_all_local_drinks.GetAllLocalDrinksUseCase
 import com.example.drinkapp.domain.use_cases.get_drinks_containing_ingredients.GetDrinksContainingIngredientsUseCase
+import com.example.drinkapp.domain.use_cases.get_ingredients_by_name.GetSelectedIngredientsByNameUseCase
 import com.example.drinkapp.domain.use_cases.get_selected_drink.GetSelectedDrinkUseCase
 //import com.example.drinkapp.domain.use_cases.get_selected_ingredients.GetSelectedIngredientsUseCase
 import com.example.drinkapp.domain.use_cases.search_drinks.SearchDrinksUseCase
@@ -22,6 +23,8 @@ data class UseCases (
 
     val getAllIngredientsMadeByUserUseCase: GetAllIngredientsMadeByUserUseCase,
 
-    val getDrinksContainingIngredientsUseCase: GetDrinksContainingIngredientsUseCase
+    val getDrinksContainingIngredientsUseCase: GetDrinksContainingIngredientsUseCase,
+
+    val getSelectedIngredientsByNameUseCase: GetSelectedIngredientsByNameUseCase
     //val getSelectedIngredientsUseCase: GetSelectedIngredientsUseCase
 )

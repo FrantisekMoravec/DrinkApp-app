@@ -1,25 +1,36 @@
 package com.example.drinkapp.presentation.screens.ingredients
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.map
 import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.common.ListIngredients
 import com.example.drinkapp.presentation.screens.filtered_drinks.FilteredDrinksViewModel
+import com.example.drinkapp.ui.theme.bottomNavBackgroundColor
+import com.example.drinkapp.ui.theme.bottomNavSelectedItemColor
+import com.example.drinkapp.ui.theme.bottomNavUnselectedItemsColor
+import kotlinx.coroutines.flow.collectLatest
 
 /** tato metoda říká jak má vypadat fragment s ingrediencemi */
 
@@ -37,6 +48,22 @@ fun IngredientsScreen(
 
     val selectedIngredients by filteredDrinksViewModel.selectedIngredients.collectAsState(emptyList())
 
+    val allLocalDrinks by filteredDrinksViewModel.allLocalDrinks.collectAsState()
+
+    //val filteredDrinks2 by filteredDrinksViewModel.filteredDrinks.collectAsState()
+
+    //val filteredDrinks = filteredDrinksViewModel.filteredDrinks.collectAsLazyPagingItems()
+
+/*
+    LaunchedEffect(filteredDrinksViewModel.filteredDrinks) {
+        filteredDrinksViewModel.filteredDrinks.collectAsState(initial = PagingData.empty()).value.map { drink ->
+            val drinkName = drink.name
+            if (!filteredDrinks2.contains(drinkName)) {
+                filteredDrinks2.add(drinkName)
+            }
+        }
+    }
+*/
     Scaffold(
         topBar = {
             IngredientsTopBar (
@@ -64,11 +91,21 @@ fun IngredientsScreen(
                 modifier = Modifier
                     .padding(bottom = 50.dp),
                 shape = CircleShape,
+                backgroundColor = MaterialTheme.colors.bottomNavBackgroundColor,
                 onClick = {
-                    val selectedIngredientNames = selectedIngredients.map { it.name }
+                    filteredDrinksViewModel.updateFilteredDrinks()
 
+                    val selectedIngredientNames = selectedIngredients.map { it.name }
+                    val allLocalDrinkNames = allLocalDrinks.map { it.name }
+
+                    val filteredDrinks2 = filteredDrinks.itemSnapshotList.items.map { "${it.name} (Id: ${it.id})" }
+
+                    //val allFilteredDrinks = filteredDrinks2.map { it.name }
+                    //val allFilteredDrinks = filteredDrinksViewModel.filteredDrinks.value
+
+                    Log.d("FAB", "všechny lokální drinky: $allLocalDrinkNames")
                     Log.d("FAB", "vybrané ingredience: $selectedIngredientNames")
-                    Log.d("FAB", "Vyfiltrované drinky: ${filteredDrinks.itemSnapshotList.items.map { "${it.name} (ID: ${it.id})" }}")
+                    Log.d("FAB", "Vyfiltrované drinky: $filteredDrinks2")
                     Log.d("FAB", "zaškrtnuté ingredience: ${filteredDrinksViewModel.checkedIngredients.value}")
 
                     navController.navigate(Screen.FilteredDrinks.passIngredients(selectedIngredientNames))
@@ -76,7 +113,8 @@ fun IngredientsScreen(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = "filter by selected ingredients"
+                    contentDescription = "filter by selected ingredients",
+                    tint = MaterialTheme.colors.bottomNavSelectedItemColor
                 )
             }
         }

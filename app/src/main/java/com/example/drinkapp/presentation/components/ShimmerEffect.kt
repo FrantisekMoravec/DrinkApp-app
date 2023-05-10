@@ -71,7 +71,7 @@ fun ShimmerItem(alpha: Float) {
                     .fillMaxWidth(0.5f)
                     .height(NAME_PLACEHOLDER_HEIGHT),
                 color = if (isSystemInDarkTheme())
-                    ShimmerDarkGray else ShimmerMediumGray,
+                    ShimmerDarkestGray else ShimmerMediumGray,
                 shape = RoundedCornerShape(size = SMALL_PADDING)
             ) {}
             Spacer(modifier = Modifier.padding(all = SMALL_PADDING))
@@ -82,7 +82,7 @@ fun ShimmerItem(alpha: Float) {
                         .fillMaxWidth()
                         .height(ABOUT_PLACEHOLDER_HEIGHT),
                     color = if (isSystemInDarkTheme())
-                        ShimmerDarkGray else ShimmerMediumGray,
+                        ShimmerDarkestGray else ShimmerMediumGray,
                     shape = RoundedCornerShape(size = SMALL_PADDING)
                 ) {}
                 Spacer(modifier = Modifier.padding(all = EXTRA_SMALL_PADDING))
@@ -94,7 +94,7 @@ fun ShimmerItem(alpha: Float) {
                             .alpha(alpha = alpha)
                             .size(RATING_PLACEHOLDER_HEIGHT),
                         color = if (isSystemInDarkTheme())
-                            ShimmerDarkGray else ShimmerMediumGray,
+                            ShimmerDarkestGray else ShimmerMediumGray,
                         shape = RoundedCornerShape(size = SMALL_PADDING)
                     ) {}
                     Spacer(modifier = Modifier.padding(all = EXTRA_SMALL_PADDING))

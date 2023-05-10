@@ -23,11 +23,16 @@ interface DrinkDao {
     fun getSelectedDrink(drinkId: Int): Drink
 
     @Query(
-        "SELECT * FROM drink_table WHERE id IN " +
-                "(SELECT id FROM drinks_containing_ingredients_table WHERE ingredientName IN (:ingredientNames)) " +
-                "ORDER BY name ASC"
+        """SELECT * FROM drink_table
+       WHERE id IN (
+           SELECT drinkId FROM drinks_containing_ingredients_table
+           WHERE ingredientName IN (:ingredientNames)
+           GROUP BY drinkId
+           HAVING COUNT(*) = :ingredientNamesCount)
+       ORDER BY name ASC"""
     )
-    fun getDrinksContainingIngredients(ingredientNames: List<String>): PagingSource<Int, Drink>
+    fun getDrinksContainingIngredients(ingredientNames: List<String>, ingredientNamesCount: Int): PagingSource<Int, Drink>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addDrinks(drinks: List<Drink>)

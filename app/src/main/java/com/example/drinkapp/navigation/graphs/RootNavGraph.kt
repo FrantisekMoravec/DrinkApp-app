@@ -37,5 +37,4 @@ fun RootNavigationGraph(navController: NavHostController) {
 object Graph {
     const val ROOT = "root_graph"
     const val HOME = "home_graph" /** home graph zobrazuje MainScreen fragment spolu se spodní navigační lištou a v něm zabrazuje další fragmenty */
-    //const val DETAILS = "details_graph"
 }

@@ -29,6 +29,10 @@ class Repository @Inject constructor(
         return remote.getAllIngredients()
     }
 
+    suspend fun getSelectedIngredientsByName(ingredientNames: List<String>): List<Ingredient>{
+        return local.getSelectedIngredientsByName(ingredientNames = ingredientNames)
+    }
+
     fun searchIngredients(query: String): Flow<PagingData<Ingredient>>{
         return remote.searchIngredients(query = query)
     }
@@ -41,8 +45,8 @@ class Repository @Inject constructor(
         return local.getAllIngredientsMadeByUser(madeByUser = madeByUser)
     }
 
-    fun getDrinksContainingIngredients(ingredientNames: List<String>): Flow<PagingData<Drink>> {
-        return local.getDrinksContainingIngredients(ingredientNames = ingredientNames)
+    fun getDrinksContainingIngredients(ingredientNames: List<String>, ingredientNamesCount: Int): Flow<PagingData<Drink>> {
+        return local.getDrinksContainingIngredients(ingredientNames = ingredientNames, ingredientNamesCount = ingredientNamesCount)
     }
 }
 /*

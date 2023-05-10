@@ -17,8 +17,8 @@ interface IngredientDao {
     @Query("SELECT * FROM ingredient_table WHERE id=:ingredientId")
     fun getSelectedIngredientById(ingredientId: Int): Ingredient
 
-    @Query("SELECT * FROM ingredient_table WHERE name=:ingredientName")
-    fun getSelectedIngredientByName(ingredientName: String): Ingredient
+    @Query("SELECT * FROM ingredient_table WHERE name=:ingredientNames")
+    fun getSelectedIngredientsByName(ingredientNames: List<String>): List<Ingredient>
 
     @Query("SELECT * FROM ingredient_table WHERE madeByUser=:ingredientMadeByUser")
     fun getIngredientsMadeByUser(ingredientMadeByUser: Boolean): Ingredient

@@ -3,11 +3,14 @@ package com.example.drinkapp.presentation.screens.ingredients
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.map
 import coil.annotation.ExperimentalCoilApi
-import com.example.drinkapp.presentation.common.ListContent
 import com.example.drinkapp.presentation.common.ListFilteredDrinks
 import com.example.drinkapp.presentation.screens.filtered_drinks.FilteredDrinksViewModel
 import com.example.drinkapp.ui.theme.statusBarColor
@@ -30,9 +33,8 @@ fun FilteredDrinksScreen(
     Scaffold(
         content = {
             ListFilteredDrinks(
-                drinks = filteredDrinks,
-                navController = navController,
-                selectedIngredients = drinks
+                filteredDrinks = filteredDrinks,
+                navController = navController
             )
         }
     )

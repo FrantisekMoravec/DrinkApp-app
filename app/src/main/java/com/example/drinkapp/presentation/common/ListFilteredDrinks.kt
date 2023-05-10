@@ -11,29 +11,23 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
-import com.example.drinkapp.data.local.dao.DrinkImageDao
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.navigation.Screen
-import com.example.drinkapp.presentation.components.RatingWidget
 import com.example.drinkapp.presentation.components.ShimmerEffect
 import com.example.drinkapp.ui.theme.*
 import com.example.drinkapp.util.Constants
@@ -43,11 +37,10 @@ import com.example.drinkapp.util.Constants
 @ExperimentalCoilApi
 @Composable
 fun ListFilteredDrinks(
-    drinks: LazyPagingItems<Drink>,
-    navController: NavHostController,
-    selectedIngredients: List<String>
+    filteredDrinks: LazyPagingItems<Drink>,
+    navController: NavHostController
 ) {
-    val result = FilteredDrinksHandlePagingResult(drinks = drinks)
+    val result = FilteredDrinksHandlePagingResult(drinks = filteredDrinks)
 
     if (result) {
         LazyColumn(
@@ -57,16 +50,21 @@ fun ListFilteredDrinks(
             verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
         ) {
             items(
-                items = drinks,
+                items = filteredDrinks,
                 key = { drink ->
                     drink.id
                 }
             ) { drink ->
                 drink?.let {
+                    FilteredDrinkItem(
+                        drink = it,
+                        navController = navController
+                    )
+
                     // Filtrujte nápoje podle vybraných ingrediencí
-                    if (drink.ingredients.any { selectedIngredients.contains(it) }) {
-                        FilteredDrinkItem(drink = it, navController = navController)
-                    }
+                    //if (drink.ingredients.any { selectedIngredients.contains(it) }) {
+                    //    FilteredDrinkItem(drink = it, navController = navController)
+                    //}
                 }
             }
         }
@@ -101,7 +99,7 @@ fun FilteredDrinksHandlePagingResult(
             }
 
             drinks.itemCount < 1 -> {
-                EmptyScreen()
+                EmptyScreen(error = null)
                 false
             }
 

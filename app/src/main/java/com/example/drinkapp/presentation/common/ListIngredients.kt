@@ -40,9 +40,9 @@ import com.example.drinkapp.ui.theme.INGREDIENT_ITEM_HEIGHT
 import com.example.drinkapp.ui.theme.LARGE_PADDING
 import com.example.drinkapp.ui.theme.MEDIUM_PADDING
 import com.example.drinkapp.ui.theme.SMALL_PADDING
-import com.example.drinkapp.ui.theme.topAppBarContentColor
+import com.example.drinkapp.ui.theme.ingredientBoxBackgroundColor
+import com.example.drinkapp.ui.theme.ingredientNamesColor
 import com.example.drinkapp.util.Constants.BASE_URL
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
 @ExperimentalCoilApi
@@ -107,7 +107,7 @@ fun handlePagingResult(
             }
 
             ingredients.itemCount < 1 -> {
-                EmptyScreen()
+                EmptyScreen(error = null)
                 false
             }
 
@@ -144,14 +144,12 @@ fun IngredientItem(
 
     Surface(
         shape = RoundedCornerShape(size = LARGE_PADDING),
-        color = Color.Black.copy(alpha = 0.1f)
+        color = MaterialTheme.colors.ingredientBoxBackgroundColor.copy(alpha = 0.1f)
     ) {
         Surface(shape = RoundedCornerShape(size = LARGE_PADDING)) {
             Image(
                 modifier = Modifier
-                    .fillMaxWidth(0.2f)
-                //.padding(start = 50.dp)
-                ,
+                    .fillMaxWidth(0.2f),
                 painter = painter,
                 contentDescription = stringResource(R.string.ingredient_image),
                 contentScale = ContentScale.Crop
@@ -180,14 +178,12 @@ fun IngredientItem(
             ) {
                 Text(
                     text = ingredient.name,
-                    color = MaterialTheme.colors.topAppBarContentColor,
-                    //color = Color.Black,
+                    color = MaterialTheme.colors.ingredientNamesColor,
                     fontSize = MaterialTheme.typography.h5.fontSize,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
             }
-//TODO předělat přes map - mutableStateMapOf a najít přes klíč mapy, kterej se bude jméno/id ingredience
             Checkbox(
                 modifier = Modifier.padding(start = 300.dp, top = 40.dp),
                 enabled = true,

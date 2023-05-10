@@ -77,8 +77,8 @@ fun HomeNavGraph(navController: NavHostController) {
                 }
             )
         ) { backStackEntry ->
-            val ingredients = backStackEntry.arguments?.getString("ingredients")?.split(",") ?: listOf()
-            FilteredDrinksScreen(navController = navController, drinks = ingredients)
+            val drinks = backStackEntry.arguments?.getString("drinks")?.split(",") ?: listOf()
+            FilteredDrinksScreen(navController = navController, drinks = drinks)
         }
 
 /*

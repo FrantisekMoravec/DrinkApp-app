@@ -32,3 +32,57 @@ fun SettingsScreen(navController: NavHostController) {
         )
     }
 }
+
+/*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.RadioButton
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import coil.annotation.ExperimentalCoilApi
+
+@ExperimentalCoilApi
+@Composable
+fun SettingsScreen(
+    navController: NavHostController,
+    selectedTheme: MutableState<List<String>>,
+    themeOptions: List<String>
+) {
+
+    Column {
+        Text("Vyberte jednu možnost:")
+        Row {
+            themeOptions.forEach { option ->
+                RadioButtonWithLabel(
+                    text = option,
+                    selectedTheme = selectedTheme.value,
+                    onOptionSelected = { selectedTheme.value = it }
+                )
+            }
+        }
+    }
+}
+@ExperimentalCoilApi
+@Composable
+fun RadioButtonWithLabel(
+    text: String,
+    selectedTheme: String,
+    onOptionSelected: (String) -> Unit
+) {
+    Row(Modifier.padding(8.dp)) {
+        RadioButton(
+            selected = text == selectedTheme,
+            onClick = { onOptionSelected(text) }
+        )
+        Text(
+            text = text,
+            modifier = Modifier.padding(start = 8.dp)
+        )
+    }
+}
+ */
