@@ -25,7 +25,8 @@ import com.example.drinkapp.domain.model.IngredientRemoteKeys
         DrinksContainingIngredients::class,
         DrinkImage::class
                ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 @TypeConverters(DatabaseConverter::class)
 abstract class DrinkDatabase: RoomDatabase() {

@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'kotlinx-serialization'
+    //id "org.jlleitschuh.gradle.ktlint" version "11.0.0"
 }
 
 android {
@@ -20,7 +21,7 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
-
+        /*
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
@@ -28,6 +29,7 @@ android {
                 ]
             }
         }
+        */
     }
 
     buildTypes {
@@ -57,7 +59,17 @@ android {
         }
     }
 }
-
+/*
+ktlint{
+    android = true
+    ignoreFailures = false
+    reporters{
+        reporter "plain"
+        reporter "checkstyle"
+        reporter "sarif"
+    }
+}
+*/
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'
