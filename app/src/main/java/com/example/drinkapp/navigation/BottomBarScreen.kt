@@ -12,12 +12,12 @@ sealed class BottomBarScreen (
     val icon: ImageVector
 ){
     object Drinks : BottomBarScreen(
-        route = "DRINKS",
+        route = "drinks",
         icon = Icons.Default.Home
     )
 
     object Ingredients : BottomBarScreen(
-        route = "INGREDIENTS",
+        route = "ingredients",
         icon = Icons.Default.Search
     )
     /*
@@ -28,12 +28,12 @@ sealed class BottomBarScreen (
     }
 */
     object Assistant : BottomBarScreen(
-        route = "ASSISTANT",
+        route = "assistant",
         icon = Icons.Default.Person
     )
 
     object Settings : BottomBarScreen(
-        route = "SETTINGS",
+        route = "settings",
         icon = Icons.Default.Settings
     )
 }

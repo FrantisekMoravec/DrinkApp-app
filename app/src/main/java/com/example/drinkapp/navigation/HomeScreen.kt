@@ -1,10 +1,12 @@
 package com.example.drinkapp.navigation
 
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -13,6 +15,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.navigation.graphs.HomeNavGraph
+import com.example.drinkapp.presentation.screens.TopBar
 import com.example.drinkapp.ui.theme.*
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -21,11 +24,49 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
 @Composable
-fun HomeScreen(navController: NavHostController = rememberNavController()) {
+fun HomeScreen(
+    navController: NavHostController = rememberNavController()
+) {
+    val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
+    val scope = rememberCoroutineScope()
+
+    //val navBackStackEntry by navController.currentBackStackEntryAsState()
+    //val currentRoute = navBackStackEntry?.destination?.route
+
     Scaffold(
-        bottomBar = { BottomBar(navController = navController) }
+        scaffoldState = scaffoldState,
+        //bottomBar = { BottomBar(navController = navController) },
+        /*
+        topBar = {
+                 TopBar(
+                     text = "",
+                     scope = scope,
+                     scaffoldState = scaffoldState
+                 ) {
+                     //TODO tohle předělat
+
+                     if (currentRoute == Screen.DrinkSearch.route)
+                         navController.navigate(Screen.DrinkSearch.route)
+                     else
+                         navController.navigate(Screen.IngredientSearch.route)
+
+                     Log.d("currentRoute", "currentRoute = $currentRoute")
+                 }
+        },
+        */
+        drawerContent = {
+            NavDrawer(
+                scope = scope,
+                scaffoldState = scaffoldState,
+                navController = navController
+            )
+        }
     ) {
-        HomeNavGraph(navController = navController)
+        HomeNavGraph(
+            scope = scope,
+            scaffoldState = scaffoldState,
+            navController = navController
+        )
     }
 }
 

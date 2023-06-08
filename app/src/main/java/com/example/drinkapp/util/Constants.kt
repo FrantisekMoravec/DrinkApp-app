@@ -2,6 +2,8 @@ package com.example.drinkapp.util
 
 object Constants {
 
+    const val APP_VERSION = "0.1.0"
+
     //const val BASE_URL = "http://10.0.2.2:8080"
     const val BASE_URL = "https://drinkapp-server.herokuapp.com/"
 
@@ -26,7 +28,6 @@ object Constants {
 
     const val MIN_BACKGROUND_IMAGE_HEIGHT = 0.4f
 
-    //TODO změnit velikost stránky
     const val DRINK_ITEMS_PER_PAGE = 3
     const val INGREDIENT_ITEMS_PER_PAGE = 3
 

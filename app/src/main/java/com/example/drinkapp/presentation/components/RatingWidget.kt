@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.drinkapp.R
 import com.example.drinkapp.ui.theme.EXTRA_SMALL_PADDING
-import com.example.drinkapp.ui.theme.LightGray
+import com.example.drinkapp.ui.theme.LightGrey
 import com.example.drinkapp.ui.theme.StarColor
 
 /** tato metoda říká jak se má vykreslit celá hodnotící komponenta */
@@ -119,7 +119,7 @@ fun HalfFilledStar(
             translate(left = left, top = top) {
                 drawPath(
                     path = starPath,
-                    color = LightGray.copy(alpha = 0.5f)
+                    color = LightGrey.copy(alpha = 0.5f)
                 )
                 clipPath(path = starPath) {
                     drawRect(
@@ -153,7 +153,7 @@ fun EmptyStar(
             translate(left = left, top = top) {
                 drawPath(
                     path = starPath,
-                    color = LightGray.copy(alpha = 0.5f)
+                    color = LightGrey.copy(alpha = 0.5f)
                 )
             }
         }

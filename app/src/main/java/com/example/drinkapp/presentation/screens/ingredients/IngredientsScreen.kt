@@ -1,36 +1,31 @@
 package com.example.drinkapp.presentation.screens.ingredients
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.map
 import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.common.ListIngredients
+import com.example.drinkapp.presentation.screens.TopBar
 import com.example.drinkapp.presentation.screens.filtered_drinks.FilteredDrinksViewModel
 import com.example.drinkapp.ui.theme.bottomNavBackgroundColor
 import com.example.drinkapp.ui.theme.bottomNavSelectedItemColor
-import com.example.drinkapp.ui.theme.bottomNavUnselectedItemsColor
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.CoroutineScope
 
 /** tato metoda říká jak má vypadat fragment s ingrediencemi */
 
@@ -39,7 +34,9 @@ import kotlinx.coroutines.flow.collectLatest
 fun IngredientsScreen(
     navController: NavHostController,
     ingredientsViewModel: IngredientsViewModel = hiltViewModel(),
-    filteredDrinksViewModel: FilteredDrinksViewModel = hiltViewModel()
+    filteredDrinksViewModel: FilteredDrinksViewModel = hiltViewModel(),
+    scaffoldState: ScaffoldState,
+    scope: CoroutineScope
 ) {
 
     val allIngredients = ingredientsViewModel.getAllIngredients.collectAsLazyPagingItems()
@@ -66,7 +63,10 @@ fun IngredientsScreen(
 */
     Scaffold(
         topBar = {
-            IngredientsTopBar (
+            TopBar (
+                text = "hledej ingredience",
+                scope = scope,
+                scaffoldState = scaffoldState,
                 onSearchClicked = {
                     navController.navigate(Screen.IngredientSearch.route)
                 }

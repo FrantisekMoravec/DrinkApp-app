@@ -1,19 +1,19 @@
 package com.example.drinkapp.presentation.screens.drinks
 
-import androidx.compose.foundation.background
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.common.ListContent
-import com.example.drinkapp.ui.theme.drinksScreenBackgroundColor
+import com.example.drinkapp.presentation.screens.TopBar
 import com.example.drinkapp.ui.theme.statusBarColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.CoroutineScope
 
 /** tato metoda říká jak má vypadat fragment s drinky */
 
@@ -21,7 +21,9 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun DrinksScreen(
     navController: NavHostController,
-    drinksViewModel: DrinksViewModel = hiltViewModel()
+    drinksViewModel: DrinksViewModel = hiltViewModel(),
+    scaffoldState: ScaffoldState,
+    scope: CoroutineScope
 ) {
     /** vybere drinky z viewmodelu */
     val allDrinks = drinksViewModel.getAllDrinks.collectAsLazyPagingItems()
@@ -33,7 +35,10 @@ fun DrinksScreen(
 
     Scaffold(
         topBar = {
-            DrinksTopBar (
+            TopBar (
+                text = "hledej drinky",
+                scope = scope,
+                scaffoldState = scaffoldState,
                 onSearchClicked = {
                     navController.navigate(Screen.DrinkSearch.route)
                 }

@@ -15,15 +15,15 @@ val Teal200 = Color(0xFF03DAC5)
 val LightBlue = Color(0xFF44A9FF)
 val DarkBlue = Color(0xFF003561)
 val StarColor = Color(0xFFFFC940)
-val LightGray = Color(0xFFD8D8D8)
+val LightGrey = Color(0xFFD8D8D8)
 val DarkerBlue = Color(0xFF003B6D)
 val DarkestBlue = Color(0xFF001A30)
-val DarkGray = Color(0xFF7A7A7A)
+val DarkGrey = Color(0xFF7A7A7A)
 
-val ShimmerLightGray = Color(0xFFF1F1F1)
-val ShimmerMediumGray = Color(0xFFE3E3E3)
-val ShimmerDarkGray = Color(0xFF575757)
-val ShimmerDarkestGray = Color(0xFF1D1D1D)
+val ShimmerLightGrey = Color(0xFFF1F1F1)
+val ShimmerMediumGrey = Color(0xFFE3E3E3)
+val ShimmerDarkGrey = Color(0xFF575757)
+val ShimmerDarkestGrey = Color(0xFF1D1D1D)
 
 /** barva je definována podle toho zda je zařízení v tmavém či světlém módu */
 val Colors.topAppBarContentColor: Color
@@ -40,15 +40,15 @@ val Colors.bottomNavBackgroundColor: Color
 
 val Colors.bottomNavUnselectedItemsColor: Color
     @Composable
-    get() = if (isLight) DarkestBlue else LightGray
+    get() = if (isLight) DarkestBlue else LightGrey
 
 val Colors.bottomNavSelectedItemColor: Color
     @Composable
-    get() = if (isLight) LightBlue else ShimmerMediumGray
+    get() = if (isLight) LightBlue else ShimmerMediumGrey
 
 val Colors.titleColor
     @Composable
-    get() = if (isLight) DarkGray else LightGray
+    get() = if (isLight) DarkGray else LightGrey
 
 val Colors.statusBarColor
     @Composable
@@ -60,8 +60,13 @@ val Colors.drinksScreenBackgroundColor
 
 val Colors.ingredientNamesColor: Color
     @Composable
-    get() = if (isLight) ShimmerDarkestGray else Color.White
+    get() = if (isLight) ShimmerDarkestGrey else Color.White
 
 val Colors.ingredientBoxBackgroundColor: Color
     @Composable
     get() = if (isLight) Color.Black else Color.White
+
+//TODO předělat navDrawerSelectedItemColor
+val Colors.navDrawerSelectedItemColor: Color
+    @Composable
+    get() = if (isLight) DarkGrey else DarkGrey
