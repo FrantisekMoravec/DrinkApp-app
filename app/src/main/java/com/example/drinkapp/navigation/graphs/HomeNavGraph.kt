@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.navigation.BottomBarScreen
 import com.example.drinkapp.navigation.Screen
+import com.example.drinkapp.presentation.screens.about_app.AboutAppScreen
 import com.example.drinkapp.presentation.screens.details.DrinkDetailsScreen
 import com.example.drinkapp.presentation.screens.details.assistant.AssistantScreen
 import com.example.drinkapp.presentation.screens.drinks.DrinksScreen
@@ -79,20 +80,20 @@ fun HomeNavGraph(
             DrinkDetailsScreen(navController = navController)
         }
 
-        composable(
-            route = Screen.FilteredDrinks.route,
-            deepLinks = listOf(navDeepLink {
-                uriPattern = "android-app://androidx.navigation/filtered_drinks_screen/{ingredients}"
-            }),
-            arguments = listOf(
-                navArgument("ingredients") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                }
+        composable(route = Screen.FilteredDrinks.route) {
+            FilteredDrinksScreen(
+                navController = navController,
+                //drinks = drinks,
+                scope = scope,
+                scaffoldState = scaffoldState
             )
-        ) { backStackEntry ->
-            val drinks = backStackEntry.arguments?.getString("drinks")?.split(",") ?: listOf()
-            FilteredDrinksScreen(navController = navController, drinks = drinks)
+        }
+
+        composable(route = Screen.AboutApp.route){
+            AboutAppScreen(
+                scaffoldState = scaffoldState,
+                scope = scope
+            )
         }
 
     }

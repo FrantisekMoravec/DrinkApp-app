@@ -29,6 +29,7 @@ fun TopBar(
     text: String,
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
+    search: Boolean,
     onSearchClicked: () -> Unit
 ) {
     TopAppBar(
@@ -40,20 +41,23 @@ fun TopBar(
         },
         backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor,
         actions = {
-            IconButton(onClick = onSearchClicked) {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = stringResource(R.string.search_icon),
-                    tint = MaterialTheme.colors.topAppBarContentColor
-                )
+            if (search){
+                IconButton(onClick = onSearchClicked) {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = stringResource(R.string.search_icon),
+                        tint = MaterialTheme.colors.topAppBarContentColor
+                    )
+                }
             }
         },
         navigationIcon = {
-            IconButton(onClick = {
-                scope.launch {
-                    scaffoldState.drawerState.open()
-                }
-            }) {
+            IconButton(
+                onClick = {
+                    scope.launch {
+                        scaffoldState.drawerState.open()
+                    }
+                }) {
                 Icon(
                     Icons.Filled.Menu,
                     contentDescription = "navigation drawer menu icon",
@@ -64,18 +68,3 @@ fun TopBar(
 
     )
 }
-/*
-/** náhled toho jak bude lišta vypadat */
-@Preview
-@Composable
-fun TopBarPreview() {
-    TopBar {}
-}
-
-/** náhled toho jak bude lišta vypadat v temném módu */
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun TopBarDarkPreview() {
-    TopBar {}
-}
-*/

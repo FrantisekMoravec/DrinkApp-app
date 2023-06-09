@@ -1,6 +1,7 @@
 package com.example.drinkapp.presentation.screens.ingredients
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.FloatingActionButton
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -38,12 +40,13 @@ fun IngredientsScreen(
     scaffoldState: ScaffoldState,
     scope: CoroutineScope
 ) {
+    val mContext = LocalContext.current
 
     val allIngredients = ingredientsViewModel.getAllIngredients.collectAsLazyPagingItems()
 
     val filteredDrinks = filteredDrinksViewModel.filteredDrinks.collectAsLazyPagingItems()
 
-    val selectedIngredients by filteredDrinksViewModel.selectedIngredients.collectAsState(emptyList())
+    //val selectedIngredients by filteredDrinksViewModel.selectedIngredients.collectAsState(emptyList())
 
     val allLocalDrinks by filteredDrinksViewModel.allLocalDrinks.collectAsState()
 
@@ -67,6 +70,7 @@ fun IngredientsScreen(
                 text = "hledej ingredience",
                 scope = scope,
                 scaffoldState = scaffoldState,
+                search = true,
                 onSearchClicked = {
                     navController.navigate(Screen.IngredientSearch.route)
                 }
@@ -95,7 +99,7 @@ fun IngredientsScreen(
                 onClick = {
                     filteredDrinksViewModel.updateFilteredDrinks()
 
-                    val selectedIngredientNames = selectedIngredients.map { it.name }
+                    //val selectedIngredientNames = selectedIngredients.map { it.name }
                     val allLocalDrinkNames = allLocalDrinks.map { it.name }
 
                     val filteredDrinks2 = filteredDrinks.itemSnapshotList.items.map { "${it.name} (Id: ${it.id})" }
@@ -104,11 +108,16 @@ fun IngredientsScreen(
                     //val allFilteredDrinks = filteredDrinksViewModel.filteredDrinks.value
 
                     Log.d("FAB", "všechny lokální drinky: $allLocalDrinkNames")
-                    Log.d("FAB", "vybrané ingredience: $selectedIngredientNames")
-                    Log.d("FAB", "Vyfiltrované drinky: $filteredDrinks2")
                     Log.d("FAB", "zaškrtnuté ingredience: ${filteredDrinksViewModel.checkedIngredients.value}")
+                    //Log.d("FAB", "vybrané ingredience: $selectedIngredientNames")//nefunguje
+                    Log.d("FAB", "Vyfiltrované drinky: $filteredDrinks2")
+                    Log.d("FAB", "Vyfiltrované drinky - State: ${filteredDrinks.loadState.refresh}")
+                    Log.d("FAB", "Vyfiltrované drinky - Item count: ${filteredDrinks.itemCount}")
 
-                    navController.navigate(Screen.FilteredDrinks.passIngredients(selectedIngredientNames))
+                    if(false)
+                        navController.navigate(Screen.FilteredDrinks.route)
+                    else
+                        Toast.makeText(mContext, "Funkce filtrování drinků podle zaškrtnutých ingrediencí zatím není dostupná", Toast.LENGTH_LONG).show()
                 },
             ) {
                 Icon(

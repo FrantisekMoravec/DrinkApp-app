@@ -28,7 +28,7 @@ interface DrinkDao {
            SELECT drinkId FROM drinks_containing_ingredients_table
            WHERE ingredientName IN (:ingredientNames)
            GROUP BY drinkId
-           HAVING COUNT(*) = :ingredientNamesCount)
+           HAVING COUNT(drinkId) = :ingredientNamesCount)
        ORDER BY name ASC"""
     )
     fun getDrinksContainingIngredients(ingredientNames: List<String>, ingredientNamesCount: Int): PagingSource<Int, Drink>
@@ -41,26 +41,3 @@ interface DrinkDao {
     suspend fun deleteAllDrinks()
 
 }
-
-    /*
-    @Query("SELECT * FROM drink_table WHERE drinkMadeByUser=:drinkMadeByUser")
-    fun getDrinksMadeByUser(drinkMadeByUser: Boolean): Drink
-*/
-    //TODO možná bude potřeba opravit tenhle request
-/*
-    @Query("SELECT DISTINCT d.* " +
-            "FROM drink_table d " +
-            "INNER JOIN ingredient_table i ON d.id = i.id " +
-            "WHERE i.checked = 1" +
-            "ORDER BY id ASC")
-    fun getFilteredDrinks(): PagingSource<Int, Drink>
-*/
-
-    /*
-    @Query(
-        "SELECT * FROM drink_table WHERE id IN " +
-                "(SELECT id FROM drinks_containing_ingredients_table WHERE ingredientName IN (:ingredientNames)) " +
-                "ORDER BY name ASC"
-    )
-    fun getDrinksContainingIngredients(ingredientNames: List<String>): List<Drink>
-*/

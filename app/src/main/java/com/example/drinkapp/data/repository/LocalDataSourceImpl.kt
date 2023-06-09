@@ -3,6 +3,7 @@ package com.example.drinkapp.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.PagingSource
 import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.Ingredient
@@ -34,19 +35,9 @@ class LocalDataSourceImpl(
 
     override fun getDrinksContainingIngredients(ingredientNames: List<String>, ingredientNamesCount: Int): Flow<PagingData<Drink>> {
         return Pager(
-            config = PagingConfig(pageSize = Constants.DRINK_ITEMS_PER_PAGE),
+            config = PagingConfig(pageSize = 21),
             pagingSourceFactory = { drinkDao.getDrinksContainingIngredients(ingredientNames, ingredientNamesCount) }
         ).flow
+
     }
 }
-    /*
-    override suspend fun getSelectedIngredients(ingredientIds: List<Ingredient>): List<Ingredient> {
-        return ingredientDao.getSelectedIngredients(ingredientIds = ingredientIds)
-    }
-    */
-
-    /*
-        override suspend fun getSelectedIngredientById(ingredientId: Int): Ingredient {
-            return ingredientDao.getSelectedIngredientById(ingredientId = ingredientId)
-        }
-    */

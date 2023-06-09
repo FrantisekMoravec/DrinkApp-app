@@ -23,15 +23,15 @@ class FilteredDrinksViewModel @Inject constructor(
     private val useCases: UseCases,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-//používat
+
     private val _checkedIngredients = MutableStateFlow<Map<Int, String>>(emptyMap())
     val checkedIngredients: StateFlow<Map<Int, String>> = _checkedIngredients
 
     private val _filteredDrinks = MutableStateFlow<PagingData<Drink>>(PagingData.empty())
     val filteredDrinks: StateFlow<PagingData<Drink>> = _filteredDrinks
-//TODO nepoužívat a zbavit se toho
-    private val _selectedIngredients = MutableStateFlow<List<Ingredient>>(emptyList())
-    val selectedIngredients: StateFlow<List<Ingredient>> = _selectedIngredients
+
+//    private val _selectedIngredients = MutableStateFlow<List<Ingredient>>(emptyList())
+//    val selectedIngredients: StateFlow<List<Ingredient>> = _selectedIngredients
 
     private val _allLocalDrinks = MutableStateFlow<List<Drink>>(emptyList())
     val allLocalDrinks: StateFlow<List<Drink>> = _allLocalDrinks
@@ -44,11 +44,9 @@ class FilteredDrinksViewModel @Inject constructor(
             //TODO hodit sem nějaký logy a sledovat tok dat
             val ingredients = useCases.getSelectedIngredientsByNameUseCase(ingredientNames = checkedIngredients.value.values as List<String>)
 
-
-
             useCases.getDrinksContainingIngredientsUseCase(
                 ingredientNames = ingredients.map { it.name },
-                ingredientNamesCount =ingredients.size
+                ingredientNamesCount = ingredients.size
             ).collect { filteredDrinks2 ->
                 _filteredDrinks.value = filteredDrinks2
             }
@@ -90,7 +88,6 @@ class FilteredDrinksViewModel @Inject constructor(
     }
 
     fun updateFilteredDrinks() {
-        // Zkontrolujte, zda jsou zaškrtnuté nějaké ingredience
         if (checkedIngredients.value.isNotEmpty()) {
             val filtered = allLocalDrinks.value.filter { drink ->
                 val drinkIngredientNames = drink.ingredients.map { simplifyName(it) }
@@ -99,19 +96,25 @@ class FilteredDrinksViewModel @Inject constructor(
             }
             _filteredDrinks.value = PagingData.from(filtered)
         } else {
-            // Pokud nejsou zaškrtnuté žádné ingredience, zalogujte hlášení
             Log.d("FAB", "filteredDrinks jsou prázdné")
         }
     }
 
+    fun simplifyName(name: String): String {
+        val regex = Regex("(\\s\\(.*\\))")
+        val simplifiedName = regex.replace(name, "")
+        return simplifiedName.lowercase()
+    }
+}
 
-    /*
+
+/*
     private suspend fun getIngredientsByName(names: List<String>): List<Ingredient> {
         return names.map { names ->
             useCases.getSelectedIngredientsByNameUseCase(names).firstOrNull() ?: Ingredient(id = 0, name = name, image = "", description = "", madeByUser = false)
         }
     }
-*/
+
     fun updateSelectedIngredients(ingredient: Ingredient, isChecked: Boolean) {
         viewModelScope.launch {
             _selectedIngredients.value = if (isChecked) {
@@ -122,10 +125,4 @@ class FilteredDrinksViewModel @Inject constructor(
             updateFilteredDrinks()
         }
     }
-
-    fun simplifyName(name: String): String {
-        val regex = Regex("(\\s\\(.*\\))")
-        val simplifiedName = regex.replace(name, "")
-        return simplifiedName.lowercase()
-    }
-}
+    */

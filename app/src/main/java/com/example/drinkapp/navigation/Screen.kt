@@ -5,30 +5,23 @@ package com.example.drinkapp.navigation
 sealed class Screen(val route: String) {
     object Splash : Screen("splash_screen")
 
-    object DrinkDetails : Screen("drink_details_screen/{drinkId}") {
+    object DrinkDetails : Screen("drink_details/{drinkId}") {
         fun passDrinkId(drinkId: Int): String {
-            return "drink_details_screen/$drinkId"
+            return "drink_details/$drinkId"
         }
     }
-    object DrinkSearch : Screen("drink_search_screen")
+    object DrinkSearch : Screen("drink_search")
 
-    object IngredientSearch : Screen("ingredient_search_screen")
+    object IngredientSearch : Screen("ingredient_search")
 
-    object FilteredDrinks : Screen("filtered_drinks_screen?ingredients={ingredients}") {
+    object FilteredDrinks : Screen("filtered_drinks?ingredients={ingredients}") {
         fun passIngredients(ingredients: List<String>): String {
             val ingredientsArg = ingredients.joinToString(",")
-            return "filtered_drinks_screen?ingredients=$ingredientsArg"
+            return "filtered_drinks?ingredients=$ingredientsArg"
         }
     }
+
+    object AboutApp : Screen("about_app")
+
+    object AddDrink : Screen("add_drink")
 }
-
-/*
-    object FilteredDrinks : Screen("filtered_drinks_screen/{ingredients}") {
-        fun passIngredients(ingredients: List<String>): String {
-            val ingredientsString = ingredients.joinToString(separator = ",")
-            return "filtered_drinks_screen/$ingredientsString"
-        }
-    }
-*/
-
-//object FilteredDrinks: Screen("filtered_drinks_screen")

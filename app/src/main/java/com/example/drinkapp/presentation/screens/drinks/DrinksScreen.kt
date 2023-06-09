@@ -39,6 +39,7 @@ fun DrinksScreen(
                 text = "hledej drinky",
                 scope = scope,
                 scaffoldState = scaffoldState,
+                search = true,
                 onSearchClicked = {
                     navController.navigate(Screen.DrinkSearch.route)
                 }

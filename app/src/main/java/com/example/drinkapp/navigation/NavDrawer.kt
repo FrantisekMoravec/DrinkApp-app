@@ -1,5 +1,6 @@
 package com.example.drinkapp.navigation
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,9 +23,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -43,6 +46,8 @@ fun NavDrawer(
     scaffoldState: ScaffoldState,
     navController: NavController
 ){
+
+    val mContext = LocalContext.current
 
     val items = listOf(
         NavDrawerItem.Drinks,
@@ -73,7 +78,6 @@ fun NavDrawer(
                     .fillMaxWidth()
                     .padding(10.dp)
             )
-
         }
 
         Spacer(
@@ -90,21 +94,25 @@ fun NavDrawer(
                 selected = currentRoute == items.route,
                 onItemClick = {
 
-                navController.navigate(items.route){
-                    navController.graph.startDestinationRoute?.let { route ->
-                        popUpTo(route){
-                            saveState = true
+                    if (!items.isWorking)
+                        Toast.makeText(mContext, "Funkce ${items.title.toLowerCase()} zatím není dostupná", Toast.LENGTH_LONG).show()
+                    else{
+                        navController.navigate(items.route){
+                            navController.graph.startDestinationRoute?.let { route ->
+                                popUpTo(route){
+                                    saveState = true
+                                }
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+
+                        scope.launch {
+                            scaffoldState.drawerState.close()
                         }
                     }
-                    launchSingleTop = true
-                    restoreState = true
                 }
-
-                scope.launch {
-                    scaffoldState.drawerState.close()
-                }
-
-            })
+            )
         }
 
         Spacer(modifier = Modifier.weight(1f))

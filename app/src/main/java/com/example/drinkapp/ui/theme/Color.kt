@@ -70,3 +70,11 @@ val Colors.ingredientBoxBackgroundColor: Color
 val Colors.navDrawerSelectedItemColor: Color
     @Composable
     get() = if (isLight) DarkGrey else DarkGrey
+
+val Colors.aboutAppBackgroundColor: Color
+    @Composable
+    get() = if (isLight) Color.White else ShimmerMediumGrey
+
+val Colors.aboutAppTextColor: Color
+    @Composable
+    get() = if (isLight) Color.Black else Color.Black

@@ -30,30 +30,8 @@ fun HomeScreen(
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     val scope = rememberCoroutineScope()
 
-    //val navBackStackEntry by navController.currentBackStackEntryAsState()
-    //val currentRoute = navBackStackEntry?.destination?.route
-
     Scaffold(
         scaffoldState = scaffoldState,
-        //bottomBar = { BottomBar(navController = navController) },
-        /*
-        topBar = {
-                 TopBar(
-                     text = "",
-                     scope = scope,
-                     scaffoldState = scaffoldState
-                 ) {
-                     //TODO tohle předělat
-
-                     if (currentRoute == Screen.DrinkSearch.route)
-                         navController.navigate(Screen.DrinkSearch.route)
-                     else
-                         navController.navigate(Screen.IngredientSearch.route)
-
-                     Log.d("currentRoute", "currentRoute = $currentRoute")
-                 }
-        },
-        */
         drawerContent = {
             NavDrawer(
                 scope = scope,
