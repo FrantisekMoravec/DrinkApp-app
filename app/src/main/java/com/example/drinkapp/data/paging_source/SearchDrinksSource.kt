@@ -29,6 +29,8 @@ class SearchDrinksSource @Inject constructor(
                     prevKey = null,
                     nextKey = null
                 )
+                //TODO tohle možná bude dělat bordel
+                //load(params)
             }
         } catch (e: Exception){
             LoadResult.Error(e)

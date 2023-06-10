@@ -78,3 +78,7 @@ val Colors.aboutAppBackgroundColor: Color
 val Colors.aboutAppTextColor: Color
     @Composable
     get() = if (isLight) Color.Black else Color.Black
+
+val Colors.FABcolor: Color
+    @Composable
+    get() = if (isLight) Color.White else ShimmerMediumGrey

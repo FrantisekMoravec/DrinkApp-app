@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
 
-    suspend fun getSelectedDrink(drinkId: Int): Drink
+    suspend fun getSelectedLocalDrink(drinkId: Int): Drink
 
     suspend fun getAllLocalDrinks(): Flow<List<Drink>>
 

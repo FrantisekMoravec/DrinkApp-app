@@ -9,7 +9,7 @@ import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.data.remote.DrinkApi
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.DrinkRemoteKeys
-//TODO ingredience by měli mít vlastní RemoteMediator classu
+
 @ExperimentalPagingApi
 class DrinkRemoteMediator(
     private val drinkApi: DrinkApi,
@@ -23,15 +23,11 @@ class DrinkRemoteMediator(
         val currentTime = System.currentTimeMillis()
         val lastUpdated = drinkRemoteKeysDao.getDrinkRemoteKeys(drinkId = 1)?.lastUpdated ?: 0L
         val cacheTimeout = 1440
-        //Log.d("RemoteMediator", "Current Time: ${parseMillis(currentTime)}")
-        //Log.d("RemoteMediator", "Last Updated Time: ${parseMillis(lastUpdated)}")
 
         val diffInMinutes = (currentTime - lastUpdated) / 1000 / 60
         return  if (diffInMinutes.toInt() <= cacheTimeout){
-            //Log.d("RemoteMediator", "up to date")
             InitializeAction.SKIP_INITIAL_REFRESH
         }else{
-            //Log.d("RemoteMediator", "refresh")
             InitializeAction.LAUNCH_INITIAL_REFRESH
         }
     }
@@ -118,11 +114,4 @@ class DrinkRemoteMediator(
                 drinkRemoteKeysDao.getDrinkRemoteKeys(drinkId = drink.id)
             }
     }
-/*
-    private fun parseMillis(millis: Long): String{
-        val date = Date(millis)
-        val format = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.ROOT)
-        return format.format(date)
-    }
-*/
 }

@@ -14,4 +14,6 @@ interface RemoteDataSource {
     fun getAllIngredients(): Flow<PagingData<Ingredient>>
 
     fun searchIngredients(query: String): Flow<PagingData<Ingredient>>
+
+    //fun getSelectedRemoteDrink(drinkId: Int): Drink
 }

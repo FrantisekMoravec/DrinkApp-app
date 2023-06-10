@@ -19,6 +19,8 @@ import javax.inject.Inject
 class DrinkDetailsViewModel @Inject constructor(
     private val useCases: UseCases,
     savedStateHandle: SavedStateHandle
+    //,
+    //downloadedDrinks: StateFlow<PagingData<Drink>>
 ): ViewModel() {
 
     private val _selectedDrink: MutableStateFlow<Drink?> = MutableStateFlow(null)
@@ -28,7 +30,7 @@ class DrinkDetailsViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO){
             val drinkId = savedStateHandle.get<Int>(DRINK_DETAILS_ARGUMENT_KEY)
-            _selectedDrink.value = drinkId?.let { useCases.getSelectedDrinkUseCase(drinkId = drinkId) }
+            _selectedDrink.value = drinkId?.let { useCases.getSelectedLocalDrinkUseCase(drinkId = drinkId) }
             //_selectedDrink.value?.name?.let { Log.d("Drink", it) }
         }
     }

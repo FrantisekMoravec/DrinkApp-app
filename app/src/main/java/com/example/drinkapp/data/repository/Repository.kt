@@ -36,9 +36,13 @@ class Repository @Inject constructor(
     fun searchIngredients(query: String): Flow<PagingData<Ingredient>>{
         return remote.searchIngredients(query = query)
     }
-
-    suspend fun getSelectedDrink(drinkId: Int): Drink{
-        return local.getSelectedDrink(drinkId = drinkId)
+/*
+    fun getSelectedRemoteDrink(drinkId: Int): Drink{
+        return remote.getSelectedRemoteDrink(drinkId = drinkId)
+    }
+*/
+    suspend fun getSelectedLocalDrink(drinkId: Int): Drink{
+        return local.getSelectedLocalDrink(drinkId = drinkId)
     }
 
     suspend fun getAllIngredientsMadeByUser(madeByUser: Boolean): Ingredient {

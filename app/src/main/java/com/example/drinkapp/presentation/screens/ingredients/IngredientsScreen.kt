@@ -25,6 +25,7 @@ import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.common.ListIngredients
 import com.example.drinkapp.presentation.screens.TopBar
 import com.example.drinkapp.presentation.screens.filtered_drinks.FilteredDrinksViewModel
+import com.example.drinkapp.ui.theme.FABcolor
 import com.example.drinkapp.ui.theme.bottomNavBackgroundColor
 import com.example.drinkapp.ui.theme.bottomNavSelectedItemColor
 import kotlinx.coroutines.CoroutineScope
@@ -93,7 +94,7 @@ fun IngredientsScreen(
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier
-                    .padding(bottom = 50.dp),
+                    .padding(10.dp),
                 shape = CircleShape,
                 backgroundColor = MaterialTheme.colors.bottomNavBackgroundColor,
                 onClick = {
@@ -123,7 +124,7 @@ fun IngredientsScreen(
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = "filter by selected ingredients",
-                    tint = MaterialTheme.colors.bottomNavSelectedItemColor
+                    tint = MaterialTheme.colors.FABcolor
                 )
             }
         }

@@ -20,8 +20,11 @@ interface DrinkDao {
     fun getAllLocalDrinks(): Flow<List<Drink>>
 
     @Query("SELECT * FROM drink_table WHERE id=:drinkId")
-    fun getSelectedDrink(drinkId: Int): Drink
-
+    fun getSelectedLocalDrink(drinkId: Int): Drink
+/*
+    @Query("SELECT * FROM drink_table WHERE id=:drinkId")
+    fun getSelectedRemoteDrink(drinkId: Int): Flow<Drink>
+    */
     @Query(
         """SELECT * FROM drink_table
        WHERE id IN (
