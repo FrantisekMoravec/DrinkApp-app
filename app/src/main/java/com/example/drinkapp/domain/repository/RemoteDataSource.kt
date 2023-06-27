@@ -3,6 +3,7 @@ package com.example.drinkapp.domain.repository
 import androidx.paging.PagingData
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.Ingredient
+import com.example.drinkapp.domain.model.IngredientFamily
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteDataSource {
@@ -14,6 +15,12 @@ interface RemoteDataSource {
     fun getAllIngredients(): Flow<PagingData<Ingredient>>
 
     fun searchIngredients(query: String): Flow<PagingData<Ingredient>>
+
+    fun getAllIngredientFamilies(): Flow<PagingData<IngredientFamily>>
+
+    fun searchIngredientFamilies(query: String): Flow<PagingData<IngredientFamily>>
+
+
 
     //fun getSelectedRemoteDrink(drinkId: Int): Drink
 }

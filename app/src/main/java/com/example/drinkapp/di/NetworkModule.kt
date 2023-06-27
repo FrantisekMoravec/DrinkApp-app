@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.data.remote.DrinkApi
 import com.example.drinkapp.data.remote.IngredientApi
+import com.example.drinkapp.data.remote.IngredientFamilyApi
 import com.example.drinkapp.data.repository.RemoteDataSourceImpl
 import com.example.drinkapp.domain.repository.RemoteDataSource
 import com.example.drinkapp.util.Constants.BASE_URL
@@ -63,14 +64,22 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideIngredientFamilyApi(retrofit: Retrofit): IngredientFamilyApi {
+        return  retrofit.create(IngredientFamilyApi::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun providesRemoteDataSource(
         drinkApi: DrinkApi,
         ingredientApi: IngredientApi,
+        ingredientFamilyApi: IngredientFamilyApi,
         drinkDatabase: DrinkDatabase
     ):RemoteDataSource{
         return RemoteDataSourceImpl(
             drinkApi = drinkApi,
             ingredientApi = ingredientApi,
+            ingredientFamilyApi = ingredientFamilyApi,
             drinkDatabase = drinkDatabase
         )
     }

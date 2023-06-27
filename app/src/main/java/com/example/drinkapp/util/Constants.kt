@@ -15,12 +15,13 @@ object Constants {
     const val INGREDIENT_DATABASE_TABLE = "ingredient_table"
     const val INGREDIENT_REMOTE_KEYS_DATABASE_TABLE = "ingredient_remote_keys_table"
 
+    const val INGREDIENT_FAMILY_DATABASE_TABLE = "ingredient_family_table"
+    const val INGREDIENT_FAMILY_REMOTE_KEYS_DATABASE_TABLE = "ingredient_family_remote_keys_table"
+
     const val DRINK_DATABASE_TABLE = "drink_table"
     const val DRINK_REMOTE_KEYS_DATABASE_TABLE = "drink_remote_keys_table"
 
     const val DRINKS_CONTAINING_INGREDIENTS_TABLE = "drinks_containing_ingredients_table"
-
-    const val DRINK_IMAGE_TABLE = "drink_image_table"
 
     const val DRINK_DATABASE = "drink_database"
 
@@ -30,6 +31,7 @@ object Constants {
 
     const val DRINK_ITEMS_PER_PAGE = 3
     const val INGREDIENT_ITEMS_PER_PAGE = 3
+    const val INGREDIENT_FAMILY_ITEMS_PER_PAGE = 3
 
     const val PREFERENCE_NAME = "drinks_made_by_user_preferences"
 }

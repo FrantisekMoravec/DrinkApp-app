@@ -3,6 +3,7 @@ package com.example.drinkapp.data.repository
 import androidx.paging.PagingData
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.Ingredient
+import com.example.drinkapp.domain.model.IngredientFamily
 import com.example.drinkapp.domain.repository.LocalDataSource
 import com.example.drinkapp.domain.repository.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
@@ -49,9 +50,22 @@ class Repository @Inject constructor(
         return local.getAllIngredientsMadeByUser(madeByUser = madeByUser)
     }
 
-    fun getDrinksContainingIngredients(ingredientNames: List<String>, ingredientNamesCount: Int): Flow<PagingData<Drink>> {
-        return local.getDrinksContainingIngredients(ingredientNames = ingredientNames, ingredientNamesCount = ingredientNamesCount)
+    fun getDrinksContainingIngredients(ingredientFamilyNames: List<String>, ingredientFamilyNamesCount: Int): Flow<PagingData<Drink>> {
+        return local.getDrinksContainingIngredients(ingredientFamilyNames = ingredientFamilyNames, ingredientFamilyNamesCount = ingredientFamilyNamesCount)
     }
+
+    fun getAllIngredientFamilies(): Flow<PagingData<IngredientFamily>>{
+        return remote.getAllIngredientFamilies()
+    }
+
+    suspend fun getSelectedIngredientFamiliesByName(ingredientFamilyNames: List<String>): List<IngredientFamily>{
+        return local.getSelectedIngredientFamiliesByName(ingredientFamilyNames = ingredientFamilyNames)
+    }
+
+    fun searchIngredientFamilies(query: String): Flow<PagingData<IngredientFamily>>{
+        return remote.searchIngredientFamilies(query = query)
+    }
+
 }
 /*
     suspend fun getSelectedIngredients(ingredientIds: List<Int>): List<Ingredient>{

@@ -8,7 +8,7 @@ import com.example.drinkapp.util.Constants.DRINKS_CONTAINING_INGREDIENTS_TABLE
 @kotlinx.serialization.Serializable
 @Entity(
     tableName = DRINKS_CONTAINING_INGREDIENTS_TABLE,
-    primaryKeys = ["drinkId", "ingredientName"],
+    primaryKeys = ["drinkId", "ingredientFamilyName"],
     foreignKeys = [
         ForeignKey(
             entity = Drink::class,
@@ -19,11 +19,11 @@ import com.example.drinkapp.util.Constants.DRINKS_CONTAINING_INGREDIENTS_TABLE
         ForeignKey(
             entity = Ingredient::class,
             parentColumns = ["name"],
-            childColumns = ["ingredientName"],
+            childColumns = ["ingredientFamilyName"],
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index(value = ["ingredientName"], unique = true)]
+    indices = [Index(value = ["ingredientFamilyName"], unique = true)]
 )
 data class DrinksContainingIngredients(
     val drinkId: Int,

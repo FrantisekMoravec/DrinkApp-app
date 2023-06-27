@@ -14,7 +14,6 @@ data class Drink(
     val name: String,
     val image: String,
     val description: String,
-    val rating: Double,
     val ingredients: List<String>,
     val tutorial: String,
     val madeByUser: Boolean

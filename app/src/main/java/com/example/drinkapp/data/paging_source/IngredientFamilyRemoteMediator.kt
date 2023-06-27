@@ -6,41 +6,34 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.drinkapp.data.local.DrinkDatabase
-import com.example.drinkapp.data.remote.IngredientApi
-import com.example.drinkapp.domain.model.Drink
-import com.example.drinkapp.domain.model.DrinkRemoteKeys
-import com.example.drinkapp.domain.model.Ingredient
-import com.example.drinkapp.domain.model.IngredientRemoteKeys
+import com.example.drinkapp.data.remote.IngredientFamilyApi
+import com.example.drinkapp.domain.model.IngredientFamily
+import com.example.drinkapp.domain.model.IngredientFamilyRemoteKeys
 
 @ExperimentalPagingApi
-class IngredientRemoteMediator (
-    private val ingredientApi: IngredientApi,
+class IngredientFamilyRemoteMediator (
+    private val ingredientFamilyApi: IngredientFamilyApi,
     private val drinkDatabase: DrinkDatabase
-) : RemoteMediator<Int, Ingredient>(){
+) : RemoteMediator<Int, IngredientFamily>(){
     private val ingredientDao = drinkDatabase.ingredientDao()
-    private val ingredientRemoteKeysDao = drinkDatabase.ingredientRemoteKeysDao()
+    private val ingredientFamilyRemoteKeysDao = drinkDatabase.ingredientFamilyRemoteKeysDao()
 
     override suspend fun initialize(): InitializeAction {
         val currentTime = System.currentTimeMillis()
-        val lastUpdated = ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = 1)?.lastUpdated ?: 0L
+        val lastUpdated = ingredientFamilyRemoteKeysDao.getIngredientFamilyRemoteKeys(ingredientFamilyId = 1)?.lastUpdated ?: 0L
         val cacheTimeout = 1440
         val diffInMinutes = (currentTime - lastUpdated) / 1000 / 60
 
-        //Log.d("RemoteMediator", "Current Time: ${parseMillis(currentTime)}")
-        //Log.d("RemoteMediator", "Last Updated Time: ${parseMillis(lastUpdated)}")
-
-        return  if (diffInMinutes.toInt() <= cacheTimeout){
-            //Log.d("RemoteMediator", "up to date")
+        return if (diffInMinutes.toInt() <= cacheTimeout){
             InitializeAction.SKIP_INITIAL_REFRESH
         }else{
-            //Log.d("RemoteMediator", "refresh")
             InitializeAction.LAUNCH_INITIAL_REFRESH
         }
     }
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, Ingredient>
+        state: PagingState<Int, IngredientFamily>
     ): MediatorResult {
         return try {
             val page = when(loadType){
@@ -66,58 +59,59 @@ class IngredientRemoteMediator (
                 }
             }
 
-            val ingredientResponse = ingredientApi.getAllIngredients(page = page)
-            if (ingredientResponse.ingredients.isNotEmpty()){
+            val ingredientFamilyResponse = ingredientFamilyApi.getAllIngredientFamilies(page = page)
+
+            if (ingredientFamilyResponse.ingredientFamilies.isNotEmpty()){
                 drinkDatabase.withTransaction {
                     if (loadType == LoadType.REFRESH){
                         ingredientDao.deleteAllIngredients()
-                        ingredientRemoteKeysDao.deleteAllIngredientRemoteKeys()
+                        ingredientFamilyRemoteKeysDao.deleteAllIngredientFamilyRemoteKeys()
                     }
-                    val ingredientPrevPage = ingredientResponse.prevPage
-                    val ingredientNextPage = ingredientResponse.nextPage
-                    val ingredientKeys = ingredientResponse.ingredients.map { ingredient ->
-                        IngredientRemoteKeys(
-                            id = ingredient.id,
-                            prevPage = ingredientPrevPage,
-                            nextPage = ingredientNextPage,
-                            lastUpdated = ingredientResponse.lastUpdated
+                    val ingredientFamilyPrevPage = ingredientFamilyResponse.prevPage
+                    val ingredientFamilyNextPage = ingredientFamilyResponse.nextPage
+                    val ingredientFamilyKeys = ingredientFamilyResponse.ingredientFamilies.map { ingredientFamily ->
+                        IngredientFamilyRemoteKeys(
+                            id = ingredientFamily.id,
+                            prevPage = ingredientFamilyPrevPage,
+                            nextPage = ingredientFamilyNextPage,
+                            lastUpdated = ingredientFamilyResponse.lastUpdated
                         )
                     }
-                    ingredientRemoteKeysDao.addAllIngredientRemoteKeys(ingredientRemoteKeys = ingredientKeys)
-                    ingredientDao.addIngredients(ingredients = ingredientResponse.ingredients)
+                    ingredientFamilyRemoteKeysDao.addAllIngredientFamilyRemoteKeys(ingredientFamilyRemoteKeys = ingredientFamilyKeys)
+                    ingredientDao.addIngredientFamilies(ingredientFamilies = ingredientFamilyResponse.ingredientFamilies)
                 }
             }
-            MediatorResult.Success(endOfPaginationReached = ingredientResponse.nextPage == null)
+            MediatorResult.Success(endOfPaginationReached = ingredientFamilyResponse.nextPage == null)
         }catch (e: Exception){
             return MediatorResult.Error(e)
         }
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(
-        state: PagingState<Int, Ingredient>
-    ): IngredientRemoteKeys? {
+        state: PagingState<Int, IngredientFamily>
+    ): IngredientFamilyRemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { id ->
-                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = id)
+                ingredientFamilyRemoteKeysDao.getIngredientFamilyRemoteKeys(ingredientFamilyId = id)
             }
         }
     }
 
     private suspend fun getRemoteKeysForFirstItem(
-        state: PagingState<Int, Ingredient>
-    ): IngredientRemoteKeys? {
+        state: PagingState<Int, IngredientFamily>
+    ): IngredientFamilyRemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
-            ?.let { ingredient ->
-                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = ingredient.id)
+            ?.let { ingredientFamily ->
+                ingredientFamilyRemoteKeysDao.getIngredientFamilyRemoteKeys(ingredientFamilyId = ingredientFamily.id)
             }
     }
 
     private suspend fun getRemoteKeyForLastItem(
-        state: PagingState<Int, Ingredient>
-    ): IngredientRemoteKeys? {
+        state: PagingState<Int, IngredientFamily>
+    ): IngredientFamilyRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
-            ?.let { ingredient ->
-                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = ingredient.id)
+            ?.let { ingredientFamily ->
+                ingredientFamilyRemoteKeysDao.getIngredientFamilyRemoteKeys(ingredientFamilyId = ingredientFamily.id)
             }
     }
 }

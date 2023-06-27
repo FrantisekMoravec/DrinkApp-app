@@ -4,15 +4,16 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.drinkapp.data.local.dao.DrinkDao
-import com.example.drinkapp.data.local.dao.DrinkImageDao
 import com.example.drinkapp.data.local.dao.DrinkRemoteKeysDao
 import com.example.drinkapp.data.local.dao.IngredientDao
+import com.example.drinkapp.data.local.dao.IngredientFamilyRemoteKeysDao
 import com.example.drinkapp.data.local.dao.IngredientRemoteKeysDao
 import com.example.drinkapp.domain.model.Drink
-import com.example.drinkapp.domain.model.DrinkImage
 import com.example.drinkapp.domain.model.DrinkRemoteKeys
 import com.example.drinkapp.domain.model.DrinksContainingIngredients
 import com.example.drinkapp.domain.model.Ingredient
+import com.example.drinkapp.domain.model.IngredientFamily
+import com.example.drinkapp.domain.model.IngredientFamilyRemoteKeys
 import com.example.drinkapp.domain.model.IngredientRemoteKeys
 
 /** databáze uchovávající stažená data */
@@ -22,8 +23,9 @@ import com.example.drinkapp.domain.model.IngredientRemoteKeys
         IngredientRemoteKeys::class,
         Drink::class,
         DrinkRemoteKeys::class,
-        DrinksContainingIngredients::class,
-        DrinkImage::class
+        IngredientFamily::class,
+        IngredientFamilyRemoteKeys::class,
+        DrinksContainingIngredients::class
                ],
     version = 1,
     exportSchema = false
@@ -35,5 +37,6 @@ abstract class DrinkDatabase: RoomDatabase() {
     abstract fun drinkRemoteKeysDao(): DrinkRemoteKeysDao
     abstract fun ingredientDao(): IngredientDao
     abstract fun ingredientRemoteKeysDao(): IngredientRemoteKeysDao
-    abstract fun drinkImageDao(): DrinkImageDao
+
+    abstract fun ingredientFamilyRemoteKeysDao(): IngredientFamilyRemoteKeysDao
 }
