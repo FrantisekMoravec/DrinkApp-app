@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.drinkapp.domain.model.Ingredient
+import com.example.drinkapp.domain.model.IngredientFamily
 import com.example.drinkapp.domain.use_cases.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,22 +17,43 @@ import javax.inject.Inject
 class IngredientsSearchViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
+//tenhle kód vyhledával ingredience - nový požívá ingredient families
+/*
+    private val _searchQuery = mutableStateOf("")
+    val searchQuery = _searchQuery
+
+    private val _searchedIngredientFamilies = MutableStateFlow<PagingData<Ingredient>>(PagingData.empty())
+    val searchedIngredientFamilies = _searchedIngredientFamilies
+
+    fun ingredientFamiliesUpdateSearchQuery(query: String){
+        _searchQuery.value = query
+    }
+
+    fun searchIngredientFamilies(query: String){
+        viewModelScope.launch(Dispatchers.IO){
+            useCases.searchIngredientsUseCase(query = query).cachedIn(viewModelScope).collect{
+                _searchedIngredientFamilies.value = it
+            }
+        }
+    }
+*/
 
     private val _searchQuery = mutableStateOf("")
     val searchQuery = _searchQuery
 
-    private val _searchedIngredients = MutableStateFlow<PagingData<Ingredient>>(PagingData.empty())
-    val searchedIngredients = _searchedIngredients
+    private val _searchedIngredientFamilies = MutableStateFlow<PagingData<IngredientFamily>>(PagingData.empty())
+    val searchedIngredientFamilies = _searchedIngredientFamilies
 
-    fun ingredientsUpdateSearchQuery(query: String){
+    fun ingredientFamiliesUpdateSearchQuery(query: String){
         _searchQuery.value = query
     }
 
-    fun searchIngredients(query: String){
+    fun searchIngredientFamilies(query: String){
         viewModelScope.launch(Dispatchers.IO){
-            useCases.searchIngredientsUseCase(query = query).cachedIn(viewModelScope).collect{
-                _searchedIngredients.value = it
+            useCases.searchIngredientFamiliesUseCase(query = query).cachedIn(viewModelScope).collect{
+                _searchedIngredientFamilies.value = it
             }
         }
     }
+
 }

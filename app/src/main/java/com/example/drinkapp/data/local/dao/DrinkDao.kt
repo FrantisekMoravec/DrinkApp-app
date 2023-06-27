@@ -29,7 +29,7 @@ interface DrinkDao {
         """SELECT * FROM drink_table
        WHERE id IN (
            SELECT drinkId FROM drinks_containing_ingredients_table
-           WHERE ingredientName IN (:ingredientNames)
+           WHERE ingredientFamilyName IN (:ingredientNames)
            GROUP BY drinkId
            HAVING COUNT(drinkId) = :ingredientNamesCount)
        ORDER BY name ASC"""

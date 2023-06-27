@@ -8,7 +8,7 @@ object Constants {
     //const val BASE_URL = "https://drinkapp-server.herokuapp.com/"
 
     const val DRINK_DETAILS_ARGUMENT_KEY = "drinkId"
-    const val FILTERED_DRINKS_ARGUMENT_KEY = "ingredientName"
+    const val FILTERED_DRINKS_ARGUMENT_KEY = "ingredientFamilyName"
     const val INGREDIENT_DETAILS_ARGUMENT_KEY = "ingredientId"
     const val INGREDIENTS_DETAILS_ARGUMENT_KEY = "ingredientIds"
 

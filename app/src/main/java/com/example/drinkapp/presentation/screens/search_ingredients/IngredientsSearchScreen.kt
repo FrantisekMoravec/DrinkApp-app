@@ -21,7 +21,7 @@ fun IngredientsSearchScreen(
     filteredDrinksViewModel: FilteredDrinksViewModel = hiltViewModel()
 ) {
     val searchQuery by ingredientsSearchViewModel.searchQuery
-    val ingredients = ingredientsSearchViewModel.searchedIngredients.collectAsLazyPagingItems()
+    val ingredients = ingredientsSearchViewModel.searchedIngredientFamilies.collectAsLazyPagingItems()
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(
@@ -32,8 +32,8 @@ fun IngredientsSearchScreen(
         topBar = {
             IngredientsSearchTopBar(
                 text = searchQuery,
-                onTextChange = {ingredientsSearchViewModel.ingredientsUpdateSearchQuery(query = it)},
-                onSearchClicked = {ingredientsSearchViewModel.searchIngredients(query = it)},
+                onTextChange = {ingredientsSearchViewModel.ingredientFamiliesUpdateSearchQuery(query = it)},
+                onSearchClicked = {ingredientsSearchViewModel.searchIngredientFamilies(query = it)},
                 onCloseClicked = {navController.popBackStack()}
             )
         },

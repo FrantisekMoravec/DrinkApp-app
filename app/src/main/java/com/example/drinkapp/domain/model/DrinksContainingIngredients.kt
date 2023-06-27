@@ -27,6 +27,5 @@ import com.example.drinkapp.util.Constants.DRINKS_CONTAINING_INGREDIENTS_TABLE
 )
 data class DrinksContainingIngredients(
     val drinkId: Int,
-    val ingredientName: String
+    val ingredientFamilyName: String
 )
-
