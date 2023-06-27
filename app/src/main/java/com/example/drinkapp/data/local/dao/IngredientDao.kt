@@ -54,7 +54,7 @@ interface IngredientDao {
 /*
     //TODO tady je možná chyba
     @Query("SELECT * FROM ingredient_table WHERE checked= 'TRUE'")
-    suspend fun getCheckedIngredients(checked: Boolean): Ingredient
+    suspend fun getCheckedIngredientFamilies(checked: Boolean): Ingredient
 */
 /*
     @Query("SELECT * FROM ingredient_table WHERE id=:ingredientId")

@@ -41,9 +41,9 @@ fun IngredientsSearchScreen(
             ListIngredients(
                 ingredientFamilies = ingredients,
                 navController = navController,
-                checkedIngredients = filteredDrinksViewModel.checkedIngredients
+                checkedIngredients = filteredDrinksViewModel.checkedIngredientFamilies
             ) { id, name, isChecked ->
-                filteredDrinksViewModel.updateCheckedIngredients(id, name, isChecked)
+                filteredDrinksViewModel.updateCheckedIngredientFamilies(id, name, isChecked)
             }
         }
     )

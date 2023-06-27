@@ -80,12 +80,12 @@ fun IngredientsScreen(
             ListIngredients(
                 ingredientFamilies = allIngredients,
                 navController = navController,
-                checkedIngredients = filteredDrinksViewModel.checkedIngredients
+                checkedIngredients = filteredDrinksViewModel.checkedIngredientFamilies
             ) { id, name, isChecked ->
                 if (isChecked) {
-                    filteredDrinksViewModel.addCheckedIngredient(id, name)
+                    filteredDrinksViewModel.addCheckedIngredientFamily(id, name)
                 } else {
-                    filteredDrinksViewModel.removeCheckedIngredient(id)
+                    filteredDrinksViewModel.removeCheckedIngredientFamily(id)
                 }
             }
         },
@@ -107,7 +107,7 @@ fun IngredientsScreen(
                     //val allFilteredDrinks = filteredDrinksViewModel.filteredDrinks.value
 
                     Log.d("FAB", "všechny lokální drinky: $allLocalDrinkNames")
-                    Log.d("FAB", "zaškrtnuté ingredience: ${filteredDrinksViewModel.checkedIngredients.value}")
+                    Log.d("FAB", "zaškrtnuté ingredience: ${filteredDrinksViewModel.checkedIngredientFamilies.value}")
                     //Log.d("FAB", "vybrané ingredience: $selectedIngredientNames")//nefunguje
                     Log.d("FAB", "Vyfiltrované drinky: $filteredDrinks2")
                     Log.d("FAB", "Vyfiltrované drinky - State: ${filteredDrinks.loadState.refresh}")

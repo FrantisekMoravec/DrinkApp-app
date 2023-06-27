@@ -252,7 +252,6 @@ fun BottomSheetContentPreview() {
             name = "B52",
             image = "/images/drinks/b52.jpg",
             description = "B52 drink je třívrstvý míchaný nápoj nazvaný podle amerického bombardéru používaného ve válce ve Vietnamu. Zvláštností tohoto drinku je, že se podává doslova hořící.",
-            rating = 5.0,
             ingredients = listOf(
                 "Kahlúa (3 cl)",
                 "Baileys (2 cl)",
