@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.Drink
-import com.example.drinkapp.domain.model.Ingredient
+import com.example.drinkapp.domain.model.IngredientFamily
 import com.example.drinkapp.ui.theme.NETWORK_ERROR_ICON_HEIGHT
 import com.example.drinkapp.ui.theme.SMALL_PADDING
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -39,7 +39,7 @@ import java.net.SocketTimeoutException
 fun EmptyScreen(
     error: LoadState.Error? = null,
     drinks: LazyPagingItems<Drink>? = null,
-    ingredients: LazyPagingItems<Ingredient>? = null
+    ingredientFamilies: LazyPagingItems<IngredientFamily>? = null
 ) {
 
     /** ikona a hláška pro obrazovku s vyhledáváním drinků podle jména */
@@ -73,7 +73,7 @@ fun EmptyScreen(
         icon = icon,
         message = message,
         drinks = drinks,
-        ingredients = ingredients,
+        ingredientFamilies = ingredientFamilies,
         error = error
     )
 }
@@ -85,7 +85,7 @@ fun EmptyContent(
     icon: Int,
     message: String,
     drinks: LazyPagingItems<Drink>? = null,
-    ingredients: LazyPagingItems<Ingredient>? = null,
+    ingredientFamilies: LazyPagingItems<IngredientFamily>? = null,
     error: LoadState.Error? = null
 ) {
     var isRefreshing by remember { mutableStateOf(false) }
@@ -96,7 +96,7 @@ fun EmptyContent(
         onRefresh = {
             isRefreshing = true
             drinks?.refresh()
-            ingredients?.refresh()
+            ingredientFamilies?.refresh()
             isRefreshing = false
         }
     ) {

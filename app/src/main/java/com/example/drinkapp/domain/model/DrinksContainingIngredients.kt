@@ -17,7 +17,7 @@ import com.example.drinkapp.util.Constants.DRINKS_CONTAINING_INGREDIENTS_TABLE
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = Ingredient::class,
+            entity = IngredientFamily::class,
             parentColumns = ["name"],
             childColumns = ["ingredientFamilyName"],
             onDelete = ForeignKey.CASCADE

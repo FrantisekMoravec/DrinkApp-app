@@ -20,36 +20,6 @@ import javax.inject.Inject
 class IngredientsViewModel @Inject constructor(
     useCases: UseCases
 ): ViewModel() {
-    val getAllIngredients = useCases.getAllIngredientsUseCase()
-}
-/*
-    val checkedIngredients: MutableState<List<Ingredient>> = mutableStateOf(listOf())
-
-    init {
-        viewModelScope.launch {
-            val ingredients =
-        }
-    }
-*/
-    //val getIngredientsMadeByUser = useCases.getAllIngredientsMadeByUserUseCase()
-
     //val getAllIngredients = useCases.getAllIngredientsUseCase()
-/*
-    //val getAllCheckedIngredientsUseCase = useCases.getAllCheckedIngredientsUseCase(checked = true)
-    val getAllRemoteDrinks = useCases.getAllDrinksUseCase()
-    var checkedIngredients = listOf<Int>()
-*/
-    //TODO přidat ingrediencím nullable parametr checked
-    //TODO udělat v dao request
-    //TODO přes usecases vzít všechny checked ingredience
-    //TODO dát je do listu
-    //init {
-        //viewModelScope.launch(Dispatchers.IO){
-            //TODO udělat proměnnou list pro každej list ingrediencí v drinku
-            //TODO vzít každej string v listu v listu ingrediencí drinku (lowercase) a smazat jeden znak před závorkama, závorky i to co je mezi nima
-            //TODO porovnat jestli už neni string v listu
-            //TODO porovnat upravenej list ingrediencí v drinku s listem vybranejch - list.containsAll(string) - použít if
-            //TODO zobrazit drinky co budou odpovídat
-        //}
-    //}
-    //TODO udělat přechod přes FAB z IngredientScreen do FilteredDrinksByIngredientsScreen
+    val getAllIngredientFamilies = useCases.getAllIngredientFamiliesUseCase()
+}

@@ -6,7 +6,9 @@ import androidx.paging.PagingData
 import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.Ingredient
+import com.example.drinkapp.domain.model.IngredientFamily
 import com.example.drinkapp.domain.repository.LocalDataSource
+import com.example.drinkapp.util.Constants.DRINK_ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
 
 class LocalDataSourceImpl(
@@ -26,16 +28,19 @@ class LocalDataSourceImpl(
     override suspend fun getAllLocalDrinks(): Flow<List<Drink>> {
         return drinkDao.getAllLocalDrinks()
     }
-
+/*
     override suspend fun getAllIngredientsMadeByUser(ingredientMadeByUser: Boolean): Ingredient {
         return ingredientDao.getIngredientsMadeByUser(ingredientMadeByUser = ingredientMadeByUser)
     }
-
-    override fun getDrinksContainingIngredients(ingredientNames: List<String>, ingredientNamesCount: Int): Flow<PagingData<Drink>> {
+*/
+    override fun getDrinksContainingIngredients(ingredientFamilyNames: List<String>, ingredientFamilyNamesCount: Int): Flow<PagingData<Drink>> {
         return Pager(
-            config = PagingConfig(pageSize = 21),
-            pagingSourceFactory = { drinkDao.getDrinksContainingIngredients(ingredientNames, ingredientNamesCount) }
+            config = PagingConfig(pageSize = DRINK_ITEMS_PER_PAGE),
+            pagingSourceFactory = { drinkDao.getDrinksContainingIngredients(ingredientFamilyNames, ingredientFamilyNamesCount) }
         ).flow
+    }
 
+    override suspend fun getSelectedIngredientFamiliesByName(ingredientFamilyNames: List<String>): List<IngredientFamily> {
+        return ingredientDao.getSelectedIngredientFamiliesByName(ingredientFamilyNames = ingredientFamilyNames)
     }
 }

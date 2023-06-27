@@ -1,7 +1,6 @@
 package com.example.drinkapp.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -32,7 +30,6 @@ import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.navigation.Screen
-import com.example.drinkapp.presentation.components.RatingWidget
 import com.example.drinkapp.presentation.components.ShimmerEffect
 import com.example.drinkapp.ui.theme.*
 import com.example.drinkapp.util.Constants.BASE_URL

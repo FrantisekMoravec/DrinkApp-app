@@ -39,13 +39,12 @@ fun IngredientsSearchScreen(
         },
         content = {
             ListIngredients(
-                ingredients = ingredients,
+                ingredientFamilies = ingredients,
                 navController = navController,
-                checkedIngredients = filteredDrinksViewModel.checkedIngredients,
-                onCheckedChange = { id, name, isChecked ->
-                    filteredDrinksViewModel.updateCheckedIngredients(id, name, isChecked)
-                }
-            )
+                checkedIngredients = filteredDrinksViewModel.checkedIngredients
+            ) { id, name, isChecked ->
+                filteredDrinksViewModel.updateCheckedIngredients(id, name, isChecked)
+            }
         }
     )
 }

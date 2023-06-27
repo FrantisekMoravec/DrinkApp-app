@@ -27,7 +27,6 @@ import com.example.drinkapp.presentation.screens.TopBar
 import com.example.drinkapp.presentation.screens.filtered_drinks.FilteredDrinksViewModel
 import com.example.drinkapp.ui.theme.FABcolor
 import com.example.drinkapp.ui.theme.bottomNavBackgroundColor
-import com.example.drinkapp.ui.theme.bottomNavSelectedItemColor
 import kotlinx.coroutines.CoroutineScope
 
 /** tato metoda říká jak má vypadat fragment s ingrediencemi */
@@ -43,7 +42,7 @@ fun IngredientsScreen(
 ) {
     val mContext = LocalContext.current
 
-    val allIngredients = ingredientsViewModel.getAllIngredients.collectAsLazyPagingItems()
+    val allIngredients = ingredientsViewModel.getAllIngredientFamilies.collectAsLazyPagingItems()
 
     val filteredDrinks = filteredDrinksViewModel.filteredDrinks.collectAsLazyPagingItems()
 
@@ -79,17 +78,16 @@ fun IngredientsScreen(
         },
         content = {
             ListIngredients(
-                ingredients = allIngredients,
+                ingredientFamilies = allIngredients,
                 navController = navController,
-                checkedIngredients = filteredDrinksViewModel.checkedIngredients,
-                onCheckedChange = { id, name, isChecked ->
-                    if (isChecked) {
-                        filteredDrinksViewModel.addCheckedIngredient(id, name)
-                    } else {
-                        filteredDrinksViewModel.removeCheckedIngredient(id)
-                    }
+                checkedIngredients = filteredDrinksViewModel.checkedIngredients
+            ) { id, name, isChecked ->
+                if (isChecked) {
+                    filteredDrinksViewModel.addCheckedIngredient(id, name)
+                } else {
+                    filteredDrinksViewModel.removeCheckedIngredient(id)
                 }
-            )
+            }
         },
         floatingActionButton = {
             FloatingActionButton(

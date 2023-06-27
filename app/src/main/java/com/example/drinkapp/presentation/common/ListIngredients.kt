@@ -34,7 +34,7 @@ import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
-import com.example.drinkapp.domain.model.Ingredient
+import com.example.drinkapp.domain.model.IngredientFamily
 import com.example.drinkapp.presentation.components.ShimmerEffect
 import com.example.drinkapp.ui.theme.INGREDIENT_ITEM_HEIGHT
 import com.example.drinkapp.ui.theme.LARGE_PADDING
@@ -48,7 +48,7 @@ import kotlinx.coroutines.flow.StateFlow
 @ExperimentalCoilApi
 @Composable
 fun ListIngredients(
-    ingredients: LazyPagingItems<Ingredient>,
+    ingredientFamilies: LazyPagingItems<IngredientFamily>,
     navController: NavHostController,
     checkedIngredients: StateFlow<Map<Int, String>>,
     onCheckedChange: (Int, String, Boolean) -> Unit
@@ -56,7 +56,7 @@ fun ListIngredients(
 ) {
     //val checkedIngredients = rememberSaveable { mutableStateOf(mutableSetOf<Ingredient>()) }
 
-    val result = handlePagingResult(ingredients = ingredients)
+    val result = handlePagingResult(ingredientFamilies = ingredientFamilies)
 
     if (result){
         LazyColumn(
@@ -64,14 +64,14 @@ fun ListIngredients(
             verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
         ){
             items(
-                items = ingredients,
+                items = ingredientFamilies,
                 key = { ingredient ->
                     ingredient.id
                 }
             ) { ingredient ->
                 ingredient?.let {
                     IngredientItem(
-                        ingredient = it,
+                        ingredientFamily = it,
                         navController = navController,
                         checkedIngredients = checkedIngredients,
                         onCheckedChange = onCheckedChange
@@ -84,9 +84,9 @@ fun ListIngredients(
 
 @Composable
 fun handlePagingResult(
-    ingredients: LazyPagingItems<Ingredient>
+    ingredientFamilies: LazyPagingItems<IngredientFamily>
 ): Boolean {
-    ingredients.apply {
+    ingredientFamilies.apply {
         val error = when{
             loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
             loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
@@ -102,11 +102,11 @@ fun handlePagingResult(
             }
 
             error != null ->{
-                EmptyScreen(error = error, ingredients = ingredients)
+                EmptyScreen(error = error, ingredientFamilies = ingredientFamilies)
                 false
             }
 
-            ingredients.itemCount < 1 -> {
+            ingredientFamilies.itemCount < 1 -> {
                 EmptyScreen(error = null)
                 false
             }
@@ -119,14 +119,14 @@ fun handlePagingResult(
 @ExperimentalCoilApi
 @Composable
 fun IngredientItem(
-    ingredient: Ingredient,
+    ingredientFamily: IngredientFamily,
     navController: NavHostController,
     checkedIngredients: StateFlow<Map<Int, String>>,
     onCheckedChange: (Int, String, Boolean) -> Unit
 ) {
     val currentCheckedIngredients by checkedIngredients.collectAsState()
 
-    val painter = rememberImagePainter(data = "${BASE_URL}${ingredient.image}"){
+    val painter = rememberImagePainter(data = "${BASE_URL}${ingredientFamily.image}"){
         placeholder(R.drawable.ic_placeholder)
         error(R.drawable.ic_placeholder)
     }
@@ -177,7 +177,7 @@ fun IngredientItem(
                 //.padding(start = 50.dp, bottom = 25.dp, top = 25.dp)
             ) {
                 Text(
-                    text = ingredient.name,
+                    text = ingredientFamily.name,
                     color = MaterialTheme.colors.ingredientNamesColor,
                     fontSize = MaterialTheme.typography.h5.fontSize,
                     maxLines = 1,
@@ -187,9 +187,9 @@ fun IngredientItem(
             Checkbox(
                 modifier = Modifier.padding(start = 300.dp, top = 40.dp),
                 enabled = true,
-                checked = currentCheckedIngredients.values.contains(ingredient.name),
+                checked = currentCheckedIngredients.values.contains(ingredientFamily.name),
                 onCheckedChange = { checked ->
-                    onCheckedChange(ingredient.id, ingredient.name, checked)
+                    onCheckedChange(ingredientFamily.id, ingredientFamily.name, checked)
                 }
             )
 

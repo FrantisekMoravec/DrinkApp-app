@@ -64,7 +64,7 @@ class IngredientFamilyRemoteMediator (
             if (ingredientFamilyResponse.ingredientFamilies.isNotEmpty()){
                 drinkDatabase.withTransaction {
                     if (loadType == LoadType.REFRESH){
-                        ingredientDao.deleteAllIngredients()
+                        ingredientDao.deleteAllIngredientFamilies()
                         ingredientFamilyRemoteKeysDao.deleteAllIngredientFamilyRemoteKeys()
                     }
                     val ingredientFamilyPrevPage = ingredientFamilyResponse.prevPage

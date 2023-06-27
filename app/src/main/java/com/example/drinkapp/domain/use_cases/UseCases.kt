@@ -22,7 +22,7 @@ data class UseCases (
 
     val getAllIngredientsUseCase: GetAllIngredientsUseCase,
     val searchIngredientsUseCase: SearchIngredientsUseCase,
-    val getAllIngredientsMadeByUserUseCase: GetAllIngredientsMadeByUserUseCase,
+    //val getAllIngredientsMadeByUserUseCase: GetAllIngredientsMadeByUserUseCase,
     val getSelectedIngredientsByNameUseCase: GetSelectedIngredientsByNameUseCase,
 
     val getAllIngredientFamiliesUseCase: GetAllIngredientFamiliesUseCase,

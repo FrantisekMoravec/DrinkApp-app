@@ -5,7 +5,6 @@ import com.example.drinkapp.domain.use_cases.UseCases
 import com.example.drinkapp.domain.use_cases.get_all_ingredient_families.GetAllIngredientFamiliesUseCase
 import com.example.drinkapp.domain.use_cases.get_all_remote_drinks.GetAllRemoteDrinksUseCase
 import com.example.drinkapp.domain.use_cases.get_all_ingredients.GetAllIngredientsUseCase
-import com.example.drinkapp.domain.use_cases.get_all_ingredients_made_by_user.GetAllIngredientsMadeByUserUseCase
 import com.example.drinkapp.domain.use_cases.get_all_local_drinks.GetAllLocalDrinksUseCase
 import com.example.drinkapp.domain.use_cases.get_drinks_containing_ingredients.GetDrinksContainingIngredientsUseCase
 import com.example.drinkapp.domain.use_cases.get_ingredient_families_by_name.GetSelectedIngredientFamiliesByName
@@ -37,7 +36,7 @@ object RepositoryModule {
 
             getSelectedLocalDrinkUseCase = GetSelectedLocalDrinkUseCase(repository),
 
-            getAllIngredientsMadeByUserUseCase = GetAllIngredientsMadeByUserUseCase(repository),
+            //getAllIngredientsMadeByUserUseCase = GetAllIngredientsMadeByUserUseCase(repository),
 
             getDrinksContainingIngredientsUseCase = GetDrinksContainingIngredientsUseCase(repository),
 

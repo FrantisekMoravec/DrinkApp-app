@@ -32,7 +32,7 @@ interface IngredientDao {
 
     @Query("SELECT * FROM ingredient_family_table ORDER BY id ASC")
     fun getAllIngredientFamilies(): PagingSource<Int, IngredientFamily>
-
+//TODO použít
     @Query("SELECT * FROM ingredient_family_table WHERE id=:ingredientFamilyId")
     fun getSelectedIngredientFamiliesById(ingredientFamilyId: Int): IngredientFamily
 

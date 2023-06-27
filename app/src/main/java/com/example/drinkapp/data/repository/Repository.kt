@@ -45,11 +45,11 @@ class Repository @Inject constructor(
     suspend fun getSelectedLocalDrink(drinkId: Int): Drink{
         return local.getSelectedLocalDrink(drinkId = drinkId)
     }
-
+/*
     suspend fun getAllIngredientsMadeByUser(madeByUser: Boolean): Ingredient {
         return local.getAllIngredientsMadeByUser(madeByUser = madeByUser)
     }
-
+*/
     fun getDrinksContainingIngredients(ingredientFamilyNames: List<String>, ingredientFamilyNamesCount: Int): Flow<PagingData<Drink>> {
         return local.getDrinksContainingIngredients(ingredientFamilyNames = ingredientFamilyNames, ingredientFamilyNamesCount = ingredientFamilyNamesCount)
     }
