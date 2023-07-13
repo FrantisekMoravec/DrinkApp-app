@@ -41,12 +41,14 @@ class FilteredDrinksViewModel @Inject constructor(
             //TODO hodit sem nějaký logy a sledovat tok dat
             val ingredientFamilies = useCases.getSelectedIngredientFamiliesByName(ingredientFamilyNames = checkedIngredientFamilies.value.values as List<String>)
 
+            /*
             useCases.getDrinksContainingIngredientsUseCase(
                 ingredientFamilyNames = ingredientFamilies.map { it.name },
                 ingredientFamilyNamesCount = ingredientFamilies.size
             ).collect { filteredDrinks2 ->
                 _filteredDrinks.value = filteredDrinks2
             }
+            */
             /*
             val ingredientNames = savedStateHandle.get<String>(FILTERED_DRINKS_ARGUMENT_KEY)?.split(",")
             if (ingredientNames != null) {

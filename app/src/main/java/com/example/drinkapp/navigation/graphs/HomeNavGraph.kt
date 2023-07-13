@@ -11,15 +11,17 @@ import coil.annotation.ExperimentalCoilApi
 import com.example.drinkapp.navigation.BottomBarScreen
 import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.screens.about_app.AboutAppScreen
-import com.example.drinkapp.presentation.screens.details.DrinkDetailsScreen
-import com.example.drinkapp.presentation.screens.details.assistant.AssistantScreen
+import com.example.drinkapp.presentation.screens.drink_details.DrinkDetailsScreen
 import com.example.drinkapp.presentation.screens.drinks.DrinksScreen
+import com.example.drinkapp.presentation.screens.ingredient_details.IngredientDetailsScreen
 import com.example.drinkapp.presentation.screens.ingredients.FilteredDrinksScreen
 import com.example.drinkapp.presentation.screens.ingredients.IngredientsScreen
 import com.example.drinkapp.presentation.screens.search_drinks.DrinksSearchScreen
 import com.example.drinkapp.presentation.screens.search_ingredients.IngredientsSearchScreen
 import com.example.drinkapp.presentation.screens.settings.SettingsScreen
 import com.example.drinkapp.util.Constants.DRINK_DETAILS_ARGUMENT_KEY
+import com.example.drinkapp.util.Constants.INGREDIENT_DETAILS_ARGUMENT_KEY
+import com.example.drinkapp.util.Constants.INGREDIENT_FAMILY_DETAILS_ARGUMENT_KEY
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
 
@@ -56,9 +58,7 @@ fun HomeNavGraph(
                 navController = navController
             )
         }
-        composable(route = BottomBarScreen.Assistant.route) {
-            AssistantScreen(navController = navController)
-        }
+
         composable(route = BottomBarScreen.Settings.route) {
             SettingsScreen(navController = navController)
         }
@@ -78,6 +78,15 @@ fun HomeNavGraph(
             })
         ) {
             DrinkDetailsScreen(navController = navController)
+        }
+
+        composable(
+            route = Screen.IngredientDetails.route,
+            arguments = listOf(navArgument(INGREDIENT_FAMILY_DETAILS_ARGUMENT_KEY){
+                type = NavType.IntType
+            })
+        ){
+            IngredientDetailsScreen(navController = navController)
         }
 
         composable(route = Screen.FilteredDrinks.route) {

@@ -24,4 +24,10 @@ sealed class Screen(val route: String) {
     object AboutApp : Screen("about_app")
 
     object AddDrink : Screen("add_drink")
+
+    object IngredientDetails : Screen("ingredient_details/{ingredientFamilyId}"){
+        fun passIngredientId(ingredientFamilyId: Int): String {
+            return "ingredient_details/$ingredientFamilyId"
+        }
+    }
 }

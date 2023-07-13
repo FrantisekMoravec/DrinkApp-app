@@ -1,4 +1,4 @@
-package com.example.drinkapp.presentation.screens.details
+package com.example.drinkapp.presentation.screens.drink_details
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
@@ -47,9 +47,7 @@ fun DrinkDetailsScreen(
                     )
                     if(bitmap != null){
                         drinkDetailsViewModel.setColorPalette(
-                            colors = extractColorFromBitmap(
-                                bitmap
-                            )
+                            colors = extractColorFromBitmap(bitmap)
                         )
                     }
                 }

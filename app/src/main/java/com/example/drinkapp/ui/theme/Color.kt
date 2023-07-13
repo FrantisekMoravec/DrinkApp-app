@@ -73,7 +73,7 @@ val Colors.navDrawerSelectedItemColor: Color
 
 val Colors.aboutAppBackgroundColor: Color
     @Composable
-    get() = if (isLight) Color.White else ShimmerMediumGrey
+    get() = if (isLight) Color.White else Color.White //ShimmerMediumGrey
 
 val Colors.aboutAppTextColor: Color
     @Composable
@@ -82,3 +82,7 @@ val Colors.aboutAppTextColor: Color
 val Colors.FABcolor: Color
     @Composable
     get() = if (isLight) Color.White else ShimmerMediumGrey
+//TODO upravit barvy
+val Colors.IngredientDetailsScreenBackgroundColor: Color
+    @Composable
+    get() = if (isLight) Color.White else Color.White

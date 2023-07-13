@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.drinkapp.domain.model.Ingredient
 import com.example.drinkapp.domain.model.IngredientFamily
-
+//TODO sloučit s DrinkDao
 /** říká knihovně room jak provádět crud operace */
 @Dao
 interface IngredientDao {

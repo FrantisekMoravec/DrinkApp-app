@@ -1,4 +1,4 @@
-package com.example.drinkapp.presentation.screens.details
+package com.example.drinkapp.presentation.screens.drink_details
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State

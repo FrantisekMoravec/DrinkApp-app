@@ -19,4 +19,9 @@ interface DrinkApi {
         @Query("name") name: String
     ): DrinkApiResponse
 
+    @GET("")
+    suspend fun searchDrinksByIngredients(
+        @Query("ingredients") ingredients: String
+    ): DrinkApiResponse
+
 }

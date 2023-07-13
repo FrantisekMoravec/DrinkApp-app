@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class GetDrinksContainingIngredientsUseCase (
     private val repository: Repository
 ){
-    operator fun invoke(ingredientFamilyNames: List<String>, ingredientFamilyNamesCount: Int): Flow<PagingData<Drink>> {
-        return repository.getDrinksContainingIngredients(ingredientFamilyNames = ingredientFamilyNames, ingredientFamilyNamesCount = ingredientFamilyNamesCount)
+    operator fun invoke(ingredientNames: List<String>): Flow<PagingData<Drink>> {
+        return repository.getDrinksContainingIngredients(ingredientNames = ingredientNames)
     }
 }

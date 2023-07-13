@@ -13,7 +13,6 @@ class Repository @Inject constructor(
     private val remote: RemoteDataSource,
     private val local: LocalDataSource
 ){
-
     fun getAllRemoteDrinks(): Flow<PagingData<Drink>>{
         return remote.getAllRemoteDrinks()
     }
@@ -50,10 +49,6 @@ class Repository @Inject constructor(
         return local.getAllIngredientsMadeByUser(madeByUser = madeByUser)
     }
 */
-    fun getDrinksContainingIngredients(ingredientFamilyNames: List<String>, ingredientFamilyNamesCount: Int): Flow<PagingData<Drink>> {
-        return local.getDrinksContainingIngredients(ingredientFamilyNames = ingredientFamilyNames, ingredientFamilyNamesCount = ingredientFamilyNamesCount)
-    }
-
     fun getAllIngredientFamilies(): Flow<PagingData<IngredientFamily>>{
         return remote.getAllIngredientFamilies()
     }
@@ -64,6 +59,18 @@ class Repository @Inject constructor(
 
     fun searchIngredientFamilies(query: String): Flow<PagingData<IngredientFamily>>{
         return remote.searchIngredientFamilies(query = query)
+    }
+
+    suspend fun getSelectedIngredientFamilyById(ingredientFamilyId: Int): IngredientFamily{
+        return local.getSelectedIngredientFamilyById(ingredientFamilyId = ingredientFamilyId)
+    }
+
+    fun getDrinksContainingIngredients(ingredientNames: List<String>): Flow<PagingData<Drink>>{
+        return remote.getDrinksContainingIngredients(ingredientNames = ingredientNames)
+    }
+
+    fun searchIngredientsByIngredientFamilyName(ingredientFamilyName: String): Flow<PagingData<Ingredient>>{
+        return remote.searchIngredientsByIngredientFamilyName(ingredientFamilyName = ingredientFamilyName)
     }
 
 }

@@ -103,6 +103,9 @@ fun IngredientsScreen(
 
                     val filteredDrinks2 = filteredDrinks.itemSnapshotList.items.map { "${it.name} (Id: ${it.id})" }
 
+                    //TODO vypsat tenhle list abych si byl jistej jak převést LazyPagingItems<Drink> na List<Drink>
+                    val filteredDrinksTest = filteredDrinks.itemSnapshotList.items
+
                     //val allFilteredDrinks = filteredDrinks2.map { it.name }
                     //val allFilteredDrinks = filteredDrinksViewModel.filteredDrinks.value
 
@@ -116,7 +119,7 @@ fun IngredientsScreen(
                     if(false)
                         navController.navigate(Screen.FilteredDrinks.route)
                     else
-                        Toast.makeText(mContext, "Funkce filtrování drinků podle zaškrtnutých ingrediencí zatím není dostupná", Toast.LENGTH_LONG).show()
+                        Toast.makeText(mContext, "Funkce filtrování drinků podle více ingrediencí zatím není dostupná", Toast.LENGTH_LONG).show()
                 },
             ) {
                 Icon(

@@ -160,6 +160,7 @@ fun AboutAppScreen(
                     }
                 }
             }
-        }
+        },
+        backgroundColor = MaterialTheme.colors.aboutAppBackgroundColor
     )
 }

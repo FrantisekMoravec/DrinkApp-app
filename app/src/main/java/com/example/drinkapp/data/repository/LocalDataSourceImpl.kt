@@ -33,14 +33,20 @@ class LocalDataSourceImpl(
         return ingredientDao.getIngredientsMadeByUser(ingredientMadeByUser = ingredientMadeByUser)
     }
 */
+    /*
     override fun getDrinksContainingIngredients(ingredientFamilyNames: List<String>, ingredientFamilyNamesCount: Int): Flow<PagingData<Drink>> {
         return Pager(
             config = PagingConfig(pageSize = DRINK_ITEMS_PER_PAGE),
             pagingSourceFactory = { drinkDao.getDrinksContainingIngredients(ingredientFamilyNames, ingredientFamilyNamesCount) }
         ).flow
     }
+    */
 
     override suspend fun getSelectedIngredientFamiliesByName(ingredientFamilyNames: List<String>): List<IngredientFamily> {
         return ingredientDao.getSelectedIngredientFamiliesByName(ingredientFamilyNames = ingredientFamilyNames)
+    }
+
+    override suspend fun getSelectedIngredientFamilyById(ingredientFamilyId: Int): IngredientFamily {
+        return drinkDao.getSelectedIngredientFamilyById(ingredientFamilyId = ingredientFamilyId)
     }
 }

@@ -16,9 +16,9 @@ interface LocalDataSource {
 /*
     suspend fun getAllIngredientsMadeByUser(madeByUser: Boolean): Ingredient
 */
-    fun getDrinksContainingIngredients(ingredientFamilyNames: List<String>, ingredientFamilyNamesCount: Int): Flow<PagingData<Drink>>
-
     suspend fun getSelectedIngredientFamiliesByName(ingredientFamilyNames: List<String>): List<IngredientFamily>
+
+    suspend fun getSelectedIngredientFamilyById(ingredientFamilyId: Int): IngredientFamily
 }
     //suspend fun getSelectedIngredients(ingredientIds: List<Int>): List<Ingredient>
 

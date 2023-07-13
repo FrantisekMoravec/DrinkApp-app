@@ -38,7 +38,10 @@ fun DrinksSearchScreen(
             )
         },
         content = {
-            ListContent(drinks = drinks, navController = navController)
+            ListContent(
+                drinks = drinks,
+                navController = navController
+            )
         }
     )
 }

@@ -8,8 +8,10 @@ import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.data.paging_source.DrinkRemoteMediator
 import com.example.drinkapp.data.paging_source.IngredientFamilyRemoteMediator
 import com.example.drinkapp.data.paging_source.IngredientRemoteMediator
+import com.example.drinkapp.data.paging_source.SearchDrinksContainingIngredientsSource
 import com.example.drinkapp.data.paging_source.SearchDrinksSource
 import com.example.drinkapp.data.paging_source.SearchIngredientFamiliesSource
+import com.example.drinkapp.data.paging_source.SearchIngredientsByIngredientFamilyNamesSource
 import com.example.drinkapp.data.paging_source.SearchIngredientsSource
 import com.example.drinkapp.data.remote.DrinkApi
 import com.example.drinkapp.data.remote.IngredientApi
@@ -107,9 +109,28 @@ class RemoteDataSourceImpl(
         ).flow
     }
 
-/*
-    override fun getSelectedRemoteDrink(drinkId: Int): Drink {
-        return
+    override fun getDrinksContainingIngredients(ingredientNames: List<String>): Flow<PagingData<Drink>> {
+        return Pager(
+            config = PagingConfig(pageSize = DRINK_ITEMS_PER_PAGE),
+            pagingSourceFactory = {
+                SearchDrinksContainingIngredientsSource(
+                    drinkApi = drinkApi,
+                    listQuery = ingredientNames
+                )
+            }
+        ).flow
     }
-    */
+
+    //TODO udělat to stejně jako vyhledávání ingrediencí
+    override fun searchIngredientsByIngredientFamilyName(ingredientFamilyName: String): Flow<PagingData<Ingredient>> {
+        return Pager(
+            config = PagingConfig(pageSize = INGREDIENT_ITEMS_PER_PAGE),
+            pagingSourceFactory = {
+                SearchIngredientsByIngredientFamilyNamesSource(
+                    ingredientApi = ingredientApi,
+                    query = ingredientFamilyName
+                )
+            }
+        ).flow
+    }
 }

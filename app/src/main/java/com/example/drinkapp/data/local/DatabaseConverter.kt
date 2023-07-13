@@ -7,7 +7,7 @@ class DatabaseConverter {
     private val separator = ";"
 
     @TypeConverter
-    fun convertListToString(list: List<String>): String{
+    fun convertListToString(list: List<String>): String {
         val stringBuilder = StringBuilder()
         for (item in list){
             stringBuilder.append(item).append(separator)
