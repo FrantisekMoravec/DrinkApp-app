@@ -86,3 +86,7 @@ val Colors.FABcolor: Color
 val Colors.IngredientDetailsScreenBackgroundColor: Color
     @Composable
     get() = if (isLight) Color.White else Color.White
+
+val Colors.IngredientDetailsScreenTextColor: Color
+    @Composable
+    get() = if (isLight) Color.Black else Color.Black

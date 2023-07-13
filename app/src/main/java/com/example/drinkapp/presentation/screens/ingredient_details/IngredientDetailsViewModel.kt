@@ -41,17 +41,22 @@ class IngredientDetailsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO){
             val ingredientFamilyId = savedStateHandle.get<Int>(INGREDIENT_FAMILY_DETAILS_ARGUMENT_KEY)
             _selectedIngredientFamily.value = ingredientFamilyId?.let { useCases.getSelectedIngredientFamilyByIdUseCase(ingredientFamilyId = ingredientFamilyId) }
-
+            /*
+            if (ingredientFamilyId != null) {
+                useCases.getSelectedIngredientFamilyByIdUseCase(ingredientFamilyId = ingredientFamilyId)
+            }
+            */
+            //selectedIngredientFamily.value?.let { useCases.searchIngredientsByIngredientFamilyNamesUseCase(ingredientFamilyName = it.name) }
             selectedIngredientFamily.value?.let { useCases.searchIngredientsByIngredientFamilyNamesUseCase(ingredientFamilyName = it.name) }
 
-            useCases.getDrinksContainingIngredientsUseCase(ingredientNames = nullableListIngredientToListString(ingredientsOfIngredientFamily.value)).cachedIn(viewModelScope).collect {
+            useCases.getDrinksContainingIngredientsUseCase(ingredientNames = listIngredientToListString(ingredientsOfIngredientFamily.value)).cachedIn(viewModelScope).collect {
                 _drinksContainingIngredients.value = it
             }
             //ingredientsOfIngredientFamily.value?.let { useCases.getDrinksContainingIngredientsUseCase(ingredientNames = it.map { it.name }) }
         }
     }
 
-    private fun nullableListIngredientToListString(ingredients: List<Ingredient>?): List<String>{
+    private fun listIngredientToListString(ingredients: List<Ingredient>?): List<String>{
         val ingredientNames = mutableListOf<String>()
 
         ingredients?.forEach { ingredient -> ingredientNames.add(ingredient.name) }

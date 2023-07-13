@@ -1,5 +1,6 @@
 package com.example.drinkapp.presentation.common
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +36,7 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.IngredientFamily
+import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.components.ShimmerEffect
 import com.example.drinkapp.ui.theme.INGREDIENT_ITEM_HEIGHT
 import com.example.drinkapp.ui.theme.LARGE_PADDING
@@ -135,10 +137,9 @@ fun IngredientItem(
         .height(INGREDIENT_ITEM_HEIGHT)
         .fillMaxWidth()
         .clickable {
-            //navController.navigate(Screen.IngredientDetails.passIngredientId(ingredientId = ingredient.id))
-            //Log.d("ingredient name", ingredient.name + " - ingredient clicked")
-        }
-        ,
+            navController.navigate(Screen.IngredientDetails.passIngredientId(ingredientFamilyId = ingredientFamily.id))
+            Log.d("ingredient", ingredientFamily.name + " - ingredient family clicked(IngredientItem)")
+        },
         contentAlignment = Alignment.BottomStart
     ){
 

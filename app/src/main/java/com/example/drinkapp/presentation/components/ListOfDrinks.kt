@@ -84,12 +84,7 @@ fun SmallDrinkItem(
         placeholder(R.drawable.ic_placeholder)
         error(R.drawable.ic_placeholder)
     }
-/*
-    val painter = rememberImagePainter(data = "${BASE_URL}${selectedDrink.image}"){
-        placeholder(R.drawable.ic_placeholder)
-        error(R.drawable.ic_placeholder)
-    }
-*/
+
     Box(modifier = Modifier
         .background(MaterialTheme.colors.drinksScreenBackgroundColor)
         .height(DRINK_ITEM_HEIGHT)
@@ -135,49 +130,7 @@ fun SmallDrinkItem(
         }
     }
 }
-/*
-@ExperimentalCoilApi
-@Preview
-@Composable
-fun ListDrinksPreview() {
-    SmallDrinkItem(
-        drink = Drink(
-            id = 1,
-            name = "B52",
-            image = "",
-            description = "B52 drink je třívrstvý míchaný nápoj nazvaný podle amerického bombardéru používaného ve válce ve Vietnamu. Zvláštností tohoto drinku je, že se podává doslova hořící.",
-            ingredients = listOf(
-                "Kahlúa (3 cl)",
-                "Baileys (2 cl)",
-                "Grand Marnier nebo Absinth nebo Stroh (3 cl)"
-            ),
-            tutorial = "Ingredience opatrně nalijte do panáku skrze kávovou lžičku, tak, aby zůstaly nepromíchané. A to přesně v tomto pořadí: 1. likér Kahlúa, 2. likér Baileys, a nakonec 3. Grand Marnier či Absinth nebo Stroh . Těsně před konzumací zapálíme zapalovačem. Podáváme s tlustým brčkem.",
-            madeByUser = false
-        ),
-        navController = rememberNavController()
-    )
-    SmallDrinkItem(
-        drink = Drink(
-            id = 2,
-            name = "Bloody Mary",
-            image = "",
-            description = "Kdo by neznal krvavou Marii? Málokdo už však ví, že nápoj je pojmenován podle anglické královny Marie I. Tudorovny, která, jak už název drinku napoví, nebyla žádnou lidumilkou. Barva nápoje je krvavě červená, a po vodce, tabascu a pepři ostrá jako katova sekera.",
-            ingredients = listOf(
-                "Vodka (4,5 cl)",
-                "Rajčatový džus (9 cl)",
-                "Citronový džus (1,5 cl)",
-                "Worcesterská omáčka",
-                "Tabasco",
-                "Sůl",
-                "Pepř"
-            ),
-            tutorial = "Připravíme si sklenicí typu highball, do které nakapeme worcester, tabasco, přidáme špetku soli a pepře. Vložíme několik kostek ledu, nalijeme vodku a džusy v uvedeném množství. Nakonec vše lehce promícháme a ozdobíme plátkem citronu a stonkem celeru. Podáváme s brčkem.",
-            madeByUser = false
-        ),
-        navController = rememberNavController()
-    )
-}
-*/
+
 @ExperimentalCoilApi
 @Preview
 @Composable
