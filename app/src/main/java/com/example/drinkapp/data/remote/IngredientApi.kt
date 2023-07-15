@@ -16,8 +16,8 @@ interface IngredientApi {
         @Query("name") name: String
     ): IngredientApiResponse
 
-    @GET("")
-    suspend fun searchIngredientsByIngredientFamilyNames(
+    @GET("/ingredients/byingredientfamily")
+    suspend fun searchIngredientsByIngredientFamilyName(
         @Query("ingredientFamilyName") ingredientFamilyName: String
     ): IngredientApiResponse
 

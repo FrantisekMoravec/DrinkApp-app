@@ -20,10 +20,9 @@ interface RemoteDataSource {
 
     fun searchIngredientFamilies(query: String): Flow<PagingData<IngredientFamily>>
 
-    //posílá se několik parametrů(jmen ingrediencí) ale jsou v jednom stringu
-    fun getDrinksContainingIngredients(ingredientNames: List<String>): Flow<PagingData<Drink>>
+    fun getDrinksContainingIngredients(query: List<String>): Flow<PagingData<Drink>>
 
-    fun searchIngredientsByIngredientFamilyName(ingredientFamilyName: String): Flow<PagingData<Ingredient>>
+    fun searchIngredientsByIngredientFamilyName(query: String): Flow<PagingData<Ingredient>>
 
     //fun getSelectedRemoteDrink(drinkId: Int): Drink
 }

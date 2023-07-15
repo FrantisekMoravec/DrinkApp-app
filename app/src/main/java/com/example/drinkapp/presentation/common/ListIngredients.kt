@@ -56,7 +56,6 @@ fun ListIngredients(
     onCheckedChange: (Int, String, Boolean) -> Unit
     //filteredDrinksViewModel: FilteredDrinksViewModel = hiltViewModel()
 ) {
-    //val checkedIngredientFamilies = rememberSaveable { mutableStateOf(mutableSetOf<Ingredient>()) }
 
     val result = handlePagingResult(ingredientFamilies = ingredientFamilies)
 

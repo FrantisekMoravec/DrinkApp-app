@@ -17,26 +17,6 @@ import javax.inject.Inject
 class IngredientsSearchViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
-//tenhle kód vyhledával ingredience - nový požívá ingredient families
-/*
-    private val _searchQuery = mutableStateOf("")
-    val searchQuery = _searchQuery
-
-    private val _searchedIngredientFamilies = MutableStateFlow<PagingData<Ingredient>>(PagingData.empty())
-    val searchedIngredientFamilies = _searchedIngredientFamilies
-
-    fun ingredientFamiliesUpdateSearchQuery(query: String){
-        _searchQuery.value = query
-    }
-
-    fun searchIngredientFamilies(query: String){
-        viewModelScope.launch(Dispatchers.IO){
-            useCases.searchIngredientsUseCase(query = query).cachedIn(viewModelScope).collect{
-                _searchedIngredientFamilies.value = it
-            }
-        }
-    }
-*/
 
     private val _searchQuery = mutableStateOf("")
     val searchQuery = _searchQuery

@@ -13,7 +13,7 @@ class SearchIngredientsByIngredientFamilyNamesSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Ingredient> {
         return try {
-            val apiResponse = ingredientApi.searchIngredientsByIngredientFamilyNames(ingredientFamilyName = query)
+            val apiResponse = ingredientApi.searchIngredientsByIngredientFamilyName(ingredientFamilyName = query)
             val ingredients = apiResponse.ingredients
             if (ingredients.isNotEmpty()){
                 LoadResult.Page(

@@ -5,10 +5,10 @@ import com.example.drinkapp.data.repository.Repository
 import com.example.drinkapp.domain.model.Ingredient
 import kotlinx.coroutines.flow.Flow
 
-class SearchIngredientsByIngredientFamilyNamesUseCase (
+class SearchIngredientsByIngredientFamilyNameUseCase (
     private val repository: Repository
 ){
-    operator fun invoke(ingredientFamilyName: String): Flow<PagingData<Ingredient>>{
-        return repository.searchIngredientsByIngredientFamilyName(ingredientFamilyName = ingredientFamilyName)
+    operator fun invoke(query: String): Flow<PagingData<Ingredient>>{
+        return repository.searchIngredientsByIngredientFamilyName(query = query)
     }
 }

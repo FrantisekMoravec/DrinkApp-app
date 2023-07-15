@@ -44,7 +44,8 @@ interface DrinkDao {
     @Query("SELECT * FROM drink_table INNER JOIN ingredient_table ON drink_table.ingredients LIKE '%' || :ingredientNames || '%'")
     fun getDrinksContainingIngredients(ingredientNames: List<String>): PagingSource<Int, Drink>
 
-    @Query("SELECT name FROM ingredient_table WHERE name = :ingredientFamilyName")
+    //@Query("SELECT name FROM ingredient_table WHERE ingredientFamily = :ingredientFamilyName")
+    @Query("SELECT name FROM ingredient_table WHERE ingredientFamily = :ingredientFamilyName")
     fun getIngredientNamesOfIngredientFamily(ingredientFamilyName: String): Flow<List<String>>
 
     @Query("SELECT * FROM ingredient_family_table WHERE id = :ingredientFamilyId")

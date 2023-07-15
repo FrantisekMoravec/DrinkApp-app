@@ -1,13 +1,15 @@
 package com.example.drinkapp.data.paging_source
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.drinkapp.data.remote.DrinkApi
 import com.example.drinkapp.domain.model.Drink
+import javax.inject.Inject
 
-class SearchDrinksContainingIngredientsSource (
+class SearchDrinksContainingIngredientsSource @Inject constructor(
     private val drinkApi: DrinkApi,
-    private val listQuery: List<String>
+    private val query: List<String>
 ): PagingSource<Int, Drink>(){
     private val separator ="-"
 
@@ -22,7 +24,8 @@ class SearchDrinksContainingIngredientsSource (
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Drink> {
         return try {
-            val apiResponse = drinkApi.searchDrinksByIngredients(ingredients = convertListToString(list = listQuery))
+            val apiResponse = drinkApi.searchDrinksByIngredients(ingredients = convertListToString(list = query))
+            Log.d("ingredient", "string ingredinecí(SearchDrinksContainingIngredientsSource): ${convertListToString(list = query)}")
             val drinks = apiResponse.drinks
             if (drinks.isNotEmpty()){
                 LoadResult.Page(
@@ -37,7 +40,7 @@ class SearchDrinksContainingIngredientsSource (
                     nextKey = null
                 )
             }
-        }catch (e: Exception){
+        } catch (e: Exception){
             LoadResult.Error(e)
         }
     }

@@ -14,7 +14,7 @@ import com.example.drinkapp.domain.use_cases.get_selected_ingredient_family.GetS
 import com.example.drinkapp.domain.use_cases.search_drinks.SearchDrinksUseCase
 import com.example.drinkapp.domain.use_cases.search_ingredient_families.SearchIngredientFamiliesUseCase
 import com.example.drinkapp.domain.use_cases.search_ingredients.SearchIngredientsUseCase
-import com.example.drinkapp.domain.use_cases.search_ingredients_by_ingredient_family_names.SearchIngredientsByIngredientFamilyNamesUseCase
+import com.example.drinkapp.domain.use_cases.search_ingredients_by_ingredient_family_names.SearchIngredientsByIngredientFamilyNameUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +41,7 @@ object RepositoryModule {
             //getAllIngredientsMadeByUserUseCase = GetAllIngredientsMadeByUserUseCase(repository),
 
             getDrinksContainingIngredientsUseCase = GetDrinksContainingIngredientsUseCase(repository),
-            searchIngredientsByIngredientFamilyNamesUseCase = SearchIngredientsByIngredientFamilyNamesUseCase(repository),
+            searchIngredientsByIngredientFamilyNameUseCase = SearchIngredientsByIngredientFamilyNameUseCase(repository),
 
             getSelectedIngredientsByNamesUseCase = GetSelectedIngredientsByNamesUseCase(repository),
 

@@ -51,8 +51,8 @@ fun ListDrinks(
     navController: NavHostController
 ){
     LazyColumn(
-        modifier = Modifier
-            .background(MaterialTheme.colors.drinksScreenBackgroundColor),
+        //modifier = Modifier
+            //.background(MaterialTheme.colors.drinksScreenBackgroundColor),
         contentPadding = PaddingValues(all = SMALL_PADDING),
         verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
     ){

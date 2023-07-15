@@ -1,5 +1,6 @@
 package com.example.drinkapp.presentation.screens.drink_details
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +33,7 @@ class DrinkDetailsViewModel @Inject constructor(
             val drinkId = savedStateHandle.get<Int>(DRINK_DETAILS_ARGUMENT_KEY)
             _selectedDrink.value = drinkId?.let { useCases.getSelectedLocalDrinkUseCase(drinkId = drinkId) }
             //_selectedDrink.value?.name?.let { Log.d("Drink", it) }
+            _selectedDrink.value?.let { Log.d("Drink", "drink: ${it.name} (id: ${it.id})") }
         }
     }
 

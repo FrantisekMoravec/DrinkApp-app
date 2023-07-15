@@ -109,26 +109,25 @@ class RemoteDataSourceImpl(
         ).flow
     }
 
-    override fun getDrinksContainingIngredients(ingredientNames: List<String>): Flow<PagingData<Drink>> {
+    override fun getDrinksContainingIngredients(query: List<String>): Flow<PagingData<Drink>> {
         return Pager(
             config = PagingConfig(pageSize = DRINK_ITEMS_PER_PAGE),
             pagingSourceFactory = {
                 SearchDrinksContainingIngredientsSource(
                     drinkApi = drinkApi,
-                    listQuery = ingredientNames
+                    query = query
                 )
             }
         ).flow
     }
 
-    //TODO udělat to stejně jako vyhledávání ingrediencí
-    override fun searchIngredientsByIngredientFamilyName(ingredientFamilyName: String): Flow<PagingData<Ingredient>> {
+    override fun searchIngredientsByIngredientFamilyName(query: String): Flow<PagingData<Ingredient>> {
         return Pager(
             config = PagingConfig(pageSize = INGREDIENT_ITEMS_PER_PAGE),
             pagingSourceFactory = {
                 SearchIngredientsByIngredientFamilyNamesSource(
                     ingredientApi = ingredientApi,
-                    query = ingredientFamilyName
+                    query = query
                 )
             }
         ).flow
