@@ -26,14 +26,9 @@ class IngredientRemoteMediator (
         val cacheTimeout = 1440
         val diffInMinutes = (currentTime - lastUpdated) / 1000 / 60
 
-        //Log.d("RemoteMediator", "Current Time: ${parseMillis(currentTime)}")
-        //Log.d("RemoteMediator", "Last Updated Time: ${parseMillis(lastUpdated)}")
-
         return  if (diffInMinutes.toInt() <= cacheTimeout){
-            //Log.d("RemoteMediator", "up to date")
             InitializeAction.SKIP_INITIAL_REFRESH
         }else{
-            //Log.d("RemoteMediator", "refresh")
             InitializeAction.LAUNCH_INITIAL_REFRESH
         }
     }
@@ -66,7 +61,10 @@ class IngredientRemoteMediator (
                 }
             }
 
+            var endOfPaginationReached = false
+            //val ingredientResponses = ingredientApi.getAllIngredients(page = page)
             val ingredientResponse = ingredientApi.getAllIngredients(page = page)
+
             if (ingredientResponse.ingredients.isNotEmpty()){
                 drinkDatabase.withTransaction {
                     if (loadType == LoadType.REFRESH){
@@ -77,7 +75,7 @@ class IngredientRemoteMediator (
                     val ingredientNextPage = ingredientResponse.nextPage
                     val ingredientKeys = ingredientResponse.ingredients.map { ingredient ->
                         IngredientRemoteKeys(
-                            id = ingredient.id,
+                            id = ingredient.ingredientId,
                             prevPage = ingredientPrevPage,
                             nextPage = ingredientNextPage,
                             lastUpdated = ingredientResponse.lastUpdated
@@ -87,7 +85,9 @@ class IngredientRemoteMediator (
                     ingredientDao.addIngredients(ingredients = ingredientResponse.ingredients)
                 }
             }
-            MediatorResult.Success(endOfPaginationReached = ingredientResponse.nextPage == null)
+
+            endOfPaginationReached = true
+            MediatorResult.Success(endOfPaginationReached = (ingredientResponse.nextPage == null) && endOfPaginationReached)
         }catch (e: Exception){
             return MediatorResult.Error(e)
         }
@@ -97,7 +97,7 @@ class IngredientRemoteMediator (
         state: PagingState<Int, Ingredient>
     ): IngredientRemoteKeys? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { id ->
+            state.closestItemToPosition(position)?.ingredientId?.let { id ->
                 ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = id)
             }
         }
@@ -108,7 +108,7 @@ class IngredientRemoteMediator (
     ): IngredientRemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { ingredient ->
-                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = ingredient.id)
+                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = ingredient.ingredientId)
             }
     }
 
@@ -117,7 +117,7 @@ class IngredientRemoteMediator (
     ): IngredientRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { ingredient ->
-                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = ingredient.id)
+                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = ingredient.ingredientId)
             }
     }
 }

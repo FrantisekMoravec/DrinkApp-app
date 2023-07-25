@@ -10,7 +10,7 @@ import com.example.drinkapp.util.Constants.DRINK_DATABASE_TABLE
 @Entity(tableName = DRINK_DATABASE_TABLE)
 data class Drink(
     @PrimaryKey(autoGenerate = false)
-    val id: Int,
+    val drinkId: Int,
     val name: String,
     val image: String,
     val description: String,

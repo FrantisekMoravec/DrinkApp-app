@@ -27,6 +27,8 @@ import com.example.drinkapp.presentation.screens.TopBar
 import com.example.drinkapp.presentation.screens.filtered_drinks.FilteredDrinksViewModel
 import com.example.drinkapp.ui.theme.FABcolor
 import com.example.drinkapp.ui.theme.bottomNavBackgroundColor
+import com.example.drinkapp.ui.theme.statusBarColor
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.CoroutineScope
 
 /** tato metoda říká jak má vypadat fragment s ingrediencemi */
@@ -40,6 +42,12 @@ fun IngredientsScreen(
     scaffoldState: ScaffoldState,
     scope: CoroutineScope
 ) {
+
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(
+        color = MaterialTheme.colors.statusBarColor
+    )
+
     val mContext = LocalContext.current
 
     val allIngredients = ingredientsViewModel.getAllIngredientFamilies.collectAsLazyPagingItems()
@@ -101,7 +109,7 @@ fun IngredientsScreen(
                     //val selectedIngredientNames = selectedIngredients.map { it.name }
                     val allLocalDrinkNames = allLocalDrinks.map { it.name }
 
-                    val filteredDrinks2 = filteredDrinks.itemSnapshotList.items.map { "${it.name} (Id: ${it.id})" }
+                    val filteredDrinks2 = filteredDrinks.itemSnapshotList.items.map { "${it.name} (Id: ${it.drinkId})" }
 
                     //TODO vypsat tenhle list abych si byl jistej jak převést LazyPagingItems<Drink> na List<Drink>
                     val filteredDrinksTest = filteredDrinks.itemSnapshotList.items

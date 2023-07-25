@@ -1,6 +1,6 @@
 package com.example.drinkapp.data.paging_source
 
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.drinkapp.data.remote.DrinkApi
@@ -22,24 +22,27 @@ class SearchDrinksContainingIngredientsSource @Inject constructor(
         return stringBuilder.toString()
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Drink> {
         return try {
-            val apiResponse = drinkApi.searchDrinksByIngredients(ingredients = convertListToString(list = query))
-            Log.d("ingredient", "string ingredinecí(SearchDrinksContainingIngredientsSource): ${convertListToString(list = query)}")
-            val drinks = apiResponse.drinks
-            if (drinks.isNotEmpty()){
+            val apiResponses = drinkApi.searchDrinksByIngredients(ingredientFamilyName = convertListToString(list = query))
+            val firstApiResponse = apiResponses.first()
+/*
+            if (!firstApiResponse.drinks.isNullOrEmpty()){
                 LoadResult.Page(
-                    data = drinks,
+                    data = apiResponses[1].drinks,
                     prevKey = apiResponse.prevPage,
                     nextKey = apiResponse.nextPage
                 )
             }else{
+                */
                 LoadResult.Page(
                     data = emptyList(),
                     prevKey = null,
                     nextKey = null
                 )
-            }
+            //}
+
         } catch (e: Exception){
             LoadResult.Error(e)
         }

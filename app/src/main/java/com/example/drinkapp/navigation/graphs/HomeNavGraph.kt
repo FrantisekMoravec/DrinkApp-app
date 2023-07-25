@@ -71,6 +71,7 @@ fun HomeNavGraph(
             IngredientsSearchScreen(navController = navController)
         }
 
+
         composable(
             route = Screen.DrinkDetails.route,
             arguments = listOf(navArgument(DRINK_DETAILS_ARGUMENT_KEY){

@@ -10,7 +10,7 @@ interface RemoteDataSource {
 
     fun getAllRemoteDrinks(): Flow<PagingData<Drink>>
 
-    fun searchDrinks(query: String): Flow<PagingData<Drink>>
+    fun searchRemoteDrinks(query: String): Flow<PagingData<Drink>>
 
     fun getAllIngredients(): Flow<PagingData<Ingredient>>
 
@@ -20,9 +20,7 @@ interface RemoteDataSource {
 
     fun searchIngredientFamilies(query: String): Flow<PagingData<IngredientFamily>>
 
-    fun getDrinksContainingIngredients(query: List<String>): Flow<PagingData<Drink>>
-
-    fun searchIngredientsByIngredientFamilyName(query: String): Flow<PagingData<Ingredient>>
+    fun getDrinksContainingIngredients(query: String): Flow<PagingData<Drink>>
 
     //fun getSelectedRemoteDrink(drinkId: Int): Drink
 }

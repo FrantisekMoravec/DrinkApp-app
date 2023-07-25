@@ -15,6 +15,9 @@ import com.example.drinkapp.domain.model.Ingredient
 import com.example.drinkapp.domain.model.IngredientFamily
 import com.example.drinkapp.domain.model.IngredientFamilyRemoteKeys
 import com.example.drinkapp.domain.model.IngredientRemoteKeys
+import com.example.drinkapp.domain.model.relations.DrinkIngredientCrossRef
+import com.example.drinkapp.domain.model.relations.DrinkWithIngredients
+import com.example.drinkapp.domain.model.relations.IngredientWithDrinks
 
 /** databáze uchovávající stažená data */
 @Database(
@@ -25,7 +28,10 @@ import com.example.drinkapp.domain.model.IngredientRemoteKeys
         DrinkRemoteKeys::class,
         IngredientFamily::class,
         IngredientFamilyRemoteKeys::class,
-        DrinksContainingIngredients::class
+        DrinksContainingIngredients::class,
+        //DrinkWithIngredients::class,
+        //IngredientWithDrinks::class,
+        DrinkIngredientCrossRef::class
                ],
     version = 1,
     exportSchema = false
@@ -37,6 +43,5 @@ abstract class DrinkDatabase: RoomDatabase() {
     abstract fun drinkRemoteKeysDao(): DrinkRemoteKeysDao
     abstract fun ingredientDao(): IngredientDao
     abstract fun ingredientRemoteKeysDao(): IngredientRemoteKeysDao
-
     abstract fun ingredientFamilyRemoteKeysDao(): IngredientFamilyRemoteKeysDao
 }

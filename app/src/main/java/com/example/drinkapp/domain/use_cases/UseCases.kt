@@ -13,9 +13,8 @@ import com.example.drinkapp.domain.use_cases.get_selected_ingredient_family.GetS
 import com.example.drinkapp.domain.use_cases.search_drinks.SearchDrinksUseCase
 import com.example.drinkapp.domain.use_cases.search_ingredient_families.SearchIngredientFamiliesUseCase
 import com.example.drinkapp.domain.use_cases.search_ingredients.SearchIngredientsUseCase
-import com.example.drinkapp.domain.use_cases.search_ingredients_by_ingredient_family_names.SearchIngredientsByIngredientFamilyNameUseCase
 
-data class UseCases (
+data class UseCases(
     val getAllRemoteDrinksUseCase: GetAllRemoteDrinksUseCase,
     val getAllLocalDrinksUseCase: GetAllLocalDrinksUseCase,
     val searchDrinksUseCase: SearchDrinksUseCase,
@@ -27,12 +26,12 @@ data class UseCases (
     val getSelectedIngredientsByNamesUseCase: GetSelectedIngredientsByNamesUseCase,
 
     val getAllIngredientFamiliesUseCase: GetAllIngredientFamiliesUseCase,
-    val getSelectedIngredientFamiliesByName: GetSelectedIngredientFamiliesByName,
     val searchIngredientFamiliesUseCase: SearchIngredientFamiliesUseCase,
     val getSelectedIngredientFamilyByIdUseCase: GetSelectedIngredientFamilyByIdUseCase,
 
     val getDrinksContainingIngredientsUseCase: GetDrinksContainingIngredientsUseCase,
-    val searchIngredientsByIngredientFamilyNameUseCase: SearchIngredientsByIngredientFamilyNameUseCase
+
+    val getSelectedIngredientFamiliesByName: GetSelectedIngredientFamiliesByName
 
     //val getSelectedIngredientsUseCase: GetSelectedIngredientsUseCase
 )

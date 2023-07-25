@@ -7,5 +7,6 @@ data class DrinkApiResponse (
     val prevPage: Int? = null,
     val nextPage: Int? = null,
     val drinks: List<Drink> = emptyList(),
+    val drinksOnServer: Int? = null,
     val lastUpdated: Long? = null
 )

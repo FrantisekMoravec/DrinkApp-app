@@ -1,10 +1,18 @@
 package com.example.drinkapp.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
@@ -20,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
@@ -31,7 +40,14 @@ import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.navigation.Screen
 import com.example.drinkapp.presentation.components.ShimmerEffect
-import com.example.drinkapp.ui.theme.*
+import com.example.drinkapp.presentation.screens.drink_details.DrinkDetailsViewModel
+import com.example.drinkapp.presentation.screens.search_drinks.DrinksSearchViewModel
+import com.example.drinkapp.ui.theme.DRINK_ITEM_HEIGHT
+import com.example.drinkapp.ui.theme.LARGE_PADDING
+import com.example.drinkapp.ui.theme.MEDIUM_PADDING
+import com.example.drinkapp.ui.theme.SMALL_PADDING
+import com.example.drinkapp.ui.theme.drinksScreenBackgroundColor
+import com.example.drinkapp.ui.theme.topAppBarContentColor
 import com.example.drinkapp.util.Constants.BASE_URL
 
 /** tento soubor slouží k zobrazování obsahu */
@@ -54,7 +70,7 @@ fun ListContent(
             items(
                 items = drinks,
                 key = { drink ->
-                    drink.id
+                    drink.drinkId
                 }
             ){ drink ->
                 drink?.let {
@@ -108,11 +124,28 @@ fun handlePagingResult(
 @Composable
 fun DrinkItem(
     drink: Drink,
-    navController: NavHostController
+    navController: NavHostController,
+    drinksSearchViewModel: DrinksSearchViewModel = hiltViewModel(),
+    drinkDetailsViewModel: DrinkDetailsViewModel = hiltViewModel()
 ) {
+    var safeDrink = drink
+
+    Log.d("safe drink", "List Content - safe drink: ${safeDrink.name} id: ${safeDrink.drinkId}")
+    Log.d("safe drink", "List Content - drink: ${drink.name} id: ${drink.drinkId}")
+
+    //if (drink.name.isNullOrEmpty()){
+        //drinksSearchViewModel.drinkId = safeDrink.id
+        //drinkDetailsViewModel.drinkId = safeDrink.id
+        //drinksSearchViewModel.drinksUpdateSearchQuery(query = drinksSearchViewModel.searchQuery.value)
+        //val getDrinkAgain = drinksSearchViewModel.searchedDrinks.collectAsLazyPagingItems()
+        //safeDrink = getDrinkAgain.itemSnapshotList.items.first()
+
+        Log.d("safe drink", "List Content - updated safe drink: ${safeDrink.name} id: ${safeDrink.drinkId}")
+    //}
+
     /** pokud se to půjde bude použit obrázek ze serveru použije se obrázek drinku */
     /** pokud to nebude možné bude místo něj použitý placeholder */
-    val painter = rememberImagePainter(data = "$BASE_URL${drink.image}"){
+    val painter = rememberImagePainter(data = "$BASE_URL${safeDrink.image}"){
         placeholder(R.drawable.ic_placeholder)
         error(R.drawable.ic_placeholder)
     }
@@ -121,7 +154,9 @@ fun DrinkItem(
         .background(MaterialTheme.colors.drinksScreenBackgroundColor)
         .height(DRINK_ITEM_HEIGHT)
         .clickable {
-            navController.navigate(Screen.DrinkDetails.passDrinkId(drinkId = drink.id))
+            drinksSearchViewModel.drinkId = safeDrink.drinkId
+            drinkDetailsViewModel.drinkId = safeDrink.drinkId
+            navController.navigate(Screen.DrinkDetails.passDrinkId(drinkId = safeDrink.drinkId))
         },
         contentAlignment = Alignment.BottomStart
     ){
@@ -151,7 +186,7 @@ fun DrinkItem(
                     .padding(start = MEDIUM_PADDING, top = MEDIUM_PADDING, end = MEDIUM_PADDING)
             ) {
                 Text(
-                    text = drink.name,
+                    text = safeDrink.name,
                     color = MaterialTheme.colors.topAppBarContentColor,
                     fontSize = MaterialTheme.typography.h5.fontSize,
                     fontWeight = FontWeight.Bold,
@@ -159,7 +194,7 @@ fun DrinkItem(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = drink.description,
+                    text = safeDrink.description,
                     color = Color.White.copy(alpha = ContentAlpha.medium),
                     fontSize = MaterialTheme.typography.subtitle1.fontSize,
                     maxLines = 2,
@@ -178,7 +213,7 @@ fun DrinkItem(
 fun DrinkItemPreview() {
     DrinkItem(
         drink = Drink(
-            id = 1,
+            drinkId = 1,
             name = "B52",
             image = "",
             description = "B52 drink je třívrstvý míchaný nápoj nazvaný podle amerického bombardéru používaného ve válce ve Vietnamu. Zvláštností tohoto drinku je, že se podává doslova hořící.",
@@ -202,7 +237,7 @@ fun DrinkItemPreview() {
 fun DrinkItemDarkPreview() {
     DrinkItem(
         drink = Drink(
-            id = 1,
+            drinkId = 1,
             name = "B52",
             image = "",
             description = "B52 drink je třívrstvý míchaný nápoj nazvaný podle amerického bombardéru používaného ve válce ve Vietnamu. Zvláštností tohoto drinku je, že se podává doslova hořící.",

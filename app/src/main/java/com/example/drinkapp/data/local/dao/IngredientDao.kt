@@ -12,10 +12,10 @@ import com.example.drinkapp.domain.model.IngredientFamily
 @Dao
 interface IngredientDao {
 
-    @Query("SELECT * FROM ingredient_table ORDER BY id ASC")
+    @Query("SELECT * FROM ingredient_table ORDER BY ingredientId ASC")
     fun getAllIngredients(): PagingSource<Int, Ingredient>
 
-    @Query("SELECT * FROM ingredient_table WHERE id=:ingredientId")
+    @Query("SELECT * FROM ingredient_table WHERE ingredientId = :ingredientId")
     fun getSelectedIngredientById(ingredientId: Int): Ingredient
 
     @Query("SELECT * FROM ingredient_table WHERE name=:ingredientNames")
@@ -32,11 +32,11 @@ interface IngredientDao {
 
     @Query("SELECT * FROM ingredient_family_table ORDER BY id ASC")
     fun getAllIngredientFamilies(): PagingSource<Int, IngredientFamily>
-//TODO použít
+
     @Query("SELECT * FROM ingredient_family_table WHERE id=:ingredientFamilyId")
     fun getSelectedIngredientFamiliesById(ingredientFamilyId: Int): IngredientFamily
 
-    @Query("SELECT * FROM ingredient_family_table WHERE name=:ingredientFamilyNames")
+    @Query("SELECT * FROM ingredient_family_table WHERE name LIKE '%' || :ingredientFamilyNames || '%'")
     fun getSelectedIngredientFamiliesByName(ingredientFamilyNames: List<String>): List<IngredientFamily>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

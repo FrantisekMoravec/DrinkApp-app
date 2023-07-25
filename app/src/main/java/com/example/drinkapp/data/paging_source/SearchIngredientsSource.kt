@@ -1,5 +1,6 @@
 package com.example.drinkapp.data.paging_source
 
+import android.annotation.SuppressLint
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.drinkapp.data.remote.IngredientApi
@@ -11,9 +12,11 @@ class SearchIngredientsSource @Inject constructor(
     private val query: String
 ): PagingSource<Int, Ingredient>(){
 
+    @SuppressLint("SuspiciousIndentation")
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Ingredient> {
         return try {
             val apiResponse = ingredientApi.searchIngredients(name = query)
+            /*
             val ingredients = apiResponse.ingredients
             if (ingredients.isNotEmpty()){
                 LoadResult.Page(
@@ -22,12 +25,14 @@ class SearchIngredientsSource @Inject constructor(
                     nextKey = apiResponse.nextPage
                 )
             }else{
+
+             */
                 LoadResult.Page(
                     data = emptyList(),
                     prevKey = null,
                     nextKey = null
                 )
-            }
+            //}
         }catch (e: Exception){
             LoadResult.Error(e)
         }

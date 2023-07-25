@@ -22,7 +22,7 @@ class Repository @Inject constructor(
     }
 
     fun searchDrinks(query: String): Flow<PagingData<Drink>>{
-        return remote.searchDrinks(query = query)
+        return remote.searchRemoteDrinks(query = query)
     }
 
     fun getAllIngredients(): Flow<PagingData<Ingredient>>{
@@ -65,12 +65,8 @@ class Repository @Inject constructor(
         return local.getSelectedIngredientFamilyById(ingredientFamilyId = ingredientFamilyId)
     }
 
-    fun getDrinksContainingIngredients(query: List<String>): Flow<PagingData<Drink>>{
+    fun getDrinksContainingIngredients(query: String): Flow<PagingData<Drink>>{
         return remote.getDrinksContainingIngredients(query = query)
-    }
-
-    fun searchIngredientsByIngredientFamilyName(query: String): Flow<PagingData<Ingredient>>{
-        return remote.searchIngredientsByIngredientFamilyName(query = query)
     }
 
 }

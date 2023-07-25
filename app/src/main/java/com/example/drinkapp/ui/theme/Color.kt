@@ -58,6 +58,10 @@ val Colors.drinksScreenBackgroundColor
     @Composable
     get() = if (isLight) DarkestBlue else Color.Black
 
+val Colors.smallDrinkItemBackgroundColor
+    @Composable
+    get() = if (isLight) Color.White else Color.White
+
 val Colors.ingredientNamesColor: Color
     @Composable
     get() = if (isLight) ShimmerDarkestGrey else Color.White

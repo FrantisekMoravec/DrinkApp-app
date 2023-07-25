@@ -15,9 +15,19 @@ import com.example.drinkapp.util.Constants.INGREDIENT_FAMILY_DETAILS_ARGUMENT_KE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.withContext
+
 
 @HiltViewModel
 class IngredientDetailsViewModel @Inject constructor(
@@ -31,11 +41,6 @@ class IngredientDetailsViewModel @Inject constructor(
     private val _ingredientsOfIngredientFamily = MutableStateFlow<PagingData<Ingredient>>(PagingData.empty())
     val ingredientsOfIngredientFamily = _ingredientsOfIngredientFamily
 
-    //private val _drinksContainingIngredients: MutableStateFlow<List<Drink>?> = MutableStateFlow(null)
-    //val drinksContainingIngredients: StateFlow<List<Drink>?> = _drinksContainingIngredients
-
-    //val drinksContainingIngredients = useCases.getDrinksContainingIngredientsUseCase(ingredientNames = nullableListIngredientToListString(ingredients = ingredientsOfIngredientFamily.value))
-
     private val _drinksContainingIngredients = MutableStateFlow<PagingData<Drink>>(PagingData.empty())
     val drinksContainingIngredients: StateFlow<PagingData<Drink>> = _drinksContainingIngredients
 
@@ -43,36 +48,14 @@ class IngredientDetailsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO){
             val ingredientFamilyId = savedStateHandle.get<Int>(INGREDIENT_FAMILY_DETAILS_ARGUMENT_KEY)
             _selectedIngredientFamily.value = ingredientFamilyId?.let { useCases.getSelectedIngredientFamilyByIdUseCase(ingredientFamilyId = ingredientFamilyId) }
-            /*
-            if (ingredientFamilyId != null) {
-                useCases.getSelectedIngredientFamilyByIdUseCase(ingredientFamilyId = ingredientFamilyId)
-            }
-            */
-            //selectedIngredientFamily.value?.let { useCases.searchIngredientsByIngredientFamilyNameUseCase(ingredientFamilyName = it.name) }
 
-            //selectedIngredientFamily.value?.let { useCases.searchIngredientsByIngredientFamilyNameUseCase(query = it.name) }
+            useCases.getDrinksContainingIngredientsUseCase(query = selectedIngredientFamily.value!!.name)
+                .cachedIn(viewModelScope)
+                .collect(){
+                    _drinksContainingIngredients.value = it
+                }
 
-            useCases.searchIngredientsByIngredientFamilyNameUseCase(query = selectedIngredientFamily.value!!.name).cachedIn(viewModelScope).collect {
-                _ingredientsOfIngredientFamily.value = it
-            }
-/*
-            val ingredientsLog = ingredientsOfIngredientFamily.value.map { "${it.name} (Id: ${it.id})" }
-            Log.d("ingredient","ingredience(IngredientDetailsViewModel): $ingredientsLog")
 
-            val preparedList = mutableListOf<String>()
-            preparedList.add("baileys")
-            preparedList.add("vodka")
-
-            useCases.getDrinksContainingIngredientsUseCase(query = preparedList).cachedIn(viewModelScope).collect {
-                _drinksContainingIngredients.value = it
-            }
-*/
-
-            useCases.getDrinksContainingIngredientsUseCase(query = pagingDataIngredientToListString(ingredientsOfIngredientFamily.value)).cachedIn(viewModelScope).collect {
-                _drinksContainingIngredients.value = it
-            }
-
-            //ingredientsOfIngredientFamily.value?.let { useCases.getDrinksContainingIngredientsUseCase(ingredientNames = it.map { it.name }) }
         }
     }
 
@@ -88,10 +71,9 @@ class IngredientDetailsViewModel @Inject constructor(
         val ingredientNames = mutableListOf<String>()
 
         ingredients.map { ingredient -> ingredientNames.add(ingredient.name) }
-        val ingredientsLog = ingredientsOfIngredientFamily.value.map { "${it.name} (Id: ${it.id})" }
+        val ingredientsLog = ingredientsOfIngredientFamily.value.map { "${it.name} (Id: ${it.ingredientId})" }
         Log.d("ingredient","ingredience(IngredientDetailsViewModel): $ingredientsLog")
 
         return ingredientNames
     }
-
 }

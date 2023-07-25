@@ -17,11 +17,11 @@ interface DrinkApi {
     @GET("/drinks/search")
     suspend fun searchDrinks(
         @Query("name") name: String
-    ): DrinkApiResponse
+    ): List<DrinkApiResponse>
 
-    @GET("/drinks/byingredients")
+    @GET("/drinks/byingredientfamily")
     suspend fun searchDrinksByIngredients(
-        @Query("ingredients") ingredients: String
-    ): DrinkApiResponse
+        @Query("ingredientFamilyName") ingredientFamilyName: String
+    ): List<DrinkApiResponse>
 
 }

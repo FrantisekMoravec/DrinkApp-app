@@ -25,7 +25,7 @@ object Constants {
 
     const val DRINK_DATABASE = "drink_database"
 
-    const val DRINK_DESCRIPTION_MAX_LINES = 7
+    const val DRINK_DESCRIPTION_MAX_LINES = 10
 
     const val MIN_BACKGROUND_IMAGE_HEIGHT = 0.4f
 

@@ -3,10 +3,6 @@ package com.example.drinkapp.presentation.screens.ingredient_details
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,22 +12,17 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
@@ -39,12 +30,14 @@ import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.Ingredient
 import com.example.drinkapp.domain.model.IngredientFamily
 import com.example.drinkapp.presentation.components.ListDrinks
+import com.example.drinkapp.presentation.screens.IngredientsSharedViewModel
 import com.example.drinkapp.ui.theme.IngredientDetailsScreenBackgroundColor
 import com.example.drinkapp.ui.theme.IngredientDetailsScreenTextColor
 import com.example.drinkapp.ui.theme.LARGE_PADDING
 import com.example.drinkapp.ui.theme.MEDIUM_PADDING
-import com.example.drinkapp.util.Constants
+import com.example.drinkapp.ui.theme.statusBarColor
 import com.example.drinkapp.util.Constants.BASE_URL
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @ExperimentalCoilApi
 @ExperimentalMaterialApi
@@ -53,9 +46,18 @@ fun IngredientDetailsScreen (
     navController: NavHostController,
     ingredientDetailsViewModel: IngredientDetailsViewModel = hiltViewModel()
 ) {
+    //ingredientDetailsViewModel.loadIngredientsOfIngredientsFamily()
+    //ingredientDetailsViewModel.loadDrinksContainingIngredients()
+    //ingredientDetailsViewModel.loadDrinks()
+
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(
+        color = MaterialTheme.colors.statusBarColor
+    )
+
     val selectedIngredientFamily by ingredientDetailsViewModel.selectedIngredientFamily.collectAsState()
     val drinks = ingredientDetailsViewModel.drinksContainingIngredients.collectAsLazyPagingItems()
-    val ingredients = ingredientDetailsViewModel.ingredientsOfIngredientFamily.collectAsLazyPagingItems()
+    val ingredientsOfIngredientFamily = ingredientDetailsViewModel.ingredientsOfIngredientFamily.collectAsLazyPagingItems()
 
     //val context = LocalContext.current
     selectedIngredientFamily?.let {
@@ -63,11 +65,10 @@ fun IngredientDetailsScreen (
         selectedIngredientFamily = it,
         navController = navController,
         drinks = drinks,
-        ingredients = ingredients
+        ingredientsOfIngredientFamily = ingredientsOfIngredientFamily
     )
     }
 }
-
 
 @ExperimentalCoilApi
 @ExperimentalMaterialApi
@@ -76,8 +77,10 @@ fun IngredientDetailsContent (
     selectedIngredientFamily: IngredientFamily,
     navController: NavHostController,
     drinks: LazyPagingItems<Drink>,
-    ingredients: LazyPagingItems<Ingredient>
+    ingredientsOfIngredientFamily: LazyPagingItems<Ingredient>,
+    ingredientsSharedViewModel: IngredientsSharedViewModel = hiltViewModel()
 ) {
+    val ingredients = ingredientsSharedViewModel.allIngredients.collectAsLazyPagingItems()
 
     val painter = rememberImagePainter(data = "${BASE_URL}${selectedIngredientFamily.image}"){
         placeholder(R.drawable.ic_placeholder)
@@ -124,17 +127,23 @@ fun IngredientDetailsContent (
             text = selectedIngredientFamily.description,
             color = MaterialTheme.colors.IngredientDetailsScreenTextColor,
             fontSize = MaterialTheme.typography.body1.fontSize,
-            maxLines = Constants.DRINK_DESCRIPTION_MAX_LINES
+            maxLines = Int.MAX_VALUE
+            //maxLines = Constants.DRINK_DESCRIPTION_MAX_LINES
         )
+        val ingredientsLog = ingredients.itemSnapshotList.items.map { "${it.name} (Id: ${it.ingredientId})" }
+        Log.d("ingredient","ingredience: $ingredientsLog")
 
-        val ingredientsLog = ingredients.itemSnapshotList.items.map { "${it.name} (Id: ${it.id})" }
+        val ingredientFamiliesLog = ingredientsOfIngredientFamily.itemSnapshotList.items.map { "${it.name} (Id: ${it.ingredientId})" }
+        Log.d("ingredient","ingredience(IngredientDetailsScreen): $ingredientFamiliesLog")
+/*
         val drinksLog = drinks.itemSnapshotList.items.map { "${it.name} (Id: ${it.id})" }
-        Log.d("ingredient","ingredience(IngredientDetailsScreen): $ingredientsLog")
         Log.d("ingredient","drinky: $drinksLog")
-
+*/
         ListDrinks(
             drinks = drinks,
             navController = navController
         )
+
+
     }
 }

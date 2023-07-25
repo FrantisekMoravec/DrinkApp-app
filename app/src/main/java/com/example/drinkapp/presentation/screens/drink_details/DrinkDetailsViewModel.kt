@@ -27,13 +27,15 @@ class DrinkDetailsViewModel @Inject constructor(
     private val _selectedDrink: MutableStateFlow<Drink?> = MutableStateFlow(null)
     val selectedDrink: StateFlow<Drink?> = _selectedDrink
 
+    var drinkId: Int? = null
+
     /** při kliknutí na drink ho najdeme přes id v databázi */
     init {
         viewModelScope.launch(Dispatchers.IO){
-            val drinkId = savedStateHandle.get<Int>(DRINK_DETAILS_ARGUMENT_KEY)
-            _selectedDrink.value = drinkId?.let { useCases.getSelectedLocalDrinkUseCase(drinkId = drinkId) }
-            //_selectedDrink.value?.name?.let { Log.d("Drink", it) }
-            _selectedDrink.value?.let { Log.d("Drink", "drink: ${it.name} (id: ${it.id})") }
+            drinkId = savedStateHandle.get<Int>(DRINK_DETAILS_ARGUMENT_KEY)
+            Log.d("safe drink", "DrinkDetailsViewModel - drink id(saved state handle): $drinkId)")
+            _selectedDrink.value = drinkId?.let { useCases.getSelectedLocalDrinkUseCase(drinkId = drinkId!!) }
+            _selectedDrink.value?.let { Log.d("safe drink", "DrinkDetailsViewModel - drink: ${it.name} (id: ${it.drinkId})") }
         }
     }
 

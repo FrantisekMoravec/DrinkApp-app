@@ -35,13 +35,12 @@ import coil.compose.rememberImagePainter
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.navigation.Screen
-import com.example.drinkapp.ui.theme.DRINK_ITEM_HEIGHT
 import com.example.drinkapp.ui.theme.LARGE_PADDING
 import com.example.drinkapp.ui.theme.MEDIUM_PADDING
+import com.example.drinkapp.ui.theme.SMALL_DRINK_ITEM_HEIGHT
 import com.example.drinkapp.ui.theme.SMALL_PADDING
-import com.example.drinkapp.ui.theme.drinksScreenBackgroundColor
+import com.example.drinkapp.ui.theme.smallDrinkItemBackgroundColor
 import com.example.drinkapp.ui.theme.topAppBarContentColor
-import com.example.drinkapp.util.Constants
 import com.example.drinkapp.util.Constants.BASE_URL
 
 @ExperimentalCoilApi
@@ -59,7 +58,7 @@ fun ListDrinks(
         items(
             items = drinks,
             key = { drink ->
-                drink.id
+                drink.drinkId
             }
         ){drink ->
             drink?.let {
@@ -86,17 +85,18 @@ fun SmallDrinkItem(
     }
 
     Box(modifier = Modifier
-        .background(MaterialTheme.colors.drinksScreenBackgroundColor)
-        .height(DRINK_ITEM_HEIGHT)
+        .background(MaterialTheme.colors.smallDrinkItemBackgroundColor)
+        .height(SMALL_DRINK_ITEM_HEIGHT)
         .clickable {
-            navController.navigate(Screen.DrinkDetails.passDrinkId(drinkId = selectedDrink.id))
+            navController.navigate(Screen.DrinkDetails.passDrinkId(drinkId = selectedDrink.drinkId))
         },
         contentAlignment = Alignment.BottomStart
     ){
-        Surface(shape = RoundedCornerShape(size = LARGE_PADDING)){
-            Image(
+        Surface(
+            shape = RoundedCornerShape(size = LARGE_PADDING)
+        ){
+        Image(
                 modifier = Modifier
-                    //.fillMaxSize()
                     .fillMaxWidth(),
                 painter = painter,
                 contentDescription = stringResource(R.string.drink_image),
@@ -105,7 +105,7 @@ fun SmallDrinkItem(
         }
         Surface(
             modifier = Modifier
-                .fillMaxHeight(0.3f)
+                .fillMaxHeight(0.4f)
                 .fillMaxWidth(),
             color = Color.Black.copy(alpha = ContentAlpha.medium),
             shape = RoundedCornerShape(
@@ -137,7 +137,7 @@ fun SmallDrinkItem(
 fun SmallDrinkItemPreview() {
     SmallDrinkItem(
         selectedDrink = Drink(
-            id = 2,
+            drinkId = 2,
             name = "Bloody Mary",
             image = "",
             description = "Kdo by neznal krvavou Marii? Málokdo už však ví, že nápoj je pojmenován podle anglické královny Marie I. Tudorovny, která, jak už název drinku napoví, nebyla žádnou lidumilkou. Barva nápoje je krvavě červená, a po vodce, tabascu a pepři ostrá jako katova sekera.",
