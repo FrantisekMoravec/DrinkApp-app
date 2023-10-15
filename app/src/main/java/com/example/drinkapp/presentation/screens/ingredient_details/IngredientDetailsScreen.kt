@@ -3,6 +3,7 @@ package com.example.drinkapp.presentation.screens.ingredient_details
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,12 +31,12 @@ import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.Ingredient
 import com.example.drinkapp.domain.model.IngredientFamily
 import com.example.drinkapp.presentation.components.ListDrinks
-import com.example.drinkapp.presentation.screens.IngredientsSharedViewModel
 import com.example.drinkapp.ui.theme.IngredientDetailsScreenBackgroundColor
 import com.example.drinkapp.ui.theme.IngredientDetailsScreenTextColor
 import com.example.drinkapp.ui.theme.LARGE_PADDING
 import com.example.drinkapp.ui.theme.MEDIUM_PADDING
 import com.example.drinkapp.ui.theme.statusBarColor
+import com.example.drinkapp.util.Constants
 import com.example.drinkapp.util.Constants.BASE_URL
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -46,10 +47,6 @@ fun IngredientDetailsScreen (
     navController: NavHostController,
     ingredientDetailsViewModel: IngredientDetailsViewModel = hiltViewModel()
 ) {
-    //ingredientDetailsViewModel.loadIngredientsOfIngredientsFamily()
-    //ingredientDetailsViewModel.loadDrinksContainingIngredients()
-    //ingredientDetailsViewModel.loadDrinks()
-
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(
         color = MaterialTheme.colors.statusBarColor
@@ -57,15 +54,14 @@ fun IngredientDetailsScreen (
 
     val selectedIngredientFamily by ingredientDetailsViewModel.selectedIngredientFamily.collectAsState()
     val drinks = ingredientDetailsViewModel.drinksContainingIngredients.collectAsLazyPagingItems()
-    val ingredientsOfIngredientFamily = ingredientDetailsViewModel.ingredientsOfIngredientFamily.collectAsLazyPagingItems()
+    val ingredients = ingredientDetailsViewModel.ingredientsOfIngredientFamily.collectAsLazyPagingItems()
 
-    //val context = LocalContext.current
     selectedIngredientFamily?.let {
         IngredientDetailsContent(
         selectedIngredientFamily = it,
         navController = navController,
         drinks = drinks,
-        ingredientsOfIngredientFamily = ingredientsOfIngredientFamily
+        ingredients = ingredients
     )
     }
 }
@@ -77,10 +73,8 @@ fun IngredientDetailsContent (
     selectedIngredientFamily: IngredientFamily,
     navController: NavHostController,
     drinks: LazyPagingItems<Drink>,
-    ingredientsOfIngredientFamily: LazyPagingItems<Ingredient>,
-    ingredientsSharedViewModel: IngredientsSharedViewModel = hiltViewModel()
+    ingredients: LazyPagingItems<Ingredient>
 ) {
-    val ingredients = ingredientsSharedViewModel.allIngredients.collectAsLazyPagingItems()
 
     val painter = rememberImagePainter(data = "${BASE_URL}${selectedIngredientFamily.image}"){
         placeholder(R.drawable.ic_placeholder)
@@ -127,23 +121,17 @@ fun IngredientDetailsContent (
             text = selectedIngredientFamily.description,
             color = MaterialTheme.colors.IngredientDetailsScreenTextColor,
             fontSize = MaterialTheme.typography.body1.fontSize,
-            maxLines = Int.MAX_VALUE
-            //maxLines = Constants.DRINK_DESCRIPTION_MAX_LINES
+            maxLines = Constants.DRINK_DESCRIPTION_MAX_LINES
         )
-        val ingredientsLog = ingredients.itemSnapshotList.items.map { "${it.name} (Id: ${it.ingredientId})" }
-        Log.d("ingredient","ingredience: $ingredientsLog")
 
-        val ingredientFamiliesLog = ingredientsOfIngredientFamily.itemSnapshotList.items.map { "${it.name} (Id: ${it.ingredientId})" }
-        Log.d("ingredient","ingredience(IngredientDetailsScreen): $ingredientFamiliesLog")
-/*
+        val ingredientsLog = ingredients.itemSnapshotList.items.map { "${it.name} (Id: ${it.id})" }
         val drinksLog = drinks.itemSnapshotList.items.map { "${it.name} (Id: ${it.id})" }
+        Log.d("ingredient","ingredience(IngredientDetailsScreen): $ingredientsLog")
         Log.d("ingredient","drinky: $drinksLog")
-*/
+
         ListDrinks(
             drinks = drinks,
             navController = navController
         )
-
-
     }
 }

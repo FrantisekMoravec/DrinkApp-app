@@ -19,9 +19,9 @@ interface DrinkApi {
         @Query("name") name: String
     ): List<DrinkApiResponse>
 
-    @GET("/drinks/byingredientfamily")
+    @GET("/drinks/byingredients")
     suspend fun searchDrinksByIngredients(
-        @Query("ingredientFamilyName") ingredientFamilyName: String
-    ): List<DrinkApiResponse>
+        @Query("ingredients") ingredients: String
+    ): DrinkApiResponse
 
 }

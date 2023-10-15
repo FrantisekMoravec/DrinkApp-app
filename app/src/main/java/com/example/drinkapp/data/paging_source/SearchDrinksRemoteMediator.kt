@@ -32,14 +32,14 @@ class SearchDrinksRemoteMediator(
                         val drinkNextPage = drinkResponse.nextPage
                         val drinkKeys = drinkResponse.drinks.map { drink ->
                             DrinkRemoteKeys(
-                                id = drink.drinkId,
+                                id = drink.id,
                                 prevPage = drinkPrevPage,
                                 nextPage = drinkNextPage,
                                 lastUpdated = drinkResponse.lastUpdated
                             )
                         }
                         drinkRemoteKeysDao.addAllDrinkRemoteKeys(drinkRemoteKeys = drinkKeys)
-                        drinkDao.insertDrinks(drinks = drinkResponse.drinks)
+                        drinkDao.addDrinks(drinks = drinkResponse.drinks)
                     }
                 }
             }

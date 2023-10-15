@@ -22,8 +22,8 @@ sealed class BottomBarScreen (
     )
     /*
     {
-        fun passIngredientId(ingredientId: Int): String{
-            return "INGREDIENTS/$ingredientId"
+        fun passIngredientId(id: Int): String{
+            return "INGREDIENTS/$id"
         }
     }
 */

@@ -22,7 +22,7 @@ class Repository @Inject constructor(
     }
 
     fun searchDrinks(query: String): Flow<PagingData<Drink>>{
-        return remote.searchRemoteDrinks(query = query)
+        return remote.searchDrinks(query = query)
     }
 
     fun getAllIngredients(): Flow<PagingData<Ingredient>>{
@@ -36,19 +36,11 @@ class Repository @Inject constructor(
     fun searchIngredients(query: String): Flow<PagingData<Ingredient>>{
         return remote.searchIngredients(query = query)
     }
-/*
-    fun getSelectedRemoteDrink(drinkId: Int): Drink{
-        return remote.getSelectedRemoteDrink(drinkId = drinkId)
-    }
-*/
+
     suspend fun getSelectedLocalDrink(drinkId: Int): Drink{
         return local.getSelectedLocalDrink(drinkId = drinkId)
     }
-/*
-    suspend fun getAllIngredientsMadeByUser(madeByUser: Boolean): Ingredient {
-        return local.getAllIngredientsMadeByUser(madeByUser = madeByUser)
-    }
-*/
+
     fun getAllIngredientFamilies(): Flow<PagingData<IngredientFamily>>{
         return remote.getAllIngredientFamilies()
     }
@@ -69,36 +61,8 @@ class Repository @Inject constructor(
         return remote.getDrinksContainingIngredients(query = query)
     }
 
+    fun searchIngredientsByIngredientFamilyName(query: String): Flow<PagingData<Ingredient>>{
+        return remote.searchIngredientsByIngredientFamilyName(query = query)
+    }
+
 }
-/*
-    suspend fun getSelectedIngredients(ingredientIds: List<Int>): List<Ingredient>{
-        return local.getSelectedIngredients(ingredientIds = ingredientIds)
-    }
-*/
-
-/*
-    suspend fun getSelectedIngredientById(ingredientId: Int): Ingredient{
-        return local.getSelectedIngredientById(ingredientId = ingredientId)
-    }
-*/
-/*
-    fun getSelectedDrinkMadeByUser(id: Int): Flow<DrinkMadeByUser> {
-        return drinkMadeByUserDao.getSelectedDrinkMadeByUser(id = id)
-    }
-
-    suspend fun addDrinkMadeByUser(drinkMadeByUser: DrinkMadeByUser){
-        drinkMadeByUserDao.addDrinkMadeByUser(drinkMadeByUser = drinkMadeByUser)
-    }
-
-    suspend fun updateDrinkMadeByUser(drinkMadeByUser: DrinkMadeByUser){
-        drinkMadeByUserDao.updateDrinkMadeByUser(drinkMadeByUser = DrinkMadeByUser)
-    }
-
-    suspend fun deleteDrinkMadeByUser(drinkMadeByUser: DrinkMadeByUser){
-        drinkMadeByUserDao.deleteDrinkMadeByUser(drinkMadeByUser = drinkMadeByUser)
-    }
-
-    fun searchDrinkMadeByUser(query: String): Flow<List<DrinkMadeByUser>>{
-        return drinkMadeByUserDao.searchDrinkMadeByUser(searchDrinkMadeByUser = query)
-    }
-*/

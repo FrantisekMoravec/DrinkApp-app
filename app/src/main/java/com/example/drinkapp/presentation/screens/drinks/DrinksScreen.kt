@@ -15,8 +15,6 @@ import com.example.drinkapp.ui.theme.statusBarColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.CoroutineScope
 
-/** tato metoda říká jak má vypadat fragment s drinky */
-
 @ExperimentalCoilApi
 @Composable
 fun DrinksScreen(
@@ -25,7 +23,6 @@ fun DrinksScreen(
     scaffoldState: ScaffoldState,
     scope: CoroutineScope
 ) {
-    /** vybere drinky z viewmodelu */
     val allDrinks = drinksViewModel.getAllDrinks.collectAsLazyPagingItems()
 
     val systemUiController = rememberSystemUiController()

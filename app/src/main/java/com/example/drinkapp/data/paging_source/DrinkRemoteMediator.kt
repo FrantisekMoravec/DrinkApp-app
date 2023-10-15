@@ -32,10 +32,10 @@ class DrinkRemoteMediator(
         }
     }
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, Drink>): MediatorResult {
+    override suspend fun load(loadType: LoadType, state: PagingState<Int, Drink>): RemoteMediator.MediatorResult {
         return try {
             val page = when (loadType) {
-                /** načte stránku */
+                /** načte první stránku */
                 LoadType.REFRESH -> {
                     val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
                     remoteKeys?.nextPage?.minus(1) ?: 1
@@ -71,15 +71,14 @@ class DrinkRemoteMediator(
                     val drinkNextPage = drinkResponse.nextPage
                     val drinkKeys = drinkResponse.drinks.map { drink ->
                         DrinkRemoteKeys(
-                            id = drink.drinkId,
+                            id = drink.id,
                             prevPage = drinkPrevPage,
                             nextPage = drinkNextPage,
-                            lastUpdated = drinkResponse.lastUpdated,
-
+                            lastUpdated = drinkResponse.lastUpdated
                         )
                     }
                     drinkRemoteKeysDao.addAllDrinkRemoteKeys(drinkRemoteKeys = drinkKeys)
-                    drinkDao.insertDrinks(drinks = drinkResponse.drinks)
+                    drinkDao.addDrinks(drinks = drinkResponse.drinks)
                 }
             }
 
@@ -93,7 +92,7 @@ class DrinkRemoteMediator(
         state: PagingState<Int, Drink>
     ): DrinkRemoteKeys? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.drinkId?.let { id ->
+            state.closestItemToPosition(position)?.id?.let { id ->
                 drinkRemoteKeysDao.getDrinkRemoteKeys(drinkId = id)
             }
         }
@@ -104,7 +103,7 @@ class DrinkRemoteMediator(
     ): DrinkRemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { drink ->
-                drinkRemoteKeysDao.getDrinkRemoteKeys(drinkId = drink.drinkId)
+                drinkRemoteKeysDao.getDrinkRemoteKeys(drinkId = drink.id)
             }
     }
 
@@ -113,7 +112,7 @@ class DrinkRemoteMediator(
     ): DrinkRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { drink ->
-                drinkRemoteKeysDao.getDrinkRemoteKeys(drinkId = drink.drinkId)
+                drinkRemoteKeysDao.getDrinkRemoteKeys(drinkId = drink.id)
             }
     }
 }

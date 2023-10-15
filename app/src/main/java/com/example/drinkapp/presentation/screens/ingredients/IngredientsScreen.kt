@@ -109,7 +109,7 @@ fun IngredientsScreen(
                     //val selectedIngredientNames = selectedIngredients.map { it.name }
                     val allLocalDrinkNames = allLocalDrinks.map { it.name }
 
-                    val filteredDrinks2 = filteredDrinks.itemSnapshotList.items.map { "${it.name} (Id: ${it.drinkId})" }
+                    val filteredDrinks2 = filteredDrinks.itemSnapshotList.items.map { "${it.name} (Id: ${it.id})" }
 
                     //TODO vypsat tenhle list abych si byl jistej jak převést LazyPagingItems<Drink> na List<Drink>
                     val filteredDrinksTest = filteredDrinks.itemSnapshotList.items

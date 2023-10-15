@@ -6,8 +6,8 @@ import com.example.drinkapp.domain.model.Ingredient
 class GetSelectedIngredientUseCase(
     private val repository: Repository
 ) {
-    suspend operator fun invoke(ingredientId: Int): Ingredient {
-        return repository.getSelectedIngredientById(ingredientId = ingredientId)
+    suspend operator fun invoke(id: Int): Ingredient {
+        return repository.getSelectedIngredientById(id = id)
     }
 }
 */

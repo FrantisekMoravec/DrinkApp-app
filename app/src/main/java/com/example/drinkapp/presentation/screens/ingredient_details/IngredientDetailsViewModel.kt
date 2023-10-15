@@ -15,18 +15,9 @@ import com.example.drinkapp.util.Constants.INGREDIENT_FAMILY_DETAILS_ARGUMENT_KE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.withContext
 
 
 @HiltViewModel
@@ -54,26 +45,6 @@ class IngredientDetailsViewModel @Inject constructor(
                 .collect(){
                     _drinksContainingIngredients.value = it
                 }
-
-
         }
-    }
-
-    private fun listIngredientToListString(ingredients: List<Ingredient>?): List<String>{
-        val ingredientNames = mutableListOf<String>()
-
-        ingredients?.forEach { ingredient -> ingredientNames.add(ingredient.name) }
-
-        return ingredientNames
-    }
-
-    private fun pagingDataIngredientToListString(ingredients: PagingData<Ingredient>): List<String>{
-        val ingredientNames = mutableListOf<String>()
-
-        ingredients.map { ingredient -> ingredientNames.add(ingredient.name) }
-        val ingredientsLog = ingredientsOfIngredientFamily.value.map { "${it.name} (Id: ${it.ingredientId})" }
-        Log.d("ingredient","ingredience(IngredientDetailsViewModel): $ingredientsLog")
-
-        return ingredientNames
     }
 }

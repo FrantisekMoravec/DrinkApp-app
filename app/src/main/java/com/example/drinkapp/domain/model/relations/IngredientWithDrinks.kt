@@ -6,13 +6,15 @@ import androidx.room.Junction
 import androidx.room.Relation
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.Ingredient
-
+/*
+@Entity(tableName = "ingredient_with_drinks")
 data class IngredientWithDrinks(
     @Embedded val ingredient: Ingredient,
     @Relation(
-        parentColumn = "ingredientId",
+        parentColumn = "id",
         entityColumn = "drinkId",
         associateBy = Junction(DrinkIngredientCrossRef::class)
     )
     val drinks: List<Drink>
 )
+ */

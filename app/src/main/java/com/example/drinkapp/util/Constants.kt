@@ -8,9 +8,9 @@ object Constants {
     //const val BASE_URL = "https://drinkapp-server.herokuapp.com/"
 
     const val DRINK_DETAILS_ARGUMENT_KEY = "drinkId"
-    const val INGREDIENT_FAMILY_DETAILS_ARGUMENT_KEY = "ingredientFamilyId"
+    const val INGREDIENT_FAMILY_DETAILS_ARGUMENT_KEY = "id"
     const val FILTERED_DRINKS_ARGUMENT_KEY = "ingredientFamilyName"
-    const val INGREDIENT_DETAILS_ARGUMENT_KEY = "ingredientId"
+    const val INGREDIENT_DETAILS_ARGUMENT_KEY = "id"
 
     const val INGREDIENT_DATABASE_TABLE = "ingredient_table"
     const val INGREDIENT_REMOTE_KEYS_DATABASE_TABLE = "ingredient_remote_keys_table"
@@ -25,7 +25,7 @@ object Constants {
 
     const val DRINK_DATABASE = "drink_database"
 
-    const val DRINK_DESCRIPTION_MAX_LINES = 10
+    const val DRINK_DESCRIPTION_MAX_LINES = 7
 
     const val MIN_BACKGROUND_IMAGE_HEIGHT = 0.4f
 

@@ -58,7 +58,7 @@ fun ListDrinks(
         items(
             items = drinks,
             key = { drink ->
-                drink.drinkId
+                drink.id
             }
         ){drink ->
             drink?.let {
@@ -88,7 +88,7 @@ fun SmallDrinkItem(
         .background(MaterialTheme.colors.smallDrinkItemBackgroundColor)
         .height(SMALL_DRINK_ITEM_HEIGHT)
         .clickable {
-            navController.navigate(Screen.DrinkDetails.passDrinkId(drinkId = selectedDrink.drinkId))
+            navController.navigate(Screen.DrinkDetails.passDrinkId(drinkId = selectedDrink.id))
         },
         contentAlignment = Alignment.BottomStart
     ){
@@ -137,7 +137,7 @@ fun SmallDrinkItem(
 fun SmallDrinkItemPreview() {
     SmallDrinkItem(
         selectedDrink = Drink(
-            drinkId = 2,
+            id = 2,
             name = "Bloody Mary",
             image = "",
             description = "Kdo by neznal krvavou Marii? Málokdo už však ví, že nápoj je pojmenován podle anglické královny Marie I. Tudorovny, která, jak už název drinku napoví, nebyla žádnou lidumilkou. Barva nápoje je krvavě červená, a po vodce, tabascu a pepři ostrá jako katova sekera.",

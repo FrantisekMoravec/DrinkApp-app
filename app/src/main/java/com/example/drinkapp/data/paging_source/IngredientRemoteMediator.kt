@@ -7,8 +7,6 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.data.remote.IngredientApi
-import com.example.drinkapp.domain.model.Drink
-import com.example.drinkapp.domain.model.DrinkRemoteKeys
 import com.example.drinkapp.domain.model.Ingredient
 import com.example.drinkapp.domain.model.IngredientRemoteKeys
 
@@ -61,8 +59,6 @@ class IngredientRemoteMediator (
                 }
             }
 
-            var endOfPaginationReached = false
-            //val ingredientResponses = ingredientApi.getAllIngredients(page = page)
             val ingredientResponse = ingredientApi.getAllIngredients(page = page)
 
             if (ingredientResponse.ingredients.isNotEmpty()){
@@ -75,7 +71,7 @@ class IngredientRemoteMediator (
                     val ingredientNextPage = ingredientResponse.nextPage
                     val ingredientKeys = ingredientResponse.ingredients.map { ingredient ->
                         IngredientRemoteKeys(
-                            id = ingredient.ingredientId,
+                            id = ingredient.id,
                             prevPage = ingredientPrevPage,
                             nextPage = ingredientNextPage,
                             lastUpdated = ingredientResponse.lastUpdated
@@ -85,9 +81,7 @@ class IngredientRemoteMediator (
                     ingredientDao.addIngredients(ingredients = ingredientResponse.ingredients)
                 }
             }
-
-            endOfPaginationReached = true
-            MediatorResult.Success(endOfPaginationReached = (ingredientResponse.nextPage == null) && endOfPaginationReached)
+            MediatorResult.Success(endOfPaginationReached = ingredientResponse.nextPage == null)
         }catch (e: Exception){
             return MediatorResult.Error(e)
         }
@@ -97,7 +91,7 @@ class IngredientRemoteMediator (
         state: PagingState<Int, Ingredient>
     ): IngredientRemoteKeys? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.ingredientId?.let { id ->
+            state.closestItemToPosition(position)?.id?.let { id ->
                 ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = id)
             }
         }
@@ -108,7 +102,7 @@ class IngredientRemoteMediator (
     ): IngredientRemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { ingredient ->
-                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = ingredient.ingredientId)
+                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = ingredient.id)
             }
     }
 
@@ -117,7 +111,7 @@ class IngredientRemoteMediator (
     ): IngredientRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { ingredient ->
-                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = ingredient.ingredientId)
+                ingredientRemoteKeysDao.getIngredientRemoteKeys(ingredientId = ingredient.id)
             }
     }
 }

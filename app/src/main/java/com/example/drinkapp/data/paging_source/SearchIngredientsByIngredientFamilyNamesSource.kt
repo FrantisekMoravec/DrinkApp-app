@@ -6,14 +6,14 @@ import com.example.drinkapp.data.remote.IngredientApi
 import com.example.drinkapp.domain.model.Ingredient
 import javax.inject.Inject
 
-class SearchIngredientsSource @Inject constructor(
+class SearchIngredientsByIngredientFamilyNamesSource @Inject constructor(
     private val ingredientApi: IngredientApi,
     private val query: String
 ): PagingSource<Int, Ingredient>(){
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Ingredient> {
         return try {
-            val apiResponse = ingredientApi.searchIngredients(name = query)
+            val apiResponse = ingredientApi.searchIngredientsByIngredientFamilyName(ingredientFamilyName = query)
             val ingredients = apiResponse.ingredients
             if (ingredients.isNotEmpty()){
                 LoadResult.Page(

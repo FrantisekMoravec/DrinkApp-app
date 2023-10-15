@@ -8,9 +8,10 @@ import com.example.drinkapp.data.local.DrinkDatabase
 import com.example.drinkapp.data.paging_source.DrinkRemoteMediator
 import com.example.drinkapp.data.paging_source.IngredientFamilyRemoteMediator
 import com.example.drinkapp.data.paging_source.IngredientRemoteMediator
-import com.example.drinkapp.data.paging_source.SearchDrinksContainingIngredientsRemoteMediator
+import com.example.drinkapp.data.paging_source.SearchDrinksContainingIngredientsSource
 import com.example.drinkapp.data.paging_source.SearchDrinksRemoteMediator
 import com.example.drinkapp.data.paging_source.SearchIngredientFamiliesSource
+import com.example.drinkapp.data.paging_source.SearchIngredientsByIngredientFamilyNamesSource
 import com.example.drinkapp.data.paging_source.SearchIngredientsSource
 import com.example.drinkapp.data.remote.DrinkApi
 import com.example.drinkapp.data.remote.IngredientApi
@@ -24,7 +25,6 @@ import com.example.drinkapp.util.Constants.INGREDIENT_FAMILY_ITEMS_PER_PAGE
 import com.example.drinkapp.util.Constants.INGREDIENT_ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
 
-/** knihovna paging bere data z databáze a upravuje si je jak potřebuje */
 @ExperimentalPagingApi
 class RemoteDataSourceImpl(
     private val drinkApi: DrinkApi,
@@ -48,7 +48,7 @@ class RemoteDataSourceImpl(
         ).flow
     }
 
-    override fun searchRemoteDrinks(query: String): Flow<PagingData<Drink>> {
+    override fun searchDrinks(query: String): Flow<PagingData<Drink>> {
         val pagingSourceFactory = { drinkDao.getSearchedDrinks(query = query) }
         return Pager(
             config = PagingConfig(pageSize = DRINK_ITEMS_PER_PAGE),
@@ -96,44 +96,8 @@ class RemoteDataSourceImpl(
             pagingSourceFactory = pagingSourceFactory
         ).flow
     }
-/*
+
     override fun searchIngredientFamilies(query: String): Flow<PagingData<IngredientFamily>> {
-        val listQuery = mutableListOf<String>()
-        listQuery.add(query)
-        val pagingSourceFactory = { ingredientDao.getSelectedIngredientFamiliesByName(ingredientFamilyNames = listQuery) }
-        return Pager(
-            config = PagingConfig(pageSize = INGREDIENT_FAMILY_ITEMS_PER_PAGE),
-            remoteMediator = SearchIngredientFamilyRemoteMediator(
-                ingredientFamilyApi = ingredientFamilyApi,
-                drinkDatabase = drinkDatabase,
-                query = query
-            ),
-            pagingSourceFactory = pagingSourceFactory
-        ).flow
-    }
-*/
-/*
-    override fun searchIngredientFamilies(query: String): Flow<PagingData<IngredientFamily>> {
-        val listQuery = mutableListOf<String>()
-        listQuery.add(query)
-        val pagingSourceFactory: () -> PagingSource<Int, IngredientFamily> = { ingredientDao.getSelectedIngredientFamiliesByName(ingredientFamilyNames = listQuery) }
-        return Pager(
-            config = PagingConfig(pageSize = INGREDIENT_FAMILY_ITEMS_PER_PAGE),
-            remoteMediator = SearchIngredientFamilyRemoteMediator(
-                ingredientFamilyApi = ingredientFamilyApi,
-                drinkDatabase = drinkDatabase,
-                query = query
-            ),
-            pagingSourceFactory = pagingSourceFactory
-        ).flow
-    }
-    */
-    override fun searchIngredientFamilies(query: String): Flow<PagingData<IngredientFamily>> {
-        /*
-        val listQuery = mutableListOf<String>()
-        listQuery.add(query)
-        val pagingSourceFactory = { ingredientDao.getSelectedIngredientFamiliesByName(ingredientFamilyNames = listQuery) }
-        */
         return Pager(
             config = PagingConfig(pageSize = INGREDIENT_FAMILY_ITEMS_PER_PAGE),
             pagingSourceFactory = {
@@ -146,29 +110,29 @@ class RemoteDataSourceImpl(
     }
 
     override fun getDrinksContainingIngredients(query: String): Flow<PagingData<Drink>> {
-        val ingredientIds = drinkDao.getIngredientIdsOfIngredientFamily(ingredientFamilyName = query)
-        val pagingSourceFactory = { drinkDao.getDrinksContainingIngredients(ingredientIds = ingredientIds) }
-        return Pager(
-            config = PagingConfig(pageSize = DRINK_ITEMS_PER_PAGE),
-            remoteMediator = SearchDrinksContainingIngredientsRemoteMediator(
-                drinkApi = drinkApi,
-                drinkDatabase = drinkDatabase,
-                query = query
-            ),
-            pagingSourceFactory = pagingSourceFactory
-        ).flow
-    }
-/*
-    override fun getDrinksContainingIngredients(query: List<String>): Flow<PagingData<Drink>> {
+        var list = mutableListOf<String>()
+        list.add(query)
         return Pager(
             config = PagingConfig(pageSize = DRINK_ITEMS_PER_PAGE),
             pagingSourceFactory = {
                 SearchDrinksContainingIngredientsSource(
                     drinkApi = drinkApi,
+                    query = list
+                )
+            }
+        ).flow
+    }
+
+    override fun searchIngredientsByIngredientFamilyName(query: String): Flow<PagingData<Ingredient>> {
+        return Pager(
+            config = PagingConfig(pageSize = INGREDIENT_ITEMS_PER_PAGE),
+            pagingSourceFactory = {
+                SearchIngredientsByIngredientFamilyNamesSource(
+                    ingredientApi = ingredientApi,
                     query = query
                 )
             }
         ).flow
     }
-*/
+
 }
